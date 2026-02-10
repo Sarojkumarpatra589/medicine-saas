@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import img1 from './images/cover-imgs-1.png';
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
-const StoreDetails = () => {
+import img1 from './images/cover-imgs-1.png';
+
+const GstAndTask = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -141,7 +142,7 @@ display: flex;
   background: white;
   border-radius: 12px;
   padding: 30px 30px;
-  max-width: 550px;
+  max-width: 460px;
   width: 100%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
@@ -329,109 +330,122 @@ display: flex;
             <div className="logo-icon"></div>
             <span className="logo-text">Pharmacy</span>
           </div>
-        <div className="login-container">
-         
+       <div className="login-container">
 
-          <h2>STORE & INFRASTRUCTURE DETAILS</h2>
-<p className="login-subtitle">
-  Important for compliance and analytics.
-</p>
+  <h2>GST & TAX IDENTIFICATION</h2>
+  <p className="login-subtitle">
+    Required for billing, invoicing & compliance.
+  </p>
 
-<form onSubmit={(e) => e.preventDefault()}>
+  <form onSubmit={(e) => e.preventDefault()}>
 
-  <div className="row">
+    <div className="row">
 
-    {/* Store Area */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Store Area (sq. ft.)</label>
-      <input
-        type="number"
-        className="form-control"
-        placeholder="Eg: 1200"
-        required
-      />
+      {/* GSTIN */}
+      <div className="col-md-6 mb-3">
+        <label className="form-label">GSTIN</label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter GSTIN"
+          maxLength="15"
+          required
+        />
+      </div>
+
+      {/* Legal Name */}
+      <div className="col-md-6 mb-3">
+        <label className="form-label">Legal Name (as per GST)</label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter legal business name"
+          required
+        />
+      </div>
+
+      {/* Trade Name */}
+      <div className="col-md-6 mb-3">
+        <label className="form-label">Trade Name</label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter trade name"
+          required
+        />
+      </div>
+
+      {/* GST Registration Date */}
+      <div className="col-md-6 mb-3">
+        <label className="form-label">GST Registration Date</label>
+        <input
+          type="date"
+          className="form-control"
+          required
+        />
+      </div>
+
+      {/* GST Type */}
+      <div className="col-md-6 mb-3">
+        <label className="form-label">GST Type</label>
+        <select className="form-control" required>
+          <option value="">Select GST Type</option>
+          <option>Regular</option>
+          <option>Composition</option>
+        </select>
+      </div>
+
+      {/* GST Status */}
+      <div className="col-md-6 mb-3">
+        <label className="form-label">GST Status</label>
+        <select className="form-control" required>
+          <option value="">Select Status</option>
+          <option>Active</option>
+          <option>Cancelled</option>
+        </select>
+      </div>
+
+      {/* GST Certificate Upload */}
+      <div className="col-md-12 mb-3">
+        <label className="form-label">GST Certificate Upload</label>
+        <input
+          type="file"
+          className="form-control"
+          accept=".jpg,.jpeg,.png,.pdf"
+          required
+        />
+      </div>
+
     </div>
-    {/* Billing Counters */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Number of Billing Counters</label>
-      <input
-        type="number"
-        className="form-control"
-        placeholder="Eg: 3"
-        required
-      />
-    </div>
 
-    {/* Store Type */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Store Type</label>
-      <select className="form-control" required>
-        <option value="">Select Store Type</option>
-        <option>Retail</option>
-        <option>Wholesale</option>
-      </select>
-    </div>
+    <div className="d-flex gap-3 mt-2">
 
-    {/* Storage Type */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Storage Type</label>
-      <select className="form-control" required>
-        <option value="">Select Storage Type</option>
-        <option>Normal</option>
-        <option>Cold Storage</option>
-      </select>
-    </div>
+  {/* Previous Button */}
+  <button
+    type="button"
+    className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
+  >
+    <FiArrowLeft size={18} />
+    Previous
+  </button>
 
-    {/* Refrigerator */}
-    <div className="col-md-12 mb-3">
-      <label className="form-label">Refrigerator Availability</label>
-      <select className="form-control" required>
-        <option value="">Select Availability</option>
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-    </div>
+  {/* Save & Next Button */}
+  <button
+    type="submit"
+    className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
+  >
+    Save & Next
+    <FiArrowRight size={18} />
+  </button>
 
-    {/* Power Backup */}
-    <div className="col-md-12 mb-3">
-      <label className="form-label">Power Backup Availability</label>
-      <select className="form-control" required>
-        <option value="">Select Availability</option>
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-    </div>
-
-    
-
-  </div>
-
- <div className="d-flex gap-3 mt-2">
-   
-     {/* Previous Button */}
-     <button
-       type="button"
-       className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
-     >
-       <FiArrowLeft size={18} />
-       Previous
-     </button>
-   
-     {/* Save & Next Button */}
-     <button
-       type="submit"
-       className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
-     >
-       Save & Next
-       <FiArrowRight size={18} />
-     </button>
-   
-   </div>
-</form>
+</div>
 
 
-          
-        </div>
+
+  </form>
+
+</div>
+
         <div className="copyright">
             Copyright © 2025 - Preclinic.
           </div>
@@ -440,4 +454,4 @@ display: flex;
   );
 };
 
-export default StoreDetails;
+export default GstAndTask;

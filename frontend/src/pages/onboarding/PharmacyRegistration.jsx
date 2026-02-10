@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import img1 from './images/cover-imgs-1.png';
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import img1 from "./images/cover-imgs-1.png";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
-const StoreDetails = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const PharmacyRegistration = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log('Login attempt:', { email, password, rememberMe });
+    console.log("Login attempt:", { email, password, rememberMe });
   };
 
   return (
@@ -308,13 +308,12 @@ display: flex;
 
       `}</style>
 
-
       <div className="left-section">
         <div className="content-box">
           <h1>Seamless healthcare access with smart, modern clinic</h1>
           <p>
-            Experience efficient, secure, and user-friendly healthcare management
-            designed for modern clinics and growing practices.
+            Experience efficient, secure, and user-friendly healthcare
+            management designed for modern clinics and growing practices.
           </p>
           <img
             src={img1}
@@ -325,119 +324,100 @@ display: flex;
       </div>
 
       <div className="right-section">
-         <div className="logo">
-            <div className="logo-icon"></div>
-            <span className="logo-text">Pharmacy</span>
-          </div>
-        <div className="login-container">
-         
-
-          <h2>STORE & INFRASTRUCTURE DETAILS</h2>
-<p className="login-subtitle">
-  Important for compliance and analytics.
-</p>
-
-<form onSubmit={(e) => e.preventDefault()}>
-
-  <div className="row">
-
-    {/* Store Area */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Store Area (sq. ft.)</label>
-      <input
-        type="number"
-        className="form-control"
-        placeholder="Eg: 1200"
-        required
-      />
-    </div>
-    {/* Billing Counters */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Number of Billing Counters</label>
-      <input
-        type="number"
-        className="form-control"
-        placeholder="Eg: 3"
-        required
-      />
-    </div>
-
-    {/* Store Type */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Store Type</label>
-      <select className="form-control" required>
-        <option value="">Select Store Type</option>
-        <option>Retail</option>
-        <option>Wholesale</option>
-      </select>
-    </div>
-
-    {/* Storage Type */}
-    <div className="col-md-6 mb-3">
-      <label className="form-label">Storage Type</label>
-      <select className="form-control" required>
-        <option value="">Select Storage Type</option>
-        <option>Normal</option>
-        <option>Cold Storage</option>
-      </select>
-    </div>
-
-    {/* Refrigerator */}
-    <div className="col-md-12 mb-3">
-      <label className="form-label">Refrigerator Availability</label>
-      <select className="form-control" required>
-        <option value="">Select Availability</option>
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-    </div>
-
-    {/* Power Backup */}
-    <div className="col-md-12 mb-3">
-      <label className="form-label">Power Backup Availability</label>
-      <select className="form-control" required>
-        <option value="">Select Availability</option>
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-    </div>
-
-    
-
-  </div>
-
- <div className="d-flex gap-3 mt-2">
-   
-     {/* Previous Button */}
-     <button
-       type="button"
-       className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
-     >
-       <FiArrowLeft size={18} />
-       Previous
-     </button>
-   
-     {/* Save & Next Button */}
-     <button
-       type="submit"
-       className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
-     >
-       Save & Next
-       <FiArrowRight size={18} />
-     </button>
-   
-   </div>
-</form>
-
-
-          
+        <div className="logo">
+          <div className="logo-icon"></div>
+          <span className="logo-text">Pharmacy</span>
         </div>
-        <div className="copyright">
-            Copyright © 2025 - Preclinic.
-          </div>
+        <div className="login-container">
+          <h2>PHARMACY LEGAL IDENTITY (CORE – STATIC)</h2>
+          <p className="login-subtitle">
+            Defines the legal existence of the pharmacy.
+          </p>
+
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div className="row">
+              {/* Pharmacy Legal Name */}
+              <div className="col-md-12 mb-3">
+                <label className="form-label">Pharmacy Legal Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter legal registered name"
+                  required
+                />
+              </div>
+
+              {/* Trade Name */}
+              <div className="col-md-12 mb-3">
+                <label className="form-label">Trade Name (Shop Name)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter shop / trade name"
+                  required
+                />
+              </div>
+
+              {/* Pharmacy Registration Number */}
+              <div className="col-md-12 mb-3">
+                <label className="form-label">
+                  Pharmacy Registration Number
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter registration number"
+                  required
+                />
+              </div>
+
+              {/* Business Entity Type */}
+              <div className="col-md-6 mb-3">
+                <label className="form-label">Business Entity Type</label>
+                <select className="form-control" required>
+                  <option value="">Select Entity Type</option>
+                  <option>Proprietorship</option>
+                  <option>Partnership</option>
+                  <option>LLP</option>
+                  <option>Private Limited</option>
+                </select>
+              </div>
+
+              {/* Date of Establishment */}
+              <div className="col-md-6 mb-3">
+                <label className="form-label">Date of Establishment</label>
+                <input type="date" className="form-control" required />
+              </div>
+
+              
+            </div>
+
+            <div className="d-flex gap-3 mt-2">
+              {/* Previous Button */}
+              <button
+                type="button"
+                className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
+              >
+                <FiArrowLeft size={18} />
+                Previous
+              </button>
+
+              {/* Save & Next Button */}
+              <button
+                type="submit"
+                className="btn-login w-50 d-flex align-items-center justify-content-center gap-2"
+              >
+                Save & Next
+                <FiArrowRight size={18} />
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div className="copyright">Copyright © 2025 - Preclinic.</div>
       </div>
     </div>
   );
 };
 
-export default StoreDetails;
+export default PharmacyRegistration;
