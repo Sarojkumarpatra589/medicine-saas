@@ -33,11 +33,14 @@ EXPIRY_TRACKING: "/inventory/expiry-tracking",
 // Onboarding
 ONBOARDING: "/onboarding",
 LICENCE_GST: "/onboarding/licence-gst",
-OWNER_DETAILS: "/onboarding/owner-details",
+OWNER_DETAILS: "/onboarding/owner-details", 
 STORE_DETAILS: "/onboarding/store-details",
 STORE_CONFIG: "/onboarding/store-config",
 SUBSCRIPTION_PLAN: "/onboarding/subscription-plan",
 ONBOARDING_SUCCESS: "/onboarding/success",
+Bank_AND_PAYMENT: "/onboarding/bank-and-payment",
+Gst_AND_Task:"/onboarding/gst-and-task",
+PHARMACY_REGISTRATION:"/onboarding/pharmacy-registration",
 
 //Reports
 REPORTS: "/reports",
