@@ -3188,9 +3188,7 @@ function TaxRates() {
     </div>
   );
 }
-
-
-
+   
 
 
 function Currencies() {
