@@ -16,7 +16,7 @@ export default function DashboardLayout() {
         <Sidebar />
 
         {/* Page Content */}
-        <div className="col-10 p-4">
+        <div className="col-10 p-4 bg-light">
           <Outlet />
         </div>
       </div>
