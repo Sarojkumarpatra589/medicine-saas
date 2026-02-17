@@ -1,3 +1,57 @@
+/* Vertical timeline line */
+.settings-menu-list::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 26px;
+  bottom: 26px;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+/* Menu items */
+.settings-menu-list li {
+  position: relative;
+  padding-left: 28px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #111827;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* Hover */
+.settings-menu-list li:hover {
+  color: #2d2774;
+}
+
+/* Dot */
+.settings-menu-list li .dot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  background: #fff;
+  z-index: 2;
+  transition: 0.25s ease;
+}
+
+/* Active dot */
+.settings-menu-list li.active-item .dot {
+  background: #2d2774; /* filled color for active item */
+  border-color: #2d2774; 
+}
+
+/* Active text color */
+.settings-menu-list li.active-item {
+  color: #2d2774;
+}
 
 /* ================= WRAPPER ================= */
 .settings-wrapper {
@@ -49,10 +103,10 @@
 /* ===== Menu Item ===== */
 .settings-menu-list li {
   position: relative;
-    padding-left: 28px;
-    padding-top: 13px;
-    padding-bottom: 10px;
-    font-size: 15px;
+    padding-left: 20px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 13px;
     font-weight: 500;
     color: #111827;
     cursor: pointer;
@@ -78,6 +132,7 @@
   z-index: 2;
   transition: 0.25s ease;
 }
+
 
 /* ===== ACTIVE ===== */
 .settings-menu-list li.active {
@@ -280,4 +335,67 @@
   object-fit: cover;   /* ensures the image covers the circle */
   border-radius: 50%;  /* makes it circular */
   border: 2px solid #ddd; /* optional border for style */
+}
+
+
+
+.settings-wrapper .border-end {
+  border-right: 2px solid #e9ecef !important;
+  min-height: 600px;
+}
+
+.settings-wrapper > div:last-child {
+  padding-left: 25px;
+}
+/* Remove underline + text color */
+.settings-menu-list a {
+  text-decoration: none;
+  color: #495057;   /* Light black / dark grey */
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+/* Hover effect */
+.settings-menu-list a:hover {
+  background: #f5f6fa;
+  color: #212529;
+}
+
+/* Active link */
+.settings-menu-list a.active-link {
+  background: #eef2ff;
+  color: #4c5fce;
+  font-weight: 500;
+}
+
+/* Remove default list style */
+.settings-menu-list {
+  list-style: none;
+  padding-left: 0;
+}
+/* Base link style */
+.settings-link {
+  text-decoration: none;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.settings-link:hover {
+  background: #f5f6fa;
+  color: #212529;
+}
+
+/* Active tab */
+.active-link {
+  background: #eef2ff;
+  color: #4c5fce;
+  font-weight: 500;
 }
