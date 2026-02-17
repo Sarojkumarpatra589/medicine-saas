@@ -69,15 +69,48 @@ UPGRADE_PLAN: "/subscription/upgrade-plan",
 BILLING_HISTORY: "/subscription/billing-history",
 SUBSCRIPTION_INVOICE_VIEW: "/subscription/invoice/view",
 
-// Settings
+/* SETTINGS ROOT */
 SETTINGS: "/settings",
+
+/* ACCOUNT */
 MY_PROFILE: "/settings/my-profile",
-COMPANY_SETTING: "/settings/company",
-STORE_SETTING: "/settings/store",
-USER_ROLE: "/settings/user-role",
-ALERT_SETTING: "/settings/alert",
-INVOICE_SETTING: "/settings/invoice",
+SECURITY: "/settings/security",
+NOTIFICATIONS: "/settings/notifications",
 INTEGRATION_SETTING: "/settings/integration",
+
+/* CLINIC */
+APPOINTMENT: "/settings/appointment",
+WORKING_HOURS: "/settings/working-hours",
+CANCELLATION_REASON: "/settings/cancellation-reason",
+
+/* APP */
+INVOICE_SETTING: "/settings/invoice",
+INVOICE_TEMPLATE: "/settings/invoice-template",
+SIGNATURE: "/settings/signature",
+CUSTOM_FIELDS: "/settings/custom-fields",
+
+/* SYSTEM */
+EMAIL_SETTING: "/settings/email-setting",
+EMAIL_TEMPLATE: "/settings/email-template",
+SMS_GATEWAY: "/settings/sms-gateway",
+SMS_TEMPLATE: "/settings/sms-template",
+GDPR_COOKIES: "/settings/gdpr-cookies",
+
+/* FINANCE */
+PAYMENT_METHODS: "/settings/payment-methods",
+BANK_ACCOUNTS: "/settings/bank-accounts",
+TAX_RATES: "/settings/tax-rates",
+CURRENCIES: "/settings/currencies",
+
+/* OTHER */
+SITEMAP: "/settings/sitemap",
+CLEAR_CACHE: "/settings/clear-cache",
+STORAGE: "/settings/storage",
+CRONJOB: "/settings/cronjob",
+BAN_IP: "/settings/ban-ip",
+SYSTEM_BACKUPS: "/settings/system-backups",
+DATABASE_BACKUPS: "/settings/database-backups",
+SYSTEM_UPDATE: "/settings/system-update",
 
 // Supplier
 SUPPLIER: "/supplier",
