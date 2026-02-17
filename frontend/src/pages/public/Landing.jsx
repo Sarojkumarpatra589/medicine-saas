@@ -184,21 +184,21 @@ const blogPosts = [
         <Container>
           <Navbar.Brand href="#home" className="brand-logo">
             <div className="logo-circle">
-              <span className="logo-icon">S</span>
+              <span className="logo-icon">D</span>
             </div>
-            <span className="brand-text">eSoft</span>
+            <span className="brand-text">Drafticode</span>
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Nav.Link href="#home" className="nav-item">Home</Nav.Link>
-              <Nav.Link href="#about" className="nav-item">About Us</Nav.Link>
-              <Nav.Link href="#pages" className="nav-item">Pages</Nav.Link>
-              <Nav.Link href="#blog" className="nav-item">Blog</Nav.Link>
-              <Nav.Link href="#account" className="nav-item">Account</Nav.Link>
-            </Nav>
+                          <Nav.Link href="/" className="nav-item">Home</Nav.Link>
+                          <Nav.Link href="/about" className="nav-item">About Us</Nav.Link>
+                          <Nav.Link href="/features" className="nav-item">Features</Nav.Link>
+                          <Nav.Link href="/pricing" className="nav-item">Pricing</Nav.Link>
+                          <Nav.Link href="/contact" className="nav-item">Contact</Nav.Link>
+                        </Nav>
 
             <Button className="cta-button">
               Get Started Now <span className="arrow">↗</span>
@@ -216,25 +216,35 @@ const blogPosts = [
             <Col lg={6} className="left-content">
               <div className="badge-tag">
                 <span className="star-icon">✦</span>
-                Top Choice For 5,800+ Websites Worldwide
+                Trusted by 5,800+ Pharmacies & Medical Stores
               </div>
 
               <h1 className="main-heading">
-                Build Your Website With eSoft Builder
+                Manage Your
+                Pharmacy With
+                Drafticode
               </h1>
 
               <p className="description">
-                eSoft takes the Customizer to the next level so you can customize every aspect your website single interface.
+                Drafticode simplifies billing, inventory, and compliance so you can run your pharmacy.
               </p>
 
               <div className="button-group">
-                <Button className="primary-btn">Get Started Now</Button>
 
-                <Button className="video-btn">
-                  <span className="play-icon">▶</span>
-                  Play Video
-                </Button>
-              </div>
+  {/* Get Started Button */}
+  <button className="cta-btn">
+    Get Started Now <span className="arrow">↗</span>
+  </button>
+
+  {/* Video Button */}
+  <div className="video-wrapper">
+    <div className="play-circle">
+      ▶
+    </div>
+    <span className="video-text">Play Demo Video</span>
+  </div>
+
+</div>
             </Col>
 
             {/* RIGHT IMAGE CONTENT */}
@@ -258,37 +268,37 @@ const blogPosts = [
   <Container>
 
     <h2 className="stats-heading text-center">
-      Trusted by Top Choice For 5,800+ Websites Worldwide
+      Empowering Businesses, Enabling Better India Through IT
     </h2>
 
     <Row className="justify-content-center mt-5 g-4">
 
       <Col lg={3} md={6} className="text-center">
         <div className="stats-card pink">
-          <h3>16 M+</h3>
+          <h3>10K +</h3>
         </div>
-        <p className="stats-para">Built With Elementor</p>
+        <p className="stats-para">Invoices Processed Per Year</p>
       </Col>
 
       <Col lg={3} md={6} className="text-center">
         <div className="stats-card peach">
           <h3>6.5 K+</h3>
         </div>
-        <p className="stats-para">5 Star Reviews</p>
+        <p className="stats-para">Transactions Processed Annually</p>
       </Col>
 
       <Col lg={3} md={6} className="text-center">
         <div className="stats-card blue">
-          <h3>100+</h3>
+          <h3>50%</h3>
         </div>
-        <p className="stats-para">5 Star Reviews</p>
+        <p className="stats-para">Pharma & FMCG Powered by Our Software</p>
       </Col>
 
       <Col lg={3} md={6} className="text-center">
         <div className="stats-card blue">
-          <h3>16 Sec.</h3>
+          <h3>1 K</h3>
         </div>
-        <p className="stats-para">15 Second An Elementor</p>
+        <p className="stats-para">Businesses Served Worldwide</p>
       </Col>
 
     </Row>
@@ -299,7 +309,7 @@ const blogPosts = [
 <section className="process-section">
   <div className="container">
     <div className="text-center mb-5">
-      <p className="section-subtitle">—— how it works</p>
+      <p className="section-subtitle">-- how it works</p>
       <h2 className="section-title">Process To Start</h2>
     </div>
 
@@ -412,10 +422,10 @@ const blogPosts = [
       <Col lg={6}>
         <div className="about-content">
 
-          <span className="about-badge">About Our Platform</span>
+          <span className="about-badge">-- About Our Platform</span>
 
           <h2 className="about-title">
-            Smart Technology Built for <br /> Modern Pharmacies
+            Smart Technology Built for  Modern Pharmacies
           </h2>
 
           <p className="about-desc">
@@ -446,7 +456,7 @@ const blogPosts = [
 
     {/* Heading */}
     <div className="text-center solutions-header">
-      <p className="solutions-subtitle">Our Solutions</p>
+      <p className="solutions-subtitle">-- Our Solutions</p>
       <h2 className="solutions-title">
         End-to-End Solutions for Your Business
       </h2>
@@ -554,7 +564,7 @@ const blogPosts = [
 
   {/* Header */}
   <div className="why-header text-center">
-    <p className="why-subtitle">WHY CHOOSE US</p>
+    <p className="why-subtitle">-- WHY CHOOSE US</p>
     <h2 className="why-title">
       A Smarter Way to Run Your <br /> Pharmacy Business
     </h2>
@@ -644,7 +654,7 @@ const blogPosts = [
 
     {/* HEADER */}
     <div className="features-header text-center">
-      <p className="feature-subtitle">— Our Features</p>
+      <p className="feature-subtitle">-- Our Features</p>
       <h2 className="feature-title">
         Powerful Features That Simplify <br />
         Pharmacy Operations
@@ -806,7 +816,7 @@ const blogPosts = [
 
         {/* Header */}
         <div className="faq-header text-center">
-          <span className="faq-badge">FAQ</span>
+          <span className="faq-badge">-- FAQ</span>
           <h2 className="faq-title">Frequently Asked Questions</h2>
         </div>
 
@@ -815,7 +825,7 @@ const blogPosts = [
           {/* LEFT COLUMN */}
           <div className="col-lg-6">
 
-            <div className={`faq-item ${active === 1 ? "active" : ""}`}>
+            <div className={`faq-item ₹{active === 1 ? "active" : ""}`}>
               <div className="faq-question" onClick={() => toggleFAQ(1)}>
                 What devices are compatible with the Time Tracker App?
                 <span>{active === 1 ? "▲" : "▼"}</span>
@@ -874,7 +884,7 @@ const blogPosts = [
           {/* RIGHT COLUMN */}
           <div className="col-lg-6">
 
-            <div className={`faq-item ${active === 5 ? "active" : ""}`}>
+            <div className={`faq-item ₹{active === 5 ? "active" : ""}`}>
               <div className="faq-question" onClick={() => toggleFAQ(5)}>
                 Is my data secure with the Time Tracker App?
                 <span>{active === 5 ? "▲" : "▼"}</span>
@@ -944,7 +954,7 @@ const blogPosts = [
           {/* Header */}
            {/* Heading */}
     <div className="text-center solutions-header">
-      <p className="solutions-subtitle text-white">Testimonial</p>
+      <p className="solutions-subtitle text-white">-- Testimonial</p>
       <h2 className="solutions-title text-white">
         Why Users Love Us
       </h2>
@@ -1011,7 +1021,7 @@ const blogPosts = [
               {[...Array(totalSlides)].map((_, index) => (
                 <div
                   key={index}
-                  className={`dot ${currentSlide === index ? 'active' : ''}`}
+                  className={`dot ₹{currentSlide === index ? 'active' : ''}`}
                   onClick={() => {
                     if (!isAnimating) {
                       setIsAnimating(true);
@@ -1046,7 +1056,7 @@ const blogPosts = [
 
     {/* HEADER */}
     <div className="pricing-header text-center">
-      <span className="pricing-badge">Pricing Plan</span>
+      <span className="pricing-badge">-- Pricing Plan</span>
       <h2 className="pricing-title">Choose The Right Plan For You</h2>
       <p className="pricing-subtitle">
         Flexible pricing built for pharmacies of every size.
@@ -1061,7 +1071,7 @@ const blogPosts = [
         <div className="pricing-card">
 
           <h5 className="plan-label">Starter</h5>
-          <h2 className="plan-price">$9.99<span>/month</span></h2>
+          <h2 className="plan-price">₹9.99<span>/month</span></h2>
 
           <p className="plan-description">
             Perfect for small pharmacy stores getting started.
@@ -1088,7 +1098,7 @@ const blogPosts = [
           <div className="featured-badge">Most Popular</div>
 
           <h5 className="plan-label">Professional</h5>
-          <h2 className="plan-price">$19.99<span>/month</span></h2>
+          <h2 className="plan-price">₹19.99<span>/month</span></h2>
 
           <p className="plan-description">
             Best choice for growing pharmacies & multi-store management.
@@ -1115,7 +1125,7 @@ const blogPosts = [
         <div className="pricing-card">
 
           <h5 className="plan-label">Enterprise</h5>
-          <h2 className="plan-price">$39.99<span>/month</span></h2>
+          <h2 className="plan-price">₹39.99<span>/month</span></h2>
 
           <p className="plan-description">
             Advanced features for large pharmacy chains.
@@ -1144,7 +1154,7 @@ const blogPosts = [
       <Container>
       {/* HEADER */}
     <div className="pricing-header text-center">
-      <span className="pricing-badge">Blog</span>
+      <span className="pricing-badge">-- Blog</span>
       <h2 className="pricing-title">Latest Insights</h2>
     </div>
         <Row className="g-4">
@@ -1153,7 +1163,7 @@ const blogPosts = [
               <div className="blog-card shadow-lg">
                 <div
                   className="blog-img"
-                  style={{ backgroundImage: `url(${post.image})` }}
+                  style={{ backgroundImage: `url(₹{post.image})` }}
                 >
                   <span className="blog-category">{post.category}</span>
                 </div>
@@ -1228,76 +1238,89 @@ const blogPosts = [
 
 
 
-   <footer className="footer-section">
+<footer className="footer-section">
 
-      <Container>
-        <Row className="gy-5">
+  <Container>
+    <Row className="gy-5">
 
-          {/* LOGO + ABOUT */}
-          <Col lg={3} md={6}>
-            <img src="../" alt="logo" className="footer-logo" />
+      {/* COMPANY INFO */}
+      <Col lg={4} md={6}>
+       <div className="footer-brand1">
+  <div className="logo-circle1">
+    <span className="logo-icon1">D</span>
+  </div>
+  <span className="brand-text1">Drafticode</span>
+</div>
 
-            <p className="footer-about">
-              SmartRx helps pharmacies manage billing, inventory, and
-              compliance using one powerful and easy-to-use platform.
-            </p>
 
-            <div className="footer-social">
-              <a href="#"><FaFacebookF /></a>
-              <a href="#"><FaTwitter /></a>
-              <a href="#"><FaInstagram /></a>
-              <a href="#"><FaLinkedinIn /></a>
-            </div>
-          </Col>
+        <p className="footer-about">
+          SmartRx is a complete pharmacy management solution designed to
+          simplify billing, inventory control, compliance tracking, and
+          daily medical store operations with accuracy and efficiency.
+        </p>
 
-          {/* QUICK LINKS */}
-          <Col lg={3} md={6}>
-            <h5 className="footer-title">Quick Links</h5>
+        <div className="footer-social">
+          <a href="#"><FaFacebookF /></a>
+          <a href="#"><FaTwitter /></a>
+          <a href="#"><FaInstagram /></a>
+          <a href="#"><FaLinkedinIn /></a>
+        </div>
+      </Col>
 
-            <ul className="footer-links">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Pricing</a></li>
-              <li><a href="#">Testimonials</a></li>
-              <li><a href="#">FAQ</a></li>
-            </ul>
-          </Col>
+      {/* PRODUCT LINKS */}
+      <Col lg={2} md={6}>
+        <h5 className="footer-title">Product</h5>
 
-          {/* CONTACT */}
-          <Col lg={3} md={6}>
-            <h5 className="footer-title">Contact</h5>
+        <ul className="footer-links">
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Updates</a></li>
+        </ul>
+      </Col>
 
-            <ul className="footer-links">
-              <li>📍 Kolkata, India</li>
-              <li>📞 +91 98765 43210</li>
-              <li>✉ support@smartrx.com</li>
-              <li>⏰ Mon - Sat : 9AM - 7PM</li>
-            </ul>
-          </Col>
+      {/* COMPANY LINKS */}
+      <Col lg={3} md={6}>
+        <h5 className="footer-title">Company</h5>
 
-          {/* POLICIES */}
-          <Col lg={3} md={6}>
-            <h5 className="footer-title">Policies</h5>
+        <ul className="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </Col>
 
-            <ul className="footer-links">
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms & Conditions</a></li>
-              <li><a href="#">Refund Policy</a></li>
-              <li><a href="#">Support Policy</a></li>
-            </ul>
-          </Col>
+     {/* CONTACT INFO */}
+<Col lg={3} md={6}>
+  <h5 className="footer-title">Contact Info</h5>
 
-        </Row>
-      </Container>
+  <ul className="footer-links">
+    <li><a href="#">Kolkata, West Bengal, India</a></li>
+    <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+    <li><a href="mailto:support@drafticode.com">support@drafticode.com</a></li>
+    <li><a href="#">Mon – Sat : 9:00 AM – 7:00 PM</a></li>
+  </ul>
+</Col>
 
-      {/* COPYRIGHT */}
-      <div className="footer-bottom">
-        <Container>
-          <p>© {new Date().getFullYear()} SmartRx. All Rights Reserved.</p>
-        </Container>
+
+    </Row>
+  </Container>
+
+  {/* COPYRIGHT */}
+  <div className="footer-bottom">
+    <Container className="d-flex justify-content-between flex-wrap">
+      <p>© {new Date().getFullYear()} Drafticode. All rights reserved.</p>
+
+      <div className="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Refund Policy</a>
       </div>
+    </Container>
+  </div>
 
-    </footer>
+</footer>
     </>
   );
 }
