@@ -1,6 +1,6 @@
 
-import React, { useState,useRef } from "react";
-import { Container, Row, Col, Button, Navbar, Nav } from 'react-bootstrap';
+import React, { useState,useRef,useEffect } from "react";
+import { Container, Row, Col, Button, Navbar, Nav ,Card} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 import hero from "./images/hero.webp";
@@ -20,6 +20,41 @@ import "swiper/css/pagination";
 
 
 function Landing() {
+
+const blogPosts = [
+  {
+    title: "The Future of Digital Marketing",
+    excerpt:
+      "Learn how emerging technologies are reshaping digital marketing strategies for 2026 and beyond.",
+    image: "https://picsum.photos/600/400?random=1",
+    author: "John Doe",
+    date: "Feb 16, 2026",
+    category: "Marketing",
+    link: "#",
+  },
+  {
+    title: "Top 10 React Tips",
+    excerpt:
+      "Boost your React skills with practical tips, best practices, and performance tricks for modern web apps.",
+    image: "https://picsum.photos/600/400?random=2",
+    author: "Jane Smith",
+    date: "Feb 10, 2026",
+    category: "Development",
+    link: "#",
+  },
+  {
+    title: "UX Design Trends 2026",
+    excerpt:
+      "Discover the latest UX/UI trends, from micro-interactions to minimalistic designs dominating 2026.",
+    image: "https://picsum.photos/600/400?random=3",
+    author: "Alex Johnson",
+    date: "Feb 12, 2026",
+    category: "Design",
+    link: "#",
+  },
+];
+
+  
   const features = [
     'Time Tracking',
     'Task Management',
@@ -35,12 +70,117 @@ function Landing() {
     setActive(active === index ? null : index);
   };
    const swiperRef = useRef(null);
+
+
+
+   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const testimonials = [
+    {
+      id: 1,
+      text: "I can't imagine managing our campaigns without eSoft. The automation tools and clean UI have completely transformed our workflow.",
+      name: "Pat Cummins",
+      role: "CEO Biosynthesis",
+      company: "CloudWatch",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
+      companyLetter: "C",
+      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    },
+    {
+      id: 2,
+      text: "The analytics dashboard gives us insights we never had before. Our team's productivity has increased by 40% since implementing eSoft.",
+      name: "Sarah Johnson",
+      role: "Marketing Director",
+      company: "TechFlow",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+      companyLetter: "T",
+      gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    },
+    {
+      id: 3,
+      text: "Exceptional support and a product that actually delivers on its promises. eSoft has become an essential part of our daily operations.",
+      name: "Michael Chen",
+      role: "Founder & CTO",
+      company: "DataSync",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+      companyLetter: "D",
+      gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+    },
+    {
+      id: 4,
+      text: "The best investment we've made this year. The ROI is incredible and the platform is so intuitive that our entire team adopted it within days.",
+      name: "Emily Rodriguez",
+      role: "VP of Operations",
+      company: "NexusHub",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+      companyLetter: "N",
+      gradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
+    },
+    {
+      id: 5,
+      text: "Game-changing platform! The customer support is outstanding and the features keep getting better. Highly recommend to anyone looking to scale.",
+      name: "James Miller",
+      role: "Product Manager",
+      company: "PixelPro",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
+      companyLetter: "P",
+      gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
+    }
+  ];
+
+  const itemsPerSlide = 2;
+  const totalSlides = Math.ceil(testimonials.length / itemsPerSlide);
+
+  const nextSlide = () => {
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      setTimeout(() => setIsAnimating(false), 600);
+    }
+  };
+
+  const prevSlide = () => {
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+      setTimeout(() => setIsAnimating(false), 600);
+    }
+  };
+
+  const getCurrentTestimonials = () => {
+    const startIndex = currentSlide * itemsPerSlide;
+    return testimonials.slice(startIndex, startIndex + itemsPerSlide);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [currentSlide]);
+  useEffect(() => {
+  const handleScroll = () => {
+    const navbar = document.querySelector(".custom-navbar");
+
+    if (window.scrollY > 50) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
   return (
     <>
     <div className="home-wrapper">
 
       {/* ================= HEADER / NAVBAR ================= */}
-      <Navbar expand="lg" className="custom-navbar" sticky="top">
+      <Navbar expand="lg" className="custom-navbar" fixed="top">
         <Container>
           <Navbar.Brand href="#home" className="brand-logo">
             <div className="logo-circle">
@@ -402,6 +542,13 @@ function Landing() {
     </div>
   </div>
 </section>
+
+
+
+
+
+
+
 
 <section className="why-section">
 
@@ -786,83 +933,110 @@ function Landing() {
     </section>
 
 
+<section>
+  <div className="testimonials-wrapper">
+        <div className="grid-background"></div>
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
+        <div className="orb orb-3"></div>
 
-
-
- <section className="testimonial-section">
-  <div className="container">
-
-    {/* HEADER */}
-    <div className="testimonial-header">
-      <div>
-        <span className="testimonial-badge">Testimonials</span>
-        <h2>Why Our Users Love Us</h2>
-      </div>
-
-      <div className="testimonial-arrows">
-        <button onClick={() => swiperRef.current.slidePrev()}>
-          ←
-        </button>
-        <button onClick={() => swiperRef.current.slideNext()}>
-          →
-        </button>
-      </div>
+        <div className="container">
+          {/* Header */}
+           {/* Heading */}
+    <div className="text-center solutions-header">
+      <p className="solutions-subtitle text-white">Testimonial</p>
+      <h2 className="solutions-title text-white">
+        Why Users Love Us
+      </h2>
     </div>
 
-    {/* SLIDER */}
-    <Swiper
-  modules={[Navigation, Pagination, Autoplay]}
-  spaceBetween={25}
-  slidesPerView={2}
-  loop={true}
+          {/* Cards */}
+          <div className="cards-container">
+            <div className="cards-grid">
+              {getCurrentTestimonials().map((testimonial, index) => (
+                <div key={testimonial.id} className="testimonial-card">
+                  <div className="corner-bracket corner-tl"></div>
+                  <div className="corner-bracket corner-tr"></div>
+                  <div className="corner-bracket corner-bl"></div>
+                  <div className="corner-bracket corner-br"></div>
+                  
+                  <div className="quote-icon-cyber">"</div>
 
-  autoplay={{
-    delay: 3000,
-    disableOnInteraction: false,
-  }}
+                  <div className="stars-cyber">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="star-cyber">★</span>
+                    ))}
+                  </div>
 
-  pagination={{ clickable: true }}
+                  <p className="testimonial-text">{testimonial.text}</p>
 
-  onSwiper={(swiper) => (swiperRef.current = swiper)}
-
-  breakpoints={{
-    0: { slidesPerView: 1 },
-    992: { slidesPerView: 2 }
-  }}
->
-
-      {/* CARD */}
-      {[1, 2, 3].map((item, i) => (
-        <SwiperSlide key={i}>
-          <div className="testimonial-card">
-
-            <div className="stars">★★★★★</div>
-
-            <p>
-              I can't imagine managing our campaigns without eSoft.
-              The automation tools and clean UI have completely
-              transformed our workflow.
-            </p>
-
-            <div className="testimonial-footer">
-              <div className="user">
-                <img src={`https://randomuser.me/api/portraits/${i % 2 ? "women" : "men"}/${40 + i}.jpg`} />
-                <div>
-                  <h6>Pat Cummins</h6>
-                  <span>CEO Biosynthesis</span>
+                  <div className="user-section-cyber">
+                    <div className="user-info-cyber">
+                      <div className="avatar-wrapper">
+                        <img
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          className="avatar-cyber"
+                        />
+                      </div>
+                      <div className="user-details">
+                        <h5>{testimonial.name}</h5>
+                        <p>{testimonial.role}</p>
+                      </div>
+                    </div>
+                    <div className="company-badge-cyber">
+                      <div className="company-icon-cyber">{testimonial.companyLetter}</div>
+                      <span>{testimonial.company}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              <div className="brand">CloudWatch</div>
+          {/* Navigation Controls */}
+          <div className="nav-controls-cyber">
+            <button
+              className="nav-arrow-cyber"
+              onClick={prevSlide}
+              disabled={isAnimating}
+              aria-label="Previous testimonials"
+            >
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <div className="pagination-dots">
+              {[...Array(totalSlides)].map((_, index) => (
+                <div
+                  key={index}
+                  className={`dot ${currentSlide === index ? 'active' : ''}`}
+                  onClick={() => {
+                    if (!isAnimating) {
+                      setIsAnimating(true);
+                      setCurrentSlide(index);
+                      setTimeout(() => setIsAnimating(false), 600);
+                    }
+                  }}
+                  style={{ cursor: 'pointer' }}
+                />
+              ))}
             </div>
 
+            <button
+              className="nav-arrow-cyber"
+              onClick={nextSlide}
+              disabled={isAnimating}
+              aria-label="Next testimonials"
+            >
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
-        </SwiperSlide>
-      ))}
-
-    </Swiper>
-
-  </div>
+        </div>
+      </div>
 </section>
 
 
@@ -966,6 +1140,41 @@ function Landing() {
   </div>
 </section>
 
+<section className="pro-blog-section  ">
+      <Container>
+      {/* HEADER */}
+    <div className="pricing-header text-center">
+      <span className="pricing-badge">Blog</span>
+      <h2 className="pricing-title">Latest Insights</h2>
+    </div>
+        <Row className="g-4">
+          {blogPosts.map((post, idx) => (
+            <Col md={6} lg={4} key={idx}>
+              <div className="blog-card shadow-lg">
+                <div
+                  className="blog-img"
+                  style={{ backgroundImage: `url(${post.image})` }}
+                >
+                  <span className="blog-category">{post.category}</span>
+                </div>
+                <div className="blog-content p-4">
+                  <h5 className="blog-title">{post.title}</h5>
+                  <p className="blog-excerpt">{post.excerpt}</p>
+                  <div className="blog-meta d-flex justify-content-between align-items-center">
+                    <small className="author">{post.author}</small>
+                    <small className="date">{post.date}</small>
+                  </div>
+                  <Button href={post.link} className="btn-read-more mt-3">
+                    Read More
+                  </Button>
+                </div>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </section>
+
 <section className="integration-section">
   <div className="cta-bg"></div>
 
@@ -1016,6 +1225,8 @@ function Landing() {
     </Row>
   </Container>
 </section>
+
+
 
    <footer className="footer-section">
 
