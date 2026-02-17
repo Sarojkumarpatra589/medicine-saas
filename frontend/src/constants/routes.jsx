@@ -2,6 +2,8 @@ export const ROUTES = {
   HOME: "/",
   ABOUT: "/about",
   PRICING: "/pricing",
+  FEATURES: "/features",
+  CONTACT: "/contact",
 
   
   REGISTER: "/register",
