@@ -1,0 +1,466 @@
+/* TopBar.css */
+
+.topbar {
+        border-radius: 6px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 58px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 14px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  box-sizing: border-box;
+}
+
+/* ── Left ──────────────────────────────────── */
+.tb-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.tb-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.tb-brand-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.3px;
+}
+
+/* ── Search ────────────────────────────────── */
+.tb-search-wrap {
+  flex: 1;
+  max-width: 280px;
+}
+
+.tb-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  padding: 7px 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tb-search:focus-within {
+  border-color: #4f8ef7;
+  box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.12);
+  background: #fff;
+}
+
+.tb-search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: #374151;
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+}
+
+.tb-search-input::placeholder {
+  color: #9ca3af;
+}
+
+.tb-kbd {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #9ca3af;
+  font-family: monospace;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Right ─────────────────────────────────── */
+.tb-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* AI Button */
+.tb-ai-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #3b5bdb;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(59, 91, 219, 0.28);
+}
+
+.tb-ai-btn:hover {
+  background: #2f4cc0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(59, 91, 219, 0.35);
+}
+
+.tb-ai-btn:active {
+  transform: translateY(0);
+}
+
+/* Icon Buttons */
+.tb-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  padding: 0;
+}
+
+.tb-icon-btn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.tb-icon-btn:active {
+  transform: translateY(0);
+}
+
+/* Avatar */
+.tb-avatar {
+  position: relative;
+  cursor: pointer;
+  margin-left: 2px;
+  flex-shrink: 0;
+}
+
+.tb-avatar-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  border: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.tb-avatar-img:hover {
+  border-color: #4f8ef7;
+}
+
+.tb-avatar-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 9px;
+  height: 9px;
+  background: #22c55e;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+/* ── Responsive ────────────────────────────── */
+@media (max-width: 768px) {
+  .tb-ai-btn span {
+    display: none;
+  }
+  .tb-ai-btn {
+    padding: 7px 10px;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .tb-search-wrap {
+    max-width: 150px;
+  }
+  .tb-kbd {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .tb-search-wrap {
+    display: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* DashboardLayout.css */
+
+/* Full page, no overflow on root */
+.dashboard-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f4f6f9;
+}
+
+/* Body row: sidebar + content side by side */
+.dashboard-body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Scrollable main content */
+.dashboard-content {
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
+  background: #f4f6f9;
+  min-height: calc(100vh - 58px);
+  overflow-y: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Sidebar.css */
+
+.sidebar-container {
+  width: 240px;
+  min-width: 240px;
+  background: #ffffff;
+  border-radius: 16px;
+  margin: 20px 0 20px 20px;
+  padding: 14px 12px 20px;
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.09);
+  border: 1px solid #ebebeb;
+  position: sticky;
+  top: 78px;
+  height: calc(100vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb transparent;
+  flex-shrink: 0;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.sidebar-container::-webkit-scrollbar { width: 4px; }
+.sidebar-container::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 4px; }
+.sidebar-container::-webkit-scrollbar-track { background: transparent; }
+
+/* ── Clinic Card ─────────────────────────────── */
+.sidebar-clinic-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8f9ff;
+  border: 1px solid #e8ecff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+}
+
+.clinic-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #4f8ef7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.clinic-info { flex: 1; min-width: 0; }
+
+.clinic-name {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clinic-city {
+  margin: 0;
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.clinic-sort-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.clinic-sort-btn:hover { background: #e8ecff; }
+
+/* ── Group label ─────────────────────────────── */
+.sidebar-group-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+  margin: 14px 0 6px 8px;
+  padding: 0;
+}
+
+/* ── List ────────────────────────────────────── */
+.sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Nav item ────────────────────────────────── */
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.sidebar-nav-item:hover { background: #f3f6ff; }
+.sidebar-nav-item-open  { background: #eef2ff; }
+
+.sidebar-nav-icon {
+  display: flex;
+  align-items: center;
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-title {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1f2937;
+  transition: color 0.15s;
+}
+
+.sidebar-nav-item:hover .sidebar-nav-title,
+.sidebar-nav-item-open .sidebar-nav-title {
+  color: #3b5bdb;
+}
+
+.sidebar-nav-chevron {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Submenu ─────────────────────────────────── */
+.sidebar-submenu {
+  list-style: none;
+  padding: 2px 0 8px 0;
+  margin: 0;
+}
+
+.sidebar-sub-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 1px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar-sub-link:hover {
+  background: #f3f6ff;
+  color: #3b5bdb;
+}
+
+.sidebar-sub-link:hover .sub-dot { background: #3b5bdb; }
+
+.sidebar-sub-link-active {
+  color: #3b5bdb;
+  font-weight: 700;
+}
+
+.sidebar-sub-link-active .sub-dot { background: #3b5bdb; }
+
+.sub-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d1d5db;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}

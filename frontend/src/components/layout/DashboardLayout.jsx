@@ -1,22 +1,21 @@
 import { Outlet } from "react-router-dom";
 import TopBarLayout from "./TopBarLayout";
 import Sidebar from "./Sidebar";
+import "./styles.css";
 
 export default function DashboardLayout() {
   return (
-    <div className="container-fluid">
-      
+    <div className="dashboard-root">
       {/* Top Bar */}
       <TopBarLayout />
 
-      {/* Main Body */}
-      <div className="row" style={{ minHeight: "90vh" }}>
-        
+      {/* Body */}
+      <div className="dashboard-body">
         {/* Sidebar */}
         <Sidebar />
 
         {/* Page Content */}
-        <div className="col-10 p-4 bg-light">
+        <div className="dashboard-content">
           <Outlet />
         </div>
       </div>
