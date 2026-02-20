@@ -4,6 +4,7 @@ import MySubscription from "./MySubscription";
 import Plan from "./Plans";
 import UpgradePlan from "./UpgradePlan";
 import BillingHistory from "./BillingHistory";
+import Invoice from "./Invoice";
 import InvoiceView from "./InvoiveView"; // ⚠️ filename has typo, keep as-is if not renamed
 
 import { ROUTES } from "../../constants/routes";
@@ -28,6 +29,10 @@ export default [
       {
         path: ROUTES.SUBSCRIPTION_INVOICE_VIEW,
         element: <InvoiceView />,
+      },
+      {
+        path: ROUTES.SUBSCRIPTION_INVOICE,
+        element: <Invoice />,
       },
       {
         path: ROUTES.BILLING_HISTORY,
