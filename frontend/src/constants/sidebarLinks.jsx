@@ -2,7 +2,7 @@ import { ROUTES } from "./routes";
 
 export const SIDEBAR_LINKS = [
   {
-    title: "🏠 Dashboard",
+    title: "Dashboard",
     key: "dashboard",
     children: [
       { label: "Dashboard",  to: ROUTES.DASHBOARD },
@@ -12,7 +12,7 @@ export const SIDEBAR_LINKS = [
   },
   
     {
-    title: "🧭 Store Onboarding",
+    title: "Store Onboarding",
     key: "onboarding",
     children: [
       { label: "Licence & GST", to: ROUTES.LICENCE_GST },
@@ -26,7 +26,7 @@ export const SIDEBAR_LINKS = [
 
 
   {
-    title: "💊 Inventory Management",
+    title: "Inventory Management",
     key: "inventory",
     children: [
       { label: "Medicine List", to: ROUTES.MEDICINE_LIST },
@@ -39,7 +39,7 @@ export const SIDEBAR_LINKS = [
   },
 
     {
-    title: "💰 Sales",
+    title: "Sales",
     key: "sales",
     children: [
       { label: "Sales List", to: ROUTES.SALES_LIST },
@@ -53,7 +53,7 @@ export const SIDEBAR_LINKS = [
  
 
   {
-    title: "👥 Customers",
+    title: "Customers",
     key: "customers",
     children: [
       { label: "Customer List", to: ROUTES.CUSTOMERLIST },
@@ -63,7 +63,7 @@ export const SIDEBAR_LINKS = [
   },
 
 {
-  title: "🚚 Suppliers",
+  title: "Suppliers",
   key: "suppliers",
   children: [
     { label: "Supplier List", to: ROUTES.SUPPLIER_LIST },
@@ -77,7 +77,7 @@ export const SIDEBAR_LINKS = [
 
 
   {
-    title: "📊 Reports & Analytics",
+    title: "Reports & Analytics",
     key: "reports",
     children: [
       { label: "Sales Report", to: ROUTES.SALES_REPORT },
@@ -92,7 +92,7 @@ export const SIDEBAR_LINKS = [
 
 
 {
-  title: "👨‍⚕️ Staff & Roles",
+  title: "Staff & Roles",
   key: "staff",
   children: [
     { label: "Staff Management", to: ROUTES.STAFF_MANAGEMENT },
@@ -105,20 +105,20 @@ export const SIDEBAR_LINKS = [
 
 
   {
-    title: "🧩 Subscription & Plans",
+    title: "Subscription & Plans",
     key: "subscription",
     children: [
       { label: "My Subscription", to: ROUTES.MY_SUBSCRIPTION },
       { label: "Available Plans", to: ROUTES.PLAN },
       { label: "Upgrade Plan", to: ROUTES.UPGRADE_PLAN },
-      { label: "Invoice View", to: ROUTES.SUBSCRIPTION_INVOICE_VIEW },
+      { label: "Invoice", to: ROUTES.SUBSCRIPTION_INVOICE },
       { label: "Billing History", to: ROUTES.BILLING_HISTORY },
     ],
   },
 
 
 {
-  title: "⚙️ Settings",
+  title: "Settings",
   key: "settings",
   children: [
     { label: "My Profile", to: ROUTES.MY_PROFILE },
@@ -134,7 +134,7 @@ export const SIDEBAR_LINKS = [
 
 
 {
-  title: "👨‍💻 Developer",
+  title: "Developer",
   key: "developer",
   children: [
     { label: "Saroj", to: ROUTES.SAROJ },

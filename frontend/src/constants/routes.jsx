@@ -70,6 +70,7 @@ PLAN: "/subscription/plan",
 UPGRADE_PLAN: "/subscription/upgrade-plan",
 BILLING_HISTORY: "/subscription/billing-history",
 SUBSCRIPTION_INVOICE_VIEW: "/subscription/invoice/view",
+SUBSCRIPTION_INVOICE: "/subscription/invoice",
 
 /* SETTINGS ROOT */
 SETTINGS: "/settings",
