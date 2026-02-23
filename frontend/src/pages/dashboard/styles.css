@@ -2,13 +2,29 @@
 
 
 /* DashboardSection.css */
-.shadow-sm{
-box-shadow: 0 7px 17px rgba(0, 0, 0, 0.15);
+.box_shadow{
+   border-radius: 12px;
+  box-shadow:
+       -4px 4px 15px rgba(0, 0, 0, 0.08), 
+       -8px 8px 20px rgba(0, 0, 0, 0.06),
+        -4px 9px 10px rgb(0 0 0 / 0.2)
+}
+.ad-content {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  padding: 0 28px 20px;
+  align-items: start;
+}
+
+.ad-left,
+.ad-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .dashboard-section {
-    border-radius: 10px;
   padding: 0px 28px;
-  background: #ffffff;
   min-height: 100vh;
   font-family: "Nunito", "Segoe UI", sans-serif;
 }
@@ -51,10 +67,8 @@ box-shadow: 0 7px 17px rgba(0, 0, 0, 0.15);
 /* ── Shared Card ── */
 .dash-card {
   background: #ffffff;
-  border-radius: 4px;
   padding: 20px;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .dash-card-header {
@@ -398,10 +412,8 @@ box-shadow: 0 7px 17px rgba(0, 0, 0, 0.15);
 /* ── Shared Card ─────────────────────────────── */
 .ds-card {
   background: #ffffff;
-  border-radius: 14px;
   padding: 20px;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .ds-card-header {
@@ -640,10 +652,8 @@ box-shadow: 0 7px 17px rgba(0, 0, 0, 0.15);
 /* ── Shared Card ─────────────────────────────── */
 .appt-card {
   background: #ffffff;
-  border-radius: 14px;
   padding: 20px;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .appt-card-header {

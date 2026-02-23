@@ -5,14 +5,14 @@ const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:#f3f4f8}
-.ad-page{min-height:100vh;background:#ffffff;    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.20);border-radius: 10px;}
-.ad-header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px 14px}
+.ad-page{min-height:100vh;border-radius: 10px;}
+.ad-header{    margin: 20px 25px 20px 25px;;display:flex;align-items:center;justify-content:space-between;padding:16px 28px 14px;background:#fff;margin-bottom:20px;}
 .ad-header-title{font-size:18px;font-weight:700;color:#1e2130}
 .ad-header-btns{display:flex;gap:10px}
 .ad-btn-primary{display:flex;align-items:center;gap:6px;background:#3d3bdb;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
 .ad-btn-secondary{display:flex;align-items:center;gap:6px;background:#fff;color:#3d3bdb;border:1.5px solid #dddcf5;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif}
 .ad-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 28px 20px}
-.ad-card{background:#fff;border-radius:5px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden}
+.ad-card{background:#fff;border-radius:5px;padding:16px 18px;overflow:hidden}
 .ad-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .ad-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ad-card-icon svg{width:24px;height:24px}
@@ -30,8 +30,8 @@ body{font-family:'Inter',sans-serif;background:#f3f4f8}
 .mc-cols{display:flex;align-items:flex-end;gap:2px;height:44px;width:90px}
 .mc-cols span{flex:1;border-radius:2px 2px 0 0;background:#38bdf8}
 .mc-area{width:110px;height:44px;display:block}
-.ad-content{display:grid;grid-template-columns:1fr 340px;gap:16px;padding:0 28px 28px;align-items:start}
-.ad-panel{background:#fff;border-radius:4px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+
+.ad-panel{background:#fff;padding:20px;}
 .ad-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .ad-panel-title{font-size:15px;font-weight:700;color:#1e2130}
 .ad-sel{border:1.5px solid #e2e8f0;border-radius:8px;padding:5px 28px 5px 10px;font-size:12.5px;color:#374151;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24'%3E%3Cpath fill='%2364748b' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 8px center;appearance:none;cursor:pointer;outline:none;font-family:'Inter',sans-serif}
@@ -56,7 +56,7 @@ body{font-family:'Inter',sans-serif;background:#f3f4f8}
 .ad-leg{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#64748b}
 .ad-legsq{width:12px;height:12px;border-radius:2px;flex-shrink:0}
 .lc{background:#2dd4bf}.lo{background:#38bdf8}.lr{background:#818cf8}
-.ad-rpanel{background:#fff;border-radius:4px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,0.06);position:relative;overflow:hidden}
+.ad-rpanel{background:#fff;padding:20px;position:relative;overflow:hidden}
 .ad-rtab{position:absolute;right:0;top:50%;transform:translateY(-50%);width:6px;height:52px;background:#3d3bdb;border-radius:4px 0 0 4px}
 .ad-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .ad-cal-nav{background:none;border:none;cursor:pointer;color:#64748b;font-size:20px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:5px;line-height:1}
@@ -64,7 +64,7 @@ body{font-family:'Inter',sans-serif;background:#f3f4f8}
 .ad-cal-title{font-size:13.5px;font-weight:600;color:#1e2130}
 .ad-calgrid{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;row-gap:0}
 .ad-cdn{font-size:11px;font-weight:600;color:#94a3b8;padding:5px 0}
-.ad-cd{font-size:12px;color:#374151;padding:5px 0;border-radius:50%;cursor:pointer;line-height:1.5}
+.ad-cd{font-size:12px;color:#374151;padding:12px 0;border-radius:50%;cursor:pointer;line-height:1.5}
 .ad-cd:hover{background:#f1f5f9}
 .ad-cd-today{background:#3d3bdb!important;color:#fff!important;font-weight:700;border-radius:50%}
 .ad-cd-other{color:#cbd5e1}
@@ -227,23 +227,83 @@ function BarChart(){
     </div>
   );
 }
+function Calendar() {
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-function Calendar(){
-  return(
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const today = new Date();
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  const monthName = currentDate.toLocaleString("default", {
+    month: "long",
+  });
+
+  const goPrev = () => {
+    setCurrentDate(new Date(year, month - 1, 1));
+  };
+
+  const goNext = () => {
+    setCurrentDate(new Date(year, month + 1, 1));
+  };
+
+  const cells = [];
+
+  // Previous month days
+  for (let i = firstDay; i > 0; i--) {
+    cells.push({
+      value: daysInPrevMonth - i + 1,
+      other: true,
+    });
+  }
+
+  // Current month days
+  for (let i = 1; i <= daysInMonth; i++) {
+    cells.push({
+      value: i,
+      other: false,
+      today:
+        i === today.getDate() &&
+        month === today.getMonth() &&
+        year === today.getFullYear(),
+    });
+  }
+
+  // Fill to always 42 cells (6 rows = better UI height)
+  let nextDay = 1;
+  while (cells.length < 42) {
+    cells.push({
+      value: nextDay++,
+      other: true,
+    });
+  }
+
+  return (
     <>
       <div className="ad-cal-head">
-        <button className="ad-cal-nav">‹</button>
-        <span className="ad-cal-title">February 2026</span>
-        <button className="ad-cal-nav">›</button>
+        <button className="ad-cal-nav" onClick={goPrev}>‹</button>
+        <span className="ad-cal-title">
+          {monthName} {year}
+        </span>
+        <button className="ad-cal-nav" onClick={goNext}>›</button>
       </div>
+
       <div className="ad-calgrid">
-        {["Su","Mo","Tu","We","Th","Fr","Sa"].map(d=><div key={d} className="ad-cdn">{d}</div>)}
-        {FEB.map((row,ri)=>row.map((cell,ci)=>{
-          const isNext=typeof cell==="string";
-          const num=isNext?cell.slice(1):cell;
-          const isToday=!isNext&&ri===2&&num===19;
-          return <div key={`${ri}-${ci}`} className={`ad-cd${isToday?" ad-cd-today":""}${isNext?" ad-cd-other":""}`}>{num}</div>;
-        }))}
+        {["Su","Mo","Tu","We","Th","Fr","Sa"].map(d => (
+          <div key={d} className="ad-cdn">{d}</div>
+        ))}
+
+        {cells.map((cell, index) => (
+          <div
+            key={index}
+            className={`ad-cd${cell.today ? " ad-cd-today" : ""}${cell.other ? " ad-cd-other" : ""}`}
+          >
+            {cell.value}
+          </div>
+        ))}
       </div>
     </>
   );
@@ -457,7 +517,7 @@ export default function Dashboard(){
   return(
     <div className="ad-page">
       <style>{CSS}</style>
-      <div className="ad-header">
+      <div className="ad-header box_shadow">
         <span className="ad-header-title">Admin Dashboard</span>
         <div className="ad-header-btns">
           <button className="ad-btn-primary">
@@ -473,7 +533,7 @@ export default function Dashboard(){
 
       <div className="ad-cards">
         {/* Doctors */}
-        <div className="ad-card shadow-sm">
+        <div className="ad-card box_shadow">
           <div className="ad-card-top">
             <div className="ad-card-icon ci-purple">
               <svg viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -489,7 +549,7 @@ export default function Dashboard(){
           </div>
         </div>
         {/* Patients */}
-        <div className="ad-card shadow-sm">
+        <div className="ad-card   box_shadow">
           <div className="ad-card-top">
             <div className="ad-card-icon ci-red">
               <svg viewBox="0 0 24 24" fill="white"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
@@ -507,7 +567,7 @@ export default function Dashboard(){
           </div>
         </div>
         {/* Appointment */}
-        <div className="ad-card shadow-sm">
+        <div className="ad-card   box_shadow">
           <div className="ad-card-top">
             <div className="ad-card-icon ci-sky">
               <svg viewBox="0 0 24 24" fill="white"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
@@ -523,7 +583,7 @@ export default function Dashboard(){
           </div>
         </div>
         {/* Revenue */}
-        <div className="ad-card shadow-sm">
+        <div className="ad-card   box_shadow">
           <div className="ad-card-top">
             <div className="ad-card-icon ci-green">
               <svg viewBox="0 0 24 24" fill="white"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
@@ -545,112 +605,141 @@ export default function Dashboard(){
       </div>
 
       <div className="ad-content">
-        <div className="ad-panel">
-          <div className="ad-panel-head">
-            <span className="ad-panel-title">Appointment Statistics</span>
-            <select className="ad-sel"><option>Monthly</option><option>Weekly</option><option>Daily</option></select>
-          </div>
-          <div className="ad-summary">
-            <div className="ad-sbox"><div className="ad-sbox-lbl"><span className="ad-sdot sd-blue"/>All Appointments</div><div className="ad-sval">6314</div></div>
-            <div className="ad-sbox"><div className="ad-sbox-lbl"><span className="ad-sdot sd-red"/>Cancelled</div><div className="ad-sval">456</div></div>
-            <div className="ad-sbox"><div className="ad-sbox-lbl"><span className="ad-sdot sd-amber"/>Reschedule</div><div className="ad-sval">745</div></div>
-            <div className="ad-sbox"><div className="ad-sbox-lbl"><span className="ad-sdot sd-green"/>Completed</div><div className="ad-sval">4578</div></div>
-          </div>
-          <BarChart/>
-          <div className="ad-legend">
-            <div className="ad-leg"><span className="ad-legsq lc"/>Completed</div>
-            <div className="ad-leg"><span className="ad-legsq lo"/>Ongoing</div>
-            <div className="ad-leg"><span className="ad-legsq lr"/>Rescheduled</div>
-          </div>
 
-          {/* Doctor Section */}
-<div className="ad-doctor-section">
-  <div className="ad-doc-head">
-    <span className="ad-doc-title">Doctors On Duty</span>
-    <button className="ad-view-btn">View All</button>
-  </div>
+  {/* LEFT COLUMN */}
+  <div className="ad-left">
 
-  <div className="ad-doc-grid">
-    
-    <div className="ad-doc-card">
-      <div className="ad-doc-img"></div>
-      <div className="ad-doc-info">
-        <div className="ad-doc-name">Dr. John Smith</div>
-        <div className="ad-doc-spec">Cardiologist</div>
-        <div className="ad-doc-meta">
-          <span>Appointments: 120</span>
-          <span className="ad-status active">Active</span>
+    {/* Appointment Statistics */}
+    <div className="ad-panel box_shadow">
+      <div className="ad-panel-head">
+        <span className="ad-panel-title">Appointment Statistics</span>
+        <select className="ad-sel">
+          <option>Monthly</option>
+          <option>Weekly</option>
+          <option>Daily</option>
+        </select>
+      </div>
+
+      <div className="ad-summary">
+        <div className="ad-sbox">
+          <div className="ad-sbox-lbl"><span className="ad-sdot sd-blue"/>All Appointments</div>
+          <div className="ad-sval">6314</div>
         </div>
+
+        <div className="ad-sbox">
+          <div className="ad-sbox-lbl"><span className="ad-sdot sd-red"/>Cancelled</div>
+          <div className="ad-sval">456</div>
+        </div>
+
+        <div className="ad-sbox">
+          <div className="ad-sbox-lbl"><span className="ad-sdot sd-amber"/>Reschedule</div>
+          <div className="ad-sval">745</div>
+        </div>
+
+        <div className="ad-sbox">
+          <div className="ad-sbox-lbl"><span className="ad-sdot sd-green"/>Completed</div>
+          <div className="ad-sval">4578</div>
+        </div>
+      </div>
+
+      <BarChart/>
+
+      <div className="ad-legend">
+        <div className="ad-leg"><span className="ad-legsq lc"/>Completed</div>
+        <div className="ad-leg"><span className="ad-legsq lo"/>Ongoing</div>
+        <div className="ad-leg"><span className="ad-legsq lr"/>Rescheduled</div>
       </div>
     </div>
 
-    <div className="ad-doc-card">
-      <div className="ad-doc-img"></div>
-      <div className="ad-doc-info">
-        <div className="ad-doc-name">Dr. Emma Watson</div>
-        <div className="ad-doc-spec">Neurologist</div>
-        <div className="ad-doc-meta">
-          <span>Appointments: 98</span>
-          <span className="ad-status inactive">On Leave</span>
-        </div>
+
+    {/* Doctors On Duty - Separate Card */}
+    <div className="ad-panel box_shadow">
+      <div className="ad-doc-head">
+        <span className="ad-panel-title">Doctors On Duty</span>
+        <button className="ad-view-btn">View All</button>
       </div>
-    </div>
 
-  </div>
-</div>
+      <div className="ad-doc-grid">
+
+        <div className="ad-doc-card">
+          <div className="ad-doc-img"></div>
+          <div className="ad-doc-info">
+            <div className="ad-doc-name">Dr. John Smith</div>
+            <div className="ad-doc-spec">Cardiologist</div>
+            <div className="ad-doc-meta">
+              <span>Appointments: 120</span>
+              <span className="ad-status active">Active</span>
+            </div>
+          </div>
         </div>
 
+        <div className="ad-doc-card">
+          <div className="ad-doc-img"></div>
+          <div className="ad-doc-info">
+            <div className="ad-doc-name">Dr. Emma Watson</div>
+            <div className="ad-doc-spec">Neurologist</div>
+            <div className="ad-doc-meta">
+              <span>Appointments: 98</span>
+              <span className="ad-status inactive">On Leave</span>
+            </div>
+          </div>
+        </div>
         
 
-        <div className="ad-rpanel">
-          <div className="ad-rtab"/>
-          <div className="ad-panel-head">
-            <span className="ad-panel-title">Appointments</span>
-            <select className="ad-sel"><option>All Type</option><option>General</option><option>Emergency</option></select>
-          </div>
-          <Calendar/>
-          <div className="ad-appt">
-            <div>
-              <div className="ad-appt-name">General Visit</div>
-              <div className="ad-appt-time">
-                <svg viewBox="0 0 24 24" fill="#94a3b8" width="12" height="12"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
-                Wed, 05 Apr 2025, 06:30 PM
-              </div>
-            </div>
-            <img className="ad-appt-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="avatar"/>
-          </div>
-          <div className="ad-appt">
-            <div>
-              <div className="ad-appt-name">General Visit</div>
-              <div className="ad-appt-time">
-                <svg viewBox="0 0 24 24" fill="#94a3b8" width="12" height="12"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
-                Wed, 05 Apr 2025, 06:30 PM
-              </div>
-            </div>
-            <img className="ad-appt-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="avatar"/>
-          </div>
-          <div className="ad-appt">
-            <div>
-              <div className="ad-appt-name">General Visit</div>
-              <div className="ad-appt-time">
-                <svg viewBox="0 0 24 24" fill="#94a3b8" width="12" height="12"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
-                Wed, 05 Apr 2025, 06:30 PM
-              </div>
-            </div>
-            <img className="ad-appt-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="avatar"/>
-          </div>
-          <div className="ad-appt">
-            <div>
-              <div className="ad-appt-name">General Visit</div>
-              <div className="ad-appt-time">
-                <svg viewBox="0 0 24 24" fill="#94a3b8" width="12" height="12"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
-                Wed, 05 Apr 2025, 06:30 PM
-              </div>
-            </div>
-            <img className="ad-appt-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="avatar"/>
+      </div>
+    </div>
+
+  </div>
+
+
+  {/* RIGHT COLUMN */}
+  <div className="ad-right">
+
+    {/* Calendar Card */}
+    <div className="ad-rpanel box_shadow">
+      <div className="ad-panel-head">
+        <span className="ad-panel-title">Appointments</span>
+        <select className="ad-sel">
+          <option>All Type</option>
+          <option>General</option>
+          <option>Emergency</option>
+        </select>
+      </div>
+      <Calendar/>
+    </div>
+
+
+    {/* General Visits Card */}
+    <div className="ad-rpanel box_shadow">
+<span className="ad-panel-title">General Visits</span>
+      <div className="ad-appt">
+        <div>
+          <div className="ad-appt-name">General Visit</div>
+          <div className="ad-appt-time">
+            Wed, 05 Apr 2025, 06:30 PM
           </div>
         </div>
+        <img className="ad-appt-avatar"
+             src="https://randomuser.me/api/portraits/women/44.jpg"
+             alt="avatar"/>
       </div>
+
+      <div className="ad-appt">
+        <div>
+          <div className="ad-appt-name">General Visit</div>
+          <div className="ad-appt-time">
+            Wed, 05 Apr 2025, 06:30 PM
+          </div>
+        </div>
+        <img className="ad-appt-avatar"
+             src="https://randomuser.me/api/portraits/women/44.jpg"
+             alt="avatar"/>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
 
 
@@ -662,7 +751,7 @@ export default function Dashboard(){
       <div className="row g-3 mb-4">
         {quickLinks.map((link) => (
           <div className="col-6 col-sm-4 col-md-2" key={link.label}>
-            <div className="quick-card shadow-sm" style={{ background: "white" }}>
+            <div className="quick-card   box_shadow" style={{ background: "white" }}>
               <div className="quick-icon">{link.icon}</div>
               <p className="quick-label">{link.label}</p>
             </div>
@@ -674,7 +763,7 @@ export default function Dashboard(){
       <div className="row g-3">
         {/* Patient Reports */}
         <div className="col-12 col-md-4">
-          <div className="dash-card h-100">
+          <div className="dash-card h-100 box_shadow">
             <div className="dash-card-header">
               <span className="dash-card-title">Patient Reports</span>
               <button className="view-all-btn">View All</button>
@@ -704,7 +793,7 @@ export default function Dashboard(){
 
         {/* Patient Visits */}
         <div className="col-12 col-md-4">
-          <div className="dash-card h-100">
+          <div className="dash-card h-100 box_shadow">
             <div className="dash-card-header">
               <span className="dash-card-title">Patient Visits</span>
               <button className="view-all-btn">View All</button>
@@ -735,7 +824,7 @@ export default function Dashboard(){
 
         {/* Doctors */}
         <div className="col-12 col-md-4">
-          <div className="dash-card h-100">
+          <div className="dash-card h-100 box_shadow">
             <div className="dash-card-header">
               <span className="dash-card-title">Doctors</span>
               <button className="view-all-btn">View All</button>
@@ -767,7 +856,7 @@ export default function Dashboard(){
 
         {/* Left: Top Departments */}
         <div className="col-12 col-md-5">
-          <div className="ds-card h-100">
+          <div className="ds-card h-100 box_shadow">
             <div className="ds-card-header">
               <span className="ds-card-title">Top Departments</span>
               <button className="ds-view-btn">View All</button>
@@ -803,7 +892,7 @@ export default function Dashboard(){
 
         {/* Right: Patient Record */}
         <div className="col-12 col-md-7">
-          <div className="ds-card h-100">
+          <div className="ds-card h-100 box_shadow">
             <div className="ds-card-header">
               <span className="ds-card-title">Patient Record</span>
               <button className="ds-view-btn">View All</button>
@@ -845,7 +934,7 @@ export default function Dashboard(){
       <div className="appt-section">
 
       {/* ── All Appointments Table ── */}
-      <div className="appt-card mb-3">
+      <div className="appt-card mb-3 box_shadow">
         <div className="appt-card-header">
           <span className="appt-card-title">All Appointments</span>
           <button className="appt-view-btn">View All</button>
@@ -902,7 +991,7 @@ export default function Dashboard(){
 
         {/* Top 5 Patients */}
         <div className="col-12 col-md-4">
-          <div className="appt-card h-100">
+          <div className="appt-card h-100 box_shadow">
             <div className="appt-card-header">
               <span className="appt-card-title">Top 5 Patients</span>
               <button className="appt-view-btn">View All</button>
@@ -924,7 +1013,7 @@ export default function Dashboard(){
 
         {/* Recent Transactions */}
         <div className="col-12 col-md-4">
-          <div className="appt-card h-100">
+          <div className="appt-card h-100 box_shadow">
             <div className="appt-card-header">
               <span className="appt-card-title">Recent Transactions</span>
               <div className="dropdown-pill">Weekly <span>&#8964;</span></div>
@@ -948,7 +1037,7 @@ export default function Dashboard(){
 
         {/* Leave Requests */}
         <div className="col-12 col-md-4">
-          <div className="appt-card h-100">
+          <div className="appt-card h-100 box_shadow">
             <div className="appt-card-header">
               <span className="appt-card-title">Leave Requests</span>
               <div className="dropdown-pill">Today <span>&#8964;</span></div>
