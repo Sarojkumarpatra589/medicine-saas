@@ -119,7 +119,7 @@ export default function Sidebar() {
   const toggle = (key) => setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
 
   return (
-    <div className="sidebar-container">
+    <div className="sidebar-container box_shadow">
 
       {/* Clinic Card */}
       <div className="sidebar-clinic-card">

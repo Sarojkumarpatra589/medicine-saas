@@ -1,25 +1,47 @@
-/* TopBar.css */
 
+:root {
+  --primary-color: #3d3bdb;
+  --primary-hover: #2f4cc0;
+}
+.box_shadow{
+   border-radius: 12px;
+  box-shadow:
+       -4px 4px 15px rgba(0, 0, 0, 0.08), 
+       -8px 8px 20px rgba(0, 0, 0, 0.06),
+        -4px 9px 10px rgb(0 0 0 / 0.2)
+}
+/* TopBar.css */
 .topbar {
-        border-radius: 6px;
   position: sticky;
-  top: 0;
+  top: 16px;
+  bottom: 16px;
+  
   z-index: 1000;
-  width: 100%;
+
+  /* OUTSIDE SPACE */
+  width: calc(100% - 40px);   /* 30px left + 30px right */
+  margin: 0 20px 20px;
+
+  /* INSIDE SPACE */
+  padding: 0 24px;
+
   height: 58px;
   background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+
   display: flex;
   align-items: center;
-  padding: 0 18px;
+  justify-content: space-between;
   gap: 14px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   font-family: "Nunito", "Segoe UI", sans-serif;
   box-sizing: border-box;
 }
-
 /* ── Left ──────────────────────────────────── */
-.tb-left {
+.tb-left,
+.tb-right {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -43,7 +65,8 @@
 /* ── Search ────────────────────────────────── */
 .tb-search-wrap {
   flex: 1;
-  max-width: 280px;
+  max-width: 560px;
+      margin-left: 70px;
 }
 
 .tb-search {
@@ -105,7 +128,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: #3b5bdb;
+  background:var(--primary-color);
   color: #fff;
   border: none;
   border-radius: 9px;
@@ -256,7 +279,6 @@
 .dashboard-content {
   flex: 1;
   min-width: 0;
-  padding: 20px;
   background: #f4f6f9;
   min-height: calc(100vh - 58px);
   overflow-y: auto;
@@ -286,10 +308,8 @@
   width: 240px;
   min-width: 240px;
   background: #ffffff;
-  border-radius: 16px;
   margin: 20px 0 20px 20px;
   padding: 14px 12px 20px;
-  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.09);
   border: 1px solid #ebebeb;
   position: sticky;
   top: 78px;
@@ -381,6 +401,7 @@
 
 /* ── Nav item ────────────────────────────────── */
 .sidebar-nav-item {
+    position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -391,7 +412,16 @@
   user-select: none;
   transition: background 0.15s;
 }
-
+/* Divider line */
+.sidebar-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: #eef2f7;
+}
 .sidebar-nav-item:hover { background: #f3f6ff; }
 .sidebar-nav-item-open  { background: #eef2ff; }
 

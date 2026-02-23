@@ -78,7 +78,7 @@ export default function TopBar() {
   const [dark, setDark] = useState(false);
 
   return (
-    <header className="topbar">
+    <header className="topbar box_shadow" >
 
       {/* LEFT — Logo + back arrow */}
       <div className="tb-left">
@@ -89,7 +89,7 @@ export default function TopBar() {
         <button className="tb-icon-btn" title="Back">
           <IconChevronLeft />
         </button>
-      </div>
+      </div> 
 
       {/* CENTER — Search */}
       <div className="tb-search-wrap">
