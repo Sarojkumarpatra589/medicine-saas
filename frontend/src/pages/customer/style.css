@@ -1,0 +1,60 @@
+/* ── PAGE HEADER ── */
+.pp-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding:13px;
+  border-bottom: 1px solid #eef2f7;
+  background-color: #fff;
+}
+
+.pp-breadcrumb {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.pp-page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.pp-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.pp-header-btn {
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pp-header-btn.outline {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  color: #64748b;
+}
+
+.pp-header-btn.outline:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.pp-header-btn.primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+}
+
+.pp-header-btn.primary:hover {
+  transform: translateY(-2px);
+}

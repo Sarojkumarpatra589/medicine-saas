@@ -1,292 +1,313 @@
-import React, { useState, useMemo } from 'react';
-import { Table, Dropdown, Badge, InputGroup, Form, Button, Card, ButtonGroup } from 'react-bootstrap';
-import { 
-  FiPlus, FiFilter, FiSearch, FiCalendar, FiChevronDown, FiMoreHorizontal, FiList, FiGrid
-} from 'react-icons/fi';
+import React, { useState, useMemo } from "react";
+import {
+  Table,
+  Dropdown,
+  Badge,
+  InputGroup,
+  Form,
+  Button,
+  Row,
+  Col,
+  Stack,
+} from "react-bootstrap";
+import { FiPlus, FiSearch, FiMoreVertical } from "react-icons/fi";
 
 const CustomerList = () => {
   const [customers] = useState([
-    { id: 1, name: 'Alberto Ripley', ageGender: '26, Male', phone: '+1 41245 54132', assignedTo: 'Dr. Mick Thompson', department: 'Cardiologist', address: 'Miami, Florida', lastVisit: '30 Apr 2025', status: 'Available' },
-    { id: 2, name: 'Susan Babin', ageGender: '21, Female', phone: '+1 54554 54789', assignedTo: 'Dr. Sarah Johnson', department: 'Orthopedic Surgeon', address: 'Austin, Texas', lastVisit: '15 Apr 2025', status: 'Unavailable' },
-    { id: 3, name: 'Carol Lam', ageGender: '28, Female', phone: '+1 43554 54985', assignedTo: 'Dr. Emily Carter', department: 'Pediatrician', address: 'Seattle, Washington', lastVisit: '02 Apr 2025', status: 'Available' },
-    { id: 4, name: 'Marsha Noland', ageGender: '25, Female', phone: '+1 47554 54257', assignedTo: 'Dr. David Lee', department: 'Gynecologist', address: 'Chicago, Illinois', lastVisit: '27 Mar 2025', status: 'Unavailable' },
-    { id: 5, name: 'Irma Armstrong', ageGender: '32, Female', phone: '+1 54114 57526', assignedTo: 'Dr. Anna Kim', department: 'Psychiatrist', address: 'Phoenix, Arizona', lastVisit: '12 Mar 2025', status: 'Available' },
-    { id: 6, name: 'Jesus Adams', ageGender: '27, Male', phone: '+1 51247 56574', assignedTo: 'Dr. John Smith', department: 'Neurosurgeon', address: 'Atlanta, Georgia', lastVisit: '05 Mar 2025', status: 'Unavailable' },
-    { id: 7, name: 'Ezra Belcher', ageGender: '28, Male', phone: '+1 41452 25741', assignedTo: 'Dr. Lisa White', department: 'Oncologist', address: 'San Diego, California', lastVisit: '24 Feb 2025', status: 'Available' },
-    { id: 8, name: 'Glen Lentz', ageGender: '22, Male', phone: '+1 51425 21498', assignedTo: 'Dr. Patricia Brown', department: 'Pulmonologist', address: 'Denver, Colorado', lastVisit: '16 Feb 2025', status: 'Unavailable' },
-    { id: 9, name: 'Bernard Griffith', ageGender: '34, Male', phone: '+1 45214 98741', assignedTo: 'Dr. Rachel Green', department: 'Urologist', address: 'Boston, Massachusetts', lastVisit: '01 Feb 2025', status: 'Available' },
-    { id: 10, name: 'John Elsass', ageGender: '23, Male', phone: '+1 41245 32540', assignedTo: 'Dr. Michael Smith', department: 'Cardiologist', address: 'Orlando, Florida', lastVisit: '25 Jan 2025', status: 'Unavailable' },
+    { id: 1, name: "Alberto Ripley", ageGender: "26, Male", phone: "+1 41245 54132", assignedTo: "Dr. Mick Thompson", department: "Cardiologist", address: "Miami, Florida", lastVisit: "30 Apr 2025", status: "Available" },
+    { id: 2, name: "Susan Babin", ageGender: "21, Female", phone: "+1 54554 54789", assignedTo: "Dr. Sarah Johnson", department: "Orthopedic Surgeon", address: "Austin, Texas", lastVisit: "15 Apr 2025", status: "Unavailable" },
+    { id: 3, name: "Carol Lam", ageGender: "28, Female", phone: "+1 43554 54985", assignedTo: "Dr. Emily Carter", department: "Pediatrician", address: "Seattle, Washington", lastVisit: "02 Apr 2025", status: "Available" },
+    { id: 4, name: "Marsha Noland", ageGender: "25, Female", phone: "+1 47554 54257", assignedTo: "Dr. David Lee", department: "Gynecologist", address: "Chicago, Illinois", lastVisit: "27 Mar 2025", status: "Unavailable" },
+    { id: 5, name: "Irma Armstrong", ageGender: "32, Female", phone: "+1 54114 57526", assignedTo: "Dr. Anna Kim", department: "Psychiatrist", address: "Phoenix, Arizona", lastVisit: "12 Mar 2025", status: "Available" },
   ]);
 
-  const [filter, setFilter] = useState({ search: '', status: [] });
+  /* ================= FILTER STATES ================= */
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [departmentFilter, setDepartmentFilter] = useState("All");
+  const [visitFilter, setVisitFilter] = useState("All");
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState('list');
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const filteredCustomers = useMemo(() => {
-    return customers.filter(c => 
-      c.name.toLowerCase().includes(filter.search.toLowerCase()) &&
-      (!filter.status.length || filter.status.includes(c.status))
+  /* ================= FILTER LOGIC ================= */
+  const filtered = useMemo(() => {
+    let data = customers.filter(
+      (c) =>
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.phone.includes(search)
     );
-  }, [customers, filter]);
 
-  const totalPages = Math.ceil(filteredCustomers.length / rowsPerPage);
-  const paginated = filteredCustomers.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+    if (statusFilter !== "All") {
+      data = data.filter((c) => c.status === statusFilter);
+    }
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    if (departmentFilter !== "All") {
+      data = data.filter((c) => c.department === departmentFilter);
+    }
+
+    if (visitFilter === "Last30Days") {
+      data = data.slice(0, 3); // demo filter
+    }
+
+    return data;
+  }, [customers, search, statusFilter, departmentFilter, visitFilter]);
+
+  /* ================= PAGINATION ================= */
+  const totalPages = Math.ceil(filtered.length / rowsPerPage);
+  const indexOfLast = currentPage * rowsPerPage;
+  const indexOfFirst = indexOfLast - rowsPerPage;
+  const currentData = filtered.slice(indexOfFirst, indexOfLast);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
   };
 
-  const resetFilters = () => {
-    setFilter({ search: '', status: [] });
+  const handleResetFilters = () => {
+    setSearch("");
+    setStatusFilter("All");
+    setDepartmentFilter("All");
+    setVisitFilter("All");
+    setCurrentPage(1);
   };
+
+  const statusColor = (status) =>
+    status === "Available" ? "success" : "danger";
 
   return (
-    <div>
-      {/* Header Section */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="d-flex align-items-center gap-2">
-          <h5 className="mb-0 fw-semibold">Customers List</h5>
-          <Badge bg="primary" className="rounded-pill">Total Customers: 565</Badge>
+    <div className="container my-4 px-4">
+
+      {/* ================= HEADER ================= */}
+      <div className="box_shadow mb-3 p-3 bg-white d-flex justify-content-between align-items-center">
+        <div>
+          <h5 className="fw-bold mb-0">Customer List</h5>
         </div>
-        <div className="d-flex gap-2">
-          <Dropdown>
-            <Dropdown.Toggle variant="outline-secondary" size="sm" className="d-flex align-items-center gap-1">
-              Export <FiChevronDown size={14} />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item>Export as PDF</Dropdown.Item>
-              <Dropdown.Item>Export as Excel</Dropdown.Item>
-              <Dropdown.Item>Export as CSV</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
 
-
-
-          <Button variant="primary" size="sm" className="d-flex align-items-center gap-1">
-            <FiPlus size={16} /> New Patient
-          </Button>
-        </div>
+        <Button size="sm" className="button">
+          <FiPlus className="me-1" /> Add Customer
+        </Button>
       </div>
 
-      {/* Search and Filters */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div style={{ width: '250px' }}>
-          <InputGroup size="sm">
-            <InputGroup.Text className="bg-white border-end-0">
-              <FiSearch size={14} />
-            </InputGroup.Text>
-            <Form.Control 
-              type="search" 
-              placeholder="Search" 
-              className="border-start-0"
-              value={filter.search}
-              onChange={(e) => setFilter({...filter, search: e.target.value})}
-            />
-          </InputGroup>
-        </div>
+      {/* ================= TABLE CARD ================= */}
+      <div className="box_shadow p-3 bg-white table-responsive">
 
-        <div className="d-flex gap-2 align-items-center">
-          <Dropdown>
-            <Dropdown.Toggle variant="outline-secondary" size="sm" className="d-flex align-items-center gap-1">
-              <FiFilter size={14} /> Filters
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="p-3" style={{ minWidth: '200px' }}>
-              <h6 className="mb-2" style={{ fontSize: '14px' }}>Filter by Status</h6>
-              <Form.Check 
-                type="checkbox"
-                label="Available"
-                id="filter-available"
-                className="mb-2"
-                checked={filter.status.includes('Available')}
-                onChange={(e) => {
-                  const newStatus = e.target.checked 
-                    ? [...filter.status, 'Available'] 
-                    : filter.status.filter(s => s !== 'Available');
-                  setFilter({...filter, status: newStatus});
-                }}
-              />
-              <Form.Check 
-                type="checkbox"
-                label="Unavailable"
-                id="filter-unavailable"
-                className="mb-3"
-                checked={filter.status.includes('Unavailable')}
-                onChange={(e) => {
-                  const newStatus = e.target.checked 
-                    ? [...filter.status, 'Unavailable'] 
-                    : filter.status.filter(s => s !== 'Unavailable');
-                  setFilter({...filter, status: newStatus});
-                }}
-              />
+        {/* FILTER SECTION */}
+        <div className="mb-4">
+          <Row className="g-3 align-items-center">
+
+            <Col lg={3} md={6}>
+              <InputGroup>
+                <InputGroup.Text><FiSearch /></InputGroup.Text>
+                <Form.Control
+                  placeholder="Search name or phone..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </InputGroup>
+            </Col>
+
+            <Col lg={2} md={6}>
+              <Form.Select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="All">All Status</option>
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
+              </Form.Select>
+            </Col>
+
+            <Col lg={3} md={6}>
+              <Form.Select
+                value={departmentFilter}
+                onChange={(e) => setDepartmentFilter(e.target.value)}
+              >
+                <option value="All">All Departments</option>
+                <option value="Cardiologist">Cardiologist</option>
+                <option value="Orthopedic Surgeon">Orthopedic Surgeon</option>
+                <option value="Pediatrician">Pediatrician</option>
+                <option value="Gynecologist">Gynecologist</option>
+                <option value="Psychiatrist">Psychiatrist</option>
+              </Form.Select>
+            </Col>
+
+            <Col lg={2} md={6}>
+              <Form.Select
+                value={visitFilter}
+                onChange={(e) => setVisitFilter(e.target.value)}
+              >
+                <option value="All">All Visits</option>
+                <option value="Last30Days">Last 30 Days</option>
+              </Form.Select>
+            </Col>
+
+            <Col lg={2} md={12}>
               <div className="d-flex gap-2">
-                <Button variant="outline-secondary" size="sm" onClick={resetFilters} className="flex-fill">
+                <Button
+                  className="button flex-fill"
+                  onClick={() => setCurrentPage(1)}
+                >
+                  Filter
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  className="flex-fill"
+                  onClick={handleResetFilters}
+                >
                   Reset
                 </Button>
-                <Button variant="primary" size="sm" className="flex-fill">
-                  Apply
-                </Button>
               </div>
-            </Dropdown.Menu>
-          </Dropdown>
+            </Col>
 
-          <Dropdown>
-            <Dropdown.Toggle variant="outline-secondary" size="sm" className="d-flex align-items-center gap-1">
-              Sort By : Recent <FiChevronDown size={14} />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item>Recent</Dropdown.Item>
-              <Dropdown.Item>Oldest</Dropdown.Item>
-              <Dropdown.Item>Name (A-Z)</Dropdown.Item>
-              <Dropdown.Item>Name (Z-A)</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          </Row>
         </div>
-      </div>
 
-      {/* Table */}
-      <Card className="border shadow-lg">
-        <Table hover responsive className="mb-0" style={{ fontSize: '14px' }}>
-          <thead className="bg-light">
+        <hr />
+
+        <Table hover className="align-middle saas-table mb-0">
+          <thead>
             <tr>
-              <th className="text-secondary fw-normal py-3 border-bottom" style={{ fontSize: '13px' }}>
-                Patient <FiChevronDown size={12} className="ms-1" />
-              </th>
-              <th className="text-secondary fw-normal py-3 border-bottom" style={{ fontSize: '13px' }}>
-                Phone <FiChevronDown size={12} className="ms-1" />
-              </th>
-              <th className="text-secondary fw-normal py-3 border-bottom" style={{ fontSize: '13px' }}>
-                Doctor <FiChevronDown size={12} className="ms-1" />
-              </th>
-              <th className="text-secondary fw-normal py-3 border-bottom" style={{ fontSize: '13px' }}>
-                Address <FiChevronDown size={12} className="ms-1" />
-              </th>
-              <th className="text-secondary fw-normal py-3 border-bottom" style={{ fontSize: '13px' }}>
-                Last Visit <FiChevronDown size={12} className="ms-1" />
-              </th>
-              <th className="text-secondary fw-normal py-3 border-bottom" style={{ fontSize: '13px' }}>
-                Status <FiChevronDown size={12} className="ms-1" />
-              </th>
-              <th className="text-secondary fw-normal py-3 border-bottom" style={{ fontSize: '13px' }}></th>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Doctor</th>
+              <th>Address</th>
+              <th>Last Visit</th>
+              <th>Status</th>
+              <th className="text-end"></th>
             </tr>
           </thead>
+
           <tbody>
-            {paginated.map((customer) => (
-              <tr key={customer.id}>
-                <td className="align-middle py-3">
-                  <div className="d-flex align-items-center gap-2">
-                    <img 
-                      src={`https://i.pravatar.cc/32?img=${customer.id}`} 
-                      alt={customer.name}
-                      className="rounded-circle"
-                      style={{ width: '32px', height: '32px', objectFit: 'cover' }}
-                    />
-                    <div>
-                      <div className="fw-semibold" style={{ fontSize: '14px' }}>{customer.name}</div>
-                      <small className="text-muted" style={{ fontSize: '12px' }}>{customer.ageGender}</small>
+            {currentData.length > 0 ? (
+              currentData.map((customer) => (
+                <tr key={customer.id}>
+                  <td>
+                    <div className="fw-medium">{customer.name}</div>
+                    <small className="text-muted">
+                      {customer.ageGender}
+                    </small>
+                  </td>
+
+                  <td>{customer.phone}</td>
+
+                  <td>
+                    <div className="fw-medium">
+                      {customer.assignedTo}
                     </div>
-                  </div>
-                </td>
-                <td className="align-middle py-3 text-muted">{customer.phone}</td>
-                <td className="align-middle py-3">
-                  <div className="d-flex align-items-center gap-2">
-                    <img 
-                      src={`https://i.pravatar.cc/28?img=${customer.id + 20}`} 
-                      alt={customer.assignedTo}
-                      className="rounded-circle"
-                      style={{ width: '28px', height: '28px', objectFit: 'cover' }}
-                    />
-                    <div>
-                      <div className="fw-semibold" style={{ fontSize: '13px' }}>{customer.assignedTo}</div>
-                      <small className="text-muted" style={{ fontSize: '12px' }}>{customer.department}</small>
-                    </div>
-                  </div>
-                </td>
-                <td className="align-middle py-3 text-muted">{customer.address}</td>
-                <td className="align-middle py-3 text-muted">{customer.lastVisit}</td>
-                <td className="align-middle py-3">
-                  <Badge 
-                    bg={customer.status === 'Available' ? 'success' : 'danger'}
-                    className="rounded-pill"
-                    style={{ 
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      padding: '4px 12px'
-                    }}
-                  >
-                    {customer.status}
-                  </Badge>
-                </td>
-                <td className="align-middle py-3">
-                  <div className="d-flex align-items-center justify-content-end gap-1">
-                  
+                    <small className="text-muted">
+                      {customer.department}
+                    </small>
+                  </td>
+
+                  <td>{customer.address}</td>
+                  <td className="text-muted small">
+                    {customer.lastVisit}
+                  </td>
+
+                  <td>
+                    <Badge bg={statusColor(customer.status)}>
+                      {customer.status}
+                    </Badge>
+                  </td>
+
+                  <td className="text-end">
                     <Dropdown align="end">
-                      <Dropdown.Toggle 
-                        variant="light" 
-                        size="sm"
-                        className="border-0 p-1"
-                        style={{ width: '28px', height: '28px' }}
-                      >
-                        <FiMoreHorizontal size={14} />
+                      <Dropdown.Toggle as="button" className="saas-dot-btn">
+                        <FiMoreVertical size={16} />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item>View Details</Dropdown.Item>
+                        <Dropdown.Item>View</Dropdown.Item>
                         <Dropdown.Item>Edit</Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item className="text-danger">Delete</Dropdown.Item>
+                        <Dropdown.Item className="text-danger">
+                          Delete
+                        </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center text-muted py-4">
+                  No customers found
+                </td>
+              </tr>
+            )}
+          </tbody>
+
+          {/* ADVANCED PAGINATION */}
+          {totalPages > 0 && (
+            <tfoot>
+              <tr>
+                <td colSpan="7">
+                  <div className="d-flex justify-content-between align-items-center mt-2 flex-wrap gap-2">
+
+                    <small className="text-muted">
+                      Showing {filtered.length === 0 ? 0 : indexOfFirst + 1}–
+                      {Math.min(indexOfLast, filtered.length)} of {filtered.length} customers
+                    </small>
+
+                    <Stack direction="horizontal" gap={2}>
+
+                      <Form.Select
+                        size="sm"
+                        value={rowsPerPage}
+                        onChange={(e) => {
+                          setRowsPerPage(Number(e.target.value));
+                          setCurrentPage(1);
+                        }}
+                        style={{ width: "90px" }}
+                      >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                      </Form.Select>
+
+                      <Button
+                        size="sm"
+                        className="pagination-btn"
+                        disabled={currentPage === 1}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                      >
+                        Prev
+                      </Button>
+
+                      {[...Array(totalPages)].map((_, index) => {
+                        const pageNumber = index + 1;
+                        return (
+                          <Button
+                            key={pageNumber}
+                            size="sm"
+                            className={`pagination-btn ${
+                              currentPage === pageNumber ? "active-page" : ""
+                            }`}
+                            onClick={() => handlePageChange(pageNumber)}
+                          >
+                            {pageNumber}
+                          </Button>
+                        );
+                      })}
+
+                      <Button
+                        size="sm"
+                        className="pagination-btn"
+                        disabled={currentPage === totalPages}
+                        onClick={() => handlePageChange(currentPage + 1)}
+                      >
+                        Next
+                      </Button>
+
+                    </Stack>
+
                   </div>
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </tfoot>
+          )}
 
-        {/* Pagination Footer */}
-        <div className="d-flex justify-content-between align-items-center px-3 py-2 border-top bg-light">
-          <div className="d-flex align-items-center gap-2">
-            <small className="text-muted">Rows per page:</small>
-            <Form.Select 
-              size="sm" 
-              value={rowsPerPage}
-              onChange={(e) => setRowsPerPage(Number(e.target.value))}
-              style={{ width: 'auto', fontSize: '13px' }}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-            </Form.Select>
-            <small className="text-muted">of {filteredCustomers.length} Entries</small>
-          </div>
-          
-          <div className="d-flex align-items-center gap-2">
-            <Button 
-              variant="outline-secondary" 
-              size="sm"
-              onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              &lt;
-            </Button>
-            <Button 
-              variant="primary" 
-              size="sm"
-            >
-              {currentPage}
-            </Button>
-            <Button 
-              variant="outline-secondary" 
-              size="sm"
-              onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              &gt;
-            </Button>
-          </div>
-        </div>
-      </Card>
+        </Table>
+      </div>
     </div>
   );
 };
