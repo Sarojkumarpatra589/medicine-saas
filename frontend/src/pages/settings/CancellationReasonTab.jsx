@@ -57,106 +57,95 @@ function CancellationReasonTab() {
   };
 
   return (
-    <div  style={{ backgroundColor: "#ffffff" }}>
-      {/* Header */}
-      <div className="d-flex justify-content-between align-items-center">
-        <h5 className="fw-bold mb-0">Cancellation Reason</h5>
+    <div className="saas-card">
 
-        <Button
-          size="sm"
-          style={{ backgroundColor: "#4c5fce", border: "none" }}
-          onClick={handleAddNewReason}
-        >
-          <FiPlus className="me-1" /> New Reason
-        </Button>
-      </div>
+  {/* Card Header */}
+  <div className="saas-card-header d-flex justify-content-between align-items-center">
+   <h5 className="fw-bold ">Cancellation Reason</h5>
+      
+    <Button
+      size="sm"
+      className="button"
+      onClick={handleAddNewReason}
+    >
+      <FiPlus className="me-1" /> New Reason
+    </Button>
+  </div>
+  <hr className="mb-4" />
 
-      <hr />
+  {/* Table */}
+  <div className="saas-table-wrapper">
+    <Table hover responsive className="align-middle saas-table mb-0">
+      <thead>
+        <tr>
+          <th>Reason</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th className="text-end" style={{ width: "60px" }}></th>
+        </tr>
+      </thead>
 
-      {/* Table */}
-      <Table hover responsive className="align-middle border">
-        <thead style={{ backgroundColor: "#f8f9fa" }}>
-          <tr>
-            <th>Reason</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th style={{ width: "50px" }}></th>
-          </tr>
-        </thead>
+      <tbody>
+        {reasons.map((item) => (
+          <tr key={item.id}>
+            <td className="fw-medium">{item.reason}</td>
 
-        <tbody>
-          {reasons.map((item) => (
-            <tr key={item.id}>
-              <td>{item.reason}</td>
+            <td className="text-muted small">{item.date}</td>
 
-              <td className="text-muted">{item.date}</td>
+            <td>
+              <Badge
+                pill
+                bg={item.status === "Active" ? "success" : "secondary"}
+              >
+                {item.status}
+              </Badge>
+            </td>
 
-              <td>
-                <Badge
-                  pill
-                  bg={item.status === "Active" ? "success" : "danger"}
+            <td className="text-end">
+              <Dropdown align="end">
+                <Dropdown.Toggle
+                  as="button"
+                  className="saas-dot-btn"
                 >
-                  {item.status}
-                </Badge>
-              </td>
+                  <FiMoreVertical size={16} />
+                </Dropdown.Toggle>
 
-              <td className="text-center">
-                <Dropdown align="end">
-                  <Dropdown.Toggle
-                    variant="link"
-                    className="p-0 text-muted"
-                    style={{ boxShadow: "none" }}
+                <Dropdown.Menu className="saas-dropdown">
+                  <Dropdown.Item onClick={() => handleMenuAction(item.id, "edit")}>
+                    Edit
+                  </Dropdown.Item>
+
+                  <Dropdown.Item
+                    onClick={() =>
+                      handleMenuAction(
+                        item.id,
+                        item.status === "Active"
+                          ? "deactivate"
+                          : "activate"
+                      )
+                    }
                   >
-                    <FiMoreVertical size={18} />
-                  </Dropdown.Toggle>
+                    {item.status === "Active" ? "Deactivate" : "Activate"}
+                  </Dropdown.Item>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => handleMenuAction(item.id, "edit")}
-                    >
-                      Edit
-                    </Dropdown.Item>
+                  <Dropdown.Divider />
 
-                    <Dropdown.Item
-                      onClick={() =>
-                        handleMenuAction(
-                          item.id,
-                          item.status === "Active"
-                            ? "deactivate"
-                            : "activate"
-                        )
-                      }
-                    >
-                      {item.status === "Active" ? "Deactivate" : "Activate"}
-                    </Dropdown.Item>
+                  <Dropdown.Item
+                    className="text-danger"
+                    onClick={() => handleMenuAction(item.id, "delete")}
+                  >
+                    Delete
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  </div>
 
-                    <Dropdown.Divider />
-
-                    <Dropdown.Item
-                      onClick={() => handleMenuAction(item.id, "delete")}
-                      style={{ color: "#dc3545" }}
-                    >
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      {/* Empty State */}
-      {reasons.length === 0 && (
-        <div className="text-center py-5 text-muted">
-          <p>No cancellation reasons found.</p>
-
-          <Button variant="outline-primary" size="sm" onClick={handleAddNewReason}>
-            <FiPlus className="me-1" /> Add First Reason
-          </Button>
-        </div>
-      )}
-    </div>
+</div>
   );
 }
 

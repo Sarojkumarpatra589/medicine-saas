@@ -76,7 +76,7 @@ function WorkingHoursTab() {
       <hr className="mb-4" />
 
       <Row className="align-items-center mb-4">
-        <Col md={3}>
+        <Col md={4}>
           <Form.Label>
             Expected Productive Time <span className="text-danger">*</span>
           </Form.Label>
@@ -90,13 +90,13 @@ function WorkingHoursTab() {
           />
         </Col>
 
-        <Col md={3} className="text-end text-muted small">
+        <Col md={2} className="text-end text-muted small">
           <FiClock className="me-1" /> Hours / Day
         </Col>
       </Row>
 
       {/* Working Days */}
-      <h5 className="fw-bold mt-5 mb-3">Working Days</h5>
+      <h5 className="fw-bold  mb-3">Working Days</h5>
       <hr />
 
       {dayNames.map(({ key, label, color }) => (
@@ -135,14 +135,8 @@ function WorkingHoursTab() {
       ))}
 
       {/* Break Hours */}
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <h5 className="fw-bold">Break Hours</h5>
-
-        <Button variant="link" onClick={addBreakHour}>
-          <FiPlus /> Add New
-        </Button>
-      </div>
-
+       {/* Lunch Break */}
+      <h5 className="fw-bold mt-5 mb-3">Break Hours</h5>
       <hr />
 
       {breakHours.map((brk, index) => (
@@ -241,7 +235,7 @@ function WorkingHoursTab() {
           Cancel
         </Button>
 
-        <Button size="sm" style={{ background: "#4c5fce", border: "none" }}>
+        <Button className="button">
           Save Changes
         </Button>
       </div>

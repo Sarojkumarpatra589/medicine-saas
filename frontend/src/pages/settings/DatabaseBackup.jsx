@@ -1,9 +1,16 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Button,
+  Dropdown,
+} from "react-bootstrap";
 import { FiPlus } from "react-icons/fi";
 
 function DatabaseBackup() {
-  const [backups] = React.useState([
+  const [backups, setBackups] = useState([
     { id: 1, name: "patients_data_backup_2025.txt", created: "30 Apr 2025" },
     { id: 2, name: "invoice_records_backup_2024.txt", created: "15 Apr 2025" },
     { id: 3, name: "lab_transactions_2024.txt", created: "02 Apr 2025" },
@@ -11,6 +18,10 @@ function DatabaseBackup() {
   ]);
 
   const handleAction = (id, action) => {
+    if (action === "delete") {
+      setBackups((prev) => prev.filter((item) => item.id !== id));
+    }
+
     console.log(action, id);
   };
 
@@ -19,75 +30,102 @@ function DatabaseBackup() {
   };
 
   return (
-    <div className="p-4 bg-white">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h5 className="fw-bold mb-0">Database Backup</h5>
+    <Container fluid>
+      <div className="saas-card">
 
-        <Button
-          variant="primary"
-          size="sm"
-          style={{ backgroundColor: "#4c5fce", border: "none" }}
-          onClick={handleGenerateBackup}
-        >
-          <FiPlus size={16} className="me-1" />
-          Generate Backup
-        </Button>
+        {/* Header */}
+        <div className="saas-card-header d-flex justify-content-between align-items-center">
+          <h5 className="mb-0 fw-bold">Database Backup</h5>
+
+          <Button className="button" onClick={handleGenerateBackup}>
+            <FiPlus size={16} className="me-1" />
+            Generate Backup
+          </Button>
+        </div>
+
+        <hr />
+
+        {/* Table */}
+        <div className="saas-table-wrapper">
+          <Row>
+            <Col>
+              <Table
+                hover
+                responsive
+                className="align-middle saas-table mb-0"
+              >
+                <thead>
+                  <tr>
+                    <th>Backup Name</th>
+                    <th>Created On</th>
+                    <th
+                      className="text-end"
+                      style={{ width: "60px" }}
+                    ></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {backups.map((item) => (
+                    <tr key={item.id}>
+                      <td className="fw-medium">
+                        {item.name}
+                      </td>
+
+                      <td className="text-muted">
+                        {item.created}
+                      </td>
+
+                      {/* 3-dot menu */}
+                      <td className="text-end">
+                        <Dropdown align="end">
+                          <Dropdown.Toggle
+                            as="button"
+                            className="saas-dot-btn"
+                          >
+                            ⋮
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu className="saas-dropdown">
+                            <Dropdown.Item
+                              onClick={() =>
+                                handleAction(item.id, "download")
+                              }
+                            >
+                              Download
+                            </Dropdown.Item>
+
+                            <Dropdown.Divider />
+
+                            <Dropdown.Item
+                              className="text-danger"
+                              onClick={() =>
+                                handleAction(item.id, "delete")
+                              }
+                            >
+                              Delete
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))}
+
+                  {backups.length === 0 && (
+                    <tr>
+                      <td colSpan="3" className="text-center py-4 text-muted">
+                        No backups available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </div>
+
       </div>
-
-      <hr />
-
-      <div className="table-responsive">
-        <table className="table table-hover align-middle">
-          <thead className="bg-light">
-            <tr>
-              <th>Name</th>
-              <th>Created On</th>
-              <th style={{ width: "40px" }}></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {backups.map((item) => (
-              <tr key={item.id}>
-                <td className="fw-semibold">{item.name}</td>
-                <td className="text-muted">{item.created}</td>
-
-                <td className="text-center">
-                  <div className="dropdown">
-                    <button
-                      className="btn btn-light btn-sm border-0"
-                      data-bs-toggle="dropdown"
-                    >
-                      ⋮
-                    </button>
-
-                    <ul className="dropdown-menu dropdown-menu-end">
-                      <li>
-                        <button
-                          className="dropdown-item"
-                          onClick={() => handleAction(item.id, "download")}
-                        >
-                          Download
-                        </button>
-                      </li>
-
-                      <li>
-                        <button
-                          className="dropdown-item text-danger"
-                          onClick={() => handleAction(item.id, "delete")}
-                        >
-                          Delete
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </Container>
   );
 }
 

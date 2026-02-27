@@ -282,10 +282,7 @@ function AppointmentTab() {
         </Button>
 
         <Button
-          variant="primary"
-          size="sm"
-          className="px-4"
-          style={{ backgroundColor: "#4c5fce", border: "none" }}
+          className="px-4 button"
         >
           Save Changes
         </Button>

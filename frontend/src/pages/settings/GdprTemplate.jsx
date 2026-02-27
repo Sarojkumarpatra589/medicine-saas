@@ -5,13 +5,9 @@ const GdprTemplate = () => {
   const [showDecline, setShowDecline] = useState(true);
 
   return (
-    <Container fluid className="py-4">
-      <Row>
-        <Col>
-          <h5 className="fw-bold">GDPR Cookies</h5>
-          <hr />
-        </Col>
-      </Row>
+    <Container fluid>
+      <h5 className="fw-bold ">GDPR Cookies</h5>
+      <hr className="mb-4" />
 
       <Form>
         <Form.Group className="mb-3">
@@ -51,7 +47,7 @@ const GdprTemplate = () => {
             Cancel
           </Button>
 
-          <Button variant="primary">Save Changes</Button>
+          <Button className="button">Save Changes</Button>
         </div>
       </Form>
     </Container>

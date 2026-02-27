@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Table, Badge, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Badge,
+  Button,
+  Dropdown,
+} from "react-bootstrap";
 
 const Signatures = () => {
-  const [signatures] = useState([
+  const [signatureList, setSignatureList] = useState([
     {
       id: 1,
       name: "Samuel Donatte",
@@ -33,74 +41,122 @@ const Signatures = () => {
     },
   ]);
 
+  const toggleStatus = (id) => {
+    setSignatureList((prev) =>
+      prev.map((sig) =>
+        sig.id === id
+          ? {
+              ...sig,
+              status: sig.status === "Active" ? "Inactive" : "Active",
+            }
+          : sig
+      )
+    );
+  };
+
+  const deleteSignature = (id) => {
+    setSignatureList((prev) => prev.filter((sig) => sig.id !== id));
+  };
+
   return (
-    <Container fluid >
-      {/* Header */}
-          <h5 className="fw-bold">Signature</h5>
-          <hr />
+    <Container fluid>
+      <div className="saas-card">
+        {/* Header */}
+        <h5 className="fw-bold ">Signature Table </h5>
+      <hr className="mb-4" />
 
-      <Row>
-        <Col>
-          <Table hover responsive className="align-middle border">
-            <thead className="bg-light">
-              <tr>
-                <th className="py-3">Signature Name</th>
-                <th className="py-3">Signature</th>
-                <th className="py-3">Status</th>
-                <th className="py-3 text-end"></th>
-              </tr>
-            </thead>
 
-            <tbody>
-              {signatures.map((sig) => (
-                <tr key={sig.id}>
-                  {/* Name */}
-                  <td>
-                    {sig.name}
-                    {sig.isDefault && (
-                      <Badge bg="secondary" className="ms-2">
-                        Default
-                      </Badge>
-                    )}
-                  </td>
+        {/* Table */}
+        <div className="saas-table-wrapper">
+          <Row>
+            <Col>
+              <Table hover responsive className="align-middle saas-table mb-0">
+                <thead>
+                  <tr>
+                    <th>Signature Name</th>
+                    <th>Signature</th>
+                    <th>Status</th>
+                    <th
+                      className="text-end"
+                      style={{ width: "60px" }}
+                    ></th>
+                  </tr>
+                </thead>
 
-                  {/* Signature */}
-                  <td>
-                    <span
-                      style={{
-                        fontStyle: "italic",
-                        fontSize: "16px",
-                      }}
-                    >
-                      {sig.signature}
-                    </span>
-                  </td>
+                <tbody>
+                  {signatureList.map((sig) => (
+                    <tr key={sig.id}>
+                      {/* Name */}
+                      <td className="fw-medium">
+                        {sig.name}
+                        {sig.isDefault && (
+                          <Badge bg="secondary" className="ms-2">
+                            Default
+                          </Badge>
+                        )}
+                      </td>
 
-                  {/* Status */}
-                  <td>
-                    <span
-                      className={`px-3 py-1 rounded-pill small fw-medium ${
-                        sig.status === "Active"
-                          ? "text-success bg-success-subtle"
-                          : "text-danger bg-danger-subtle"
-                      }`}
-                    >
-                      {sig.status}
-                    </span>
-                  </td>
+                      {/* Signature */}
+                      <td>
+                        <span className="signature-text">
+                          {sig.signature}
+                        </span>
+                      </td>
 
-                  {/* Action */}
-                  <td className="text-end">
-                    <Button variant="link" className="text-secondary p-0">
-                      <span style={{ fontSize: "20px" }}>⋮</span>
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
+                      {/* Status */}
+                      <td>
+                        <Badge
+                          pill
+                          bg={
+                            sig.status === "Active"
+                              ? "success"
+                              : "secondary"
+                          }
+                        >
+                          {sig.status}
+                        </Badge>
+                      </td>
+
+                      {/* Actions */}
+                      <td className="text-end">
+                        <Dropdown align="end">
+                          <Dropdown.Toggle
+                            as="button"
+                            className="saas-dot-btn"
+                          >
+                            ⋮
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu className="saas-dropdown">
+                            <Dropdown.Item
+                              onClick={() => toggleStatus(sig.id)}
+                            >
+                              {sig.status === "Active"
+                                ? "Deactivate"
+                                : "Activate"}
+                            </Dropdown.Item>
+
+                            <Dropdown.Divider />
+
+                            <Dropdown.Item
+                              className="text-danger"
+                              onClick={() =>
+                                deleteSignature(sig.id)
+                              }
+                            >
+                              Delete
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </div>
+      </div>
     </Container>
   );
 };

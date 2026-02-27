@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Button } from "react-bootstrap";
 
 const ClearCache = () => {
   const handleClearCache = () => {
@@ -7,18 +8,34 @@ const ClearCache = () => {
   };
 
   return (
-    <div className="p-4 bg-white">
-      <h5 className="fw-bold mb-3">Clear Cache</h5>
-      <hr />
+    <Container fluid>
+      <div className="saas-card">
 
-      <p className="text-muted">
-        Clearing cache removes temporary files and stored preferences.
-      </p>
+        {/* Header */}
+        <div className="saas-card-header">
+          <h5 className="mb-0 fw-bold">Clear Cache</h5>
+        </div>
 
-      <button className="btn btn-danger btn-sm" onClick={handleClearCache}>
-        Clear Cache
-      </button>
-    </div>
+        <hr />
+
+        {/* Content */}
+        <div className="p-3">
+          <p className="text-muted mb-4">
+            Clearing cache removes temporary files and stored preferences.
+            This helps refresh system data and fix minor performance issues.
+          </p>
+
+          <Button
+            variant="danger"
+            className="button"
+            onClick={handleClearCache}
+          >
+            Clear Cache
+          </Button>
+        </div>
+
+      </div>
+    </Container>
   );
 };
 

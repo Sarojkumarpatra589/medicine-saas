@@ -1,13 +1,21 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Button,
+  Dropdown,
+} from "react-bootstrap";
 import { FiPlus } from "react-icons/fi";
 
 function BanIPAddress() {
-  const [bannedIPs] = React.useState([
+  const [bannedIPs, setBannedIPs] = useState([
     {
       id: 1,
       ip: "211.11.0.25",
-      reason: "You can get on-demand services in order to find a nearby service.",
+      reason:
+        "You can get on-demand services in order to find a nearby service.",
       created: "30 Apr 2025",
     },
     {
@@ -19,7 +27,8 @@ function BanIPAddress() {
     {
       id: 3,
       ip: "211.24.0.17",
-      reason: "Fetching data for competitors to gain competitive advantage.",
+      reason:
+        "Fetching data for competitors to gain competitive advantage.",
       created: "02 Apr 2025",
     },
     {
@@ -32,78 +41,107 @@ function BanIPAddress() {
   ]);
 
   const handleAction = (id, action) => {
+    if (action === "delete") {
+      setBannedIPs((prev) =>
+        prev.filter((item) => item.id !== id)
+      );
+    }
+
     console.log(action, id);
   };
 
   return (
-    <div className=" bg-white">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h5 className="fw-bold mb-0">Ban IP Address</h5>
-        <Button
-          variant="primary"
-          size="sm"
-          style={{ backgroundColor: "#4c5fce", border: "none" }}
-        >
-          <FiPlus size={16} className="me-1" />
-          New Ip Address
-        </Button>
+    <Container fluid>
+      <div className="saas-card">
+
+        {/* Header */}
+        <div className="saas-card-header d-flex justify-content-between align-items-center">
+          <h5 className="mb-0 fw-bold">Ban IP Address</h5>
+
+          <Button className="button">
+            <FiPlus size={16} className="me-1" />
+            New IP Address
+          </Button>
+        </div>
+
+        <hr />
+
+        {/* Table */}
+        <div className="saas-table-wrapper">
+          <Row>
+            <Col>
+              <Table
+                hover
+                responsive
+                className="align-middle saas-table mb-0"
+              >
+                <thead>
+                  <tr>
+                    <th>IP Address</th>
+                    <th>Reason</th>
+                    <th>Created On</th>
+                    <th
+                      className="text-end"
+                      style={{ width: "60px" }}
+                    ></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {bannedIPs.map((item) => (
+                    <tr key={item.id}>
+                      <td className="fw-medium">
+                        {item.ip}
+                      </td>
+
+                      <td>{item.reason}</td>
+
+                      <td className="text-muted">
+                        {item.created}
+                      </td>
+
+                      {/* 3-dot menu */}
+                      <td className="text-end">
+                        <Dropdown align="end">
+                          <Dropdown.Toggle
+                            as="button"
+                            className="saas-dot-btn"
+                          >
+                            ⋮
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu className="saas-dropdown">
+                            <Dropdown.Item
+                              onClick={() =>
+                                handleAction(item.id, "edit")
+                              }
+                            >
+                              Edit
+                            </Dropdown.Item>
+
+                            <Dropdown.Divider />
+
+                            <Dropdown.Item
+                              className="text-danger"
+                              onClick={() =>
+                                handleAction(item.id, "delete")
+                              }
+                            >
+                              Remove Ban
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </div>
+
       </div>
-      <hr />
-
-      <div className="table-responsive">
-        <table className="table table-hover align-middle">
-          <thead className="bg-light">
-            <tr>
-              <th>IP Address</th>
-              <th>Reason</th>
-              <th>Created On</th>
-              <th style={{ width: "40px" }}></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {bannedIPs.map((item) => (
-              <tr key={item.id}>
-                <td className="fw-semibold">{item.ip}</td>
-                <td>{item.reason}</td>
-                <td className="text-muted">{item.created}</td>
-
-                <td className="text-center">
-                  <div className="dropdown">
-                    <button
-                      className="btn btn-light btn-sm border-0"
-                      data-bs-toggle="dropdown"
-                    >
-                      ⋮
-                    </button>
-
-                    <ul className="dropdown-menu dropdown-menu-end">
-                      <li>
-                        <button
-                          className="dropdown-item"
-                          onClick={() => handleAction(item.id, "edit")}
-                        >
-                          Edit
-                        </button>
-                      </li>
-
-                      <li>
-                        <button
-                          className="dropdown-item text-danger"
-                          onClick={() => handleAction(item.id, "delete")}
-                        >
-                          Remove Ban
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </Container>
   );
 }
 

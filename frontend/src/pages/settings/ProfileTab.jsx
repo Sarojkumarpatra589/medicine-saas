@@ -170,7 +170,7 @@ function ProfileTab() {
 
       <div className="profile-actions d-flex justify-content-end gap-2">
         <Button variant="light">Cancel</Button>
-        <Button className="save-btn">Save Changes</Button>
+        <Button className="button">Save Changes</Button>
       </div>
     </div>
   );

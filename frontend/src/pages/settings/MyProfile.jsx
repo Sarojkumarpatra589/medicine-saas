@@ -1112,10 +1112,8 @@ function AppointmentTab() {
           Cancel
         </Button>
         <Button
-          variant="primary"
           size="sm"
-          className="px-4"
-          style={{ backgroundColor: "#4c5fce", border: "none" }}
+          className="px-4 button"
         >
           Save Changes
         </Button>
@@ -1403,10 +1401,9 @@ function WorkingHoursTab() {
           Cancel
         </Button>
         <Button
-          variant="primary"
+          
           size="sm"
-          className="px-4"
-          style={{ backgroundColor: "#4c5fce", border: "none" }}
+          className="px-4 button"
         >
           Save Changes
         </Button>
@@ -1460,7 +1457,7 @@ function CancellationReasonTab() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h5 className="fw-bold mb-0">Cancellation Reason</h5>
         <Button
-          variant="primary"
+          
           size="sm"
           style={{ backgroundColor: "#4c5fce", border: "none" }}
           onClick={handleAddNewReason}
@@ -1632,7 +1629,7 @@ const CustomField = () => {
             <h5 className="fw-bold mb-0">Custom Field</h5>
 
             <Button
-              variant="primary"
+              
               className="d-flex align-items-center gap-2"
             >
               + New Custom Field
@@ -2002,7 +1999,7 @@ const InvoiceSettings = () => {
             {/* Action Buttons */}
             <div className="d-flex justify-content-end gap-2 pt-3">
               <Button variant="outline-secondary">Cancel</Button>
-              <Button variant="primary">Save Changes</Button>
+              <Button className="button">Save Changes</Button>
             </div>
           </div>
         </Col>
@@ -2126,7 +2123,7 @@ function EmailTemplate() {
         <h5 className="fw-bold mb-0">Email Template</h5>
        
         <Button
-          variant="primary"
+          
           size="sm"
           style={{ backgroundColor: "#4c5fce", border: "none" }}
           onClick={handleAddNewReason}
@@ -2383,7 +2380,7 @@ function SmsTemplate() {
         <h5 className="fw-bold mb-0">SMS Template</h5>
        
         <Button
-          variant="primary"
+          
           size="sm"
           style={{ backgroundColor: "#4c5fce", border: "none" }}
           onClick={handleAddNewReason}
@@ -2659,7 +2656,7 @@ const GdprTemplate = () => {
             {/* Action Buttons */}
             <div className="d-flex justify-content-end gap-2 pt-3">
               <Button variant="outline-secondary">Cancel</Button>
-              <Button variant="primary">Save Changes</Button>
+              <Button className="button">Save Changes</Button>
             </div>
           </div>
         </Col>
@@ -2716,7 +2713,7 @@ function PaymentMethods() {
         <h5 className="fw-bold mb-0">Payment Methods</h5>
        
         <Button
-          variant="primary"
+          
           size="sm"
           style={{ backgroundColor: "#4c5fce", border: "none" }}
           onClick={handleAddNewReason}
@@ -3618,7 +3615,7 @@ function CronjobSettings() {
       {/* Buttons */}
       <div className="profile-actions d-flex justify-content-end gap-2">
         <Button variant="light">Cancel</Button>
-        <Button className="save-btn">Save Changes</Button>
+        <Button className="button">Save Changes</Button>
       </div>
 
     </div>
@@ -3667,7 +3664,7 @@ function BanIPAddress() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h5 className="fw-bold mb-0">Ban IP Address</h5>
         <Button
-          variant="primary"
+          
           size="sm"
           style={{ backgroundColor: "#4c5fce", border: "none" }}
           // onClick={handleAddNewip}
@@ -3781,7 +3778,7 @@ function SystemBackup() {
         <h5 className="fw-bold mb-0">System Backup</h5>
 
         <Button
-          variant="primary"
+          
           size="sm"
           style={{ backgroundColor: "#4c5fce", border: "none" }}
           onClick={handleGenerateBackup}
@@ -3894,7 +3891,7 @@ function DatabaseBackup() {
         <h5 className="fw-bold mb-0">Database Backup</h5>
 
         <Button
-          variant="primary"
+          
           size="sm"
           style={{ backgroundColor: "#4c5fce", border: "none" }}
           onClick={handleGenerateBackup}

@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Button, Form, Row, Col, Badge, Alert } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Badge,
+  Alert,
+} from "react-bootstrap";
 import { FiCheckCircle } from "react-icons/fi";
 
 function SystemUpdate() {
@@ -16,68 +24,106 @@ function SystemUpdate() {
   };
 
   return (
-    <div className="p-4 bg-white">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="fw-bold mb-0">System Update</h5>
+    <Container fluid>
+      <div className="saas-card">
 
-        <Button
-          size="sm"
-          style={{ backgroundColor: "#4c5fce", border: "none" }}
-          onClick={handleCheckUpdate}
-        >
-          Check for Update
-        </Button>
-      </div>
+        {/* Header */}
+        <div className="saas-card-header d-flex justify-content-between align-items-center">
+          <h5 className="mb-0 fw-bold">System Update</h5>
 
-      <hr />
-
-      <div className="mb-3">
-        <div className="d-flex align-items-center gap-2">
-          <FiCheckCircle color="#4c5fce" size={18} />
-          <span className="fw-semibold">You are up to date</span>
-
-          <Badge bg="light" text="primary" className="border">
-            Current Version : 8.0
-          </Badge>
+          <Button
+            className="button"
+            size="sm"
+            onClick={handleCheckUpdate}
+          >
+            Check for Update
+          </Button>
         </div>
 
-        <small className="text-muted ms-4">
-          Last Checked : Today 10:30 AM
-        </small>
+        <hr />
+
+        {/* Version Status */}
+        <div className="px-4 pt-3">
+          <div className="d-flex align-items-center gap-2 mb-1">
+            <FiCheckCircle size={18} color="#4c5fce" />
+            <span className="fw-semibold">
+              You are up to date
+            </span>
+
+            <Badge
+              bg="light"
+              text="primary"
+              className="border"
+            >
+              Current Version : 8.0
+            </Badge>
+          </div>
+
+          <small className="text-muted ms-4">
+            Last Checked : Today 10:30 AM
+          </small>
+        </div>
+
+        {/* Info Alert */}
+        <div className="px-4 pt-3">
+          <Alert
+            variant="light"
+            className="border rounded-3"
+          >
+            ℹ️ Before updating, it's best to back up your
+            files and database.
+          </Alert>
+        </div>
+
+        {/* Form */}
+        <div className="px-4 pb-4">
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label className="fw-medium">
+                    Purchase Key{" "}
+                    <span className="text-danger">*</span>
+                  </Form.Label>
+
+                  <Form.Control
+                    value={purchaseKey}
+                    onChange={(e) =>
+                      setPurchaseKey(e.target.value)
+                    }
+                    placeholder="Enter your purchase key"
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label className="fw-medium">
+                    User Name{" "}
+                    <span className="text-danger">*</span>
+                  </Form.Label>
+
+                  <Form.Control
+                    value={username}
+                    onChange={(e) =>
+                      setUsername(e.target.value)
+                    }
+                    placeholder="Enter your username"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <div className="d-flex justify-content-end mt-3">
+              <Button type="submit" className="button">
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </div>
+
       </div>
-
-      <Alert variant="light" className="border">
-        ℹ️ Before updating, it's best to back up your files and database.
-      </Alert>
-
-      <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col md={6}>
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Purchase Key <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Control
-                value={purchaseKey}
-                onChange={(e) => setPurchaseKey(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-
-          <Col md={6}>
-            <Form.Group className="mb-3">
-              <Form.Label>
-                User Name <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Control
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
-    </div>
+    </Container>
   );
 }
 

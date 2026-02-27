@@ -1,48 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
+import { Container, Row, Col, Form } from "react-bootstrap";
 
 const Storage = () => {
-  const [localStorageEnabled, setLocalStorageEnabled] = React.useState(true);
-  const [awsEnabled, setAwsEnabled] = React.useState(true);
+  const [localStorageEnabled, setLocalStorageEnabled] = useState(true);
+  const [awsEnabled, setAwsEnabled] = useState(true);
 
   return (
-    <div className="p-4 bg-white">
-      <h5 className="fw-bold mb-4">Storage</h5>
-      <hr />
+    <Container fluid>
+      <div className="saas-card">
 
-      <div className="row g-4">
-        {/* Local Storage */}
-        <div className="col-md-6">
-          <div className="card border-0 shadow-sm p-3">
-            <div className="d-flex justify-content-between align-items-center">
-              <h6 className="fw-semibold">Local Storage</h6>
-
-              <input
-                type="checkbox"
-                checked={localStorageEnabled}
-                onChange={() =>
-                  setLocalStorageEnabled(!localStorageEnabled)
-                }
-              />
-            </div>
-          </div>
+        {/* Header */}
+        <div className="saas-card-header">
+          <h5 className="mb-0 fw-bold">Storage</h5>
         </div>
 
-        {/* AWS */}
-        <div className="col-md-6">
-          <div className="card border-0 shadow-sm p-3">
-            <div className="d-flex justify-content-between align-items-center">
-              <h6 className="fw-semibold">AWS Storage</h6>
+        <hr />
 
-              <input
-                type="checkbox"
-                checked={awsEnabled}
-                onChange={() => setAwsEnabled(!awsEnabled)}
-              />
-            </div>
-          </div>
+        {/* Content */}
+        <div className="p-3">
+          <Row className="g-4">
+
+            {/* Local Storage */}
+            <Col md={6}>
+              <div className="saas-storage-card">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="fw-semibold mb-1">
+                      Local Storage
+                    </h6>
+                    <small className="text-muted">
+                      Store files directly on server.
+                    </small>
+                  </div>
+
+                  <Form.Check
+                    type="switch"
+                    id="local-storage-switch"
+                    checked={localStorageEnabled}
+                    onChange={() =>
+                      setLocalStorageEnabled(!localStorageEnabled)
+                    }
+                  />
+                </div>
+              </div>
+            </Col>
+
+            {/* AWS Storage */}
+            <Col md={6}>
+              <div className="saas-storage-card">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="fw-semibold mb-1">
+                      AWS Storage
+                    </h6>
+                    <small className="text-muted">
+                      Store files securely on AWS cloud.
+                    </small>
+                  </div>
+
+                  <Form.Check
+                    type="switch"
+                    id="aws-storage-switch"
+                    checked={awsEnabled}
+                    onChange={() =>
+                      setAwsEnabled(!awsEnabled)
+                    }
+                  />
+                </div>
+              </div>
+            </Col>
+
+          </Row>
         </div>
+
       </div>
-    </div>
+    </Container>
   );
 };
 

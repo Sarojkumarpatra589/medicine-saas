@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Button,
+  Form,
+  Dropdown,
+  Badge,
+} from "react-bootstrap";
 
 const CustomField = () => {
   const [customFields, setCustomFields] = useState([
@@ -23,87 +32,158 @@ const CustomField = () => {
     },
   ]);
 
+  // Toggle required switch
+  const toggleRequired = (id) => {
+    setCustomFields((prev) =>
+      prev.map((field) =>
+        field.id === id
+          ? { ...field, required: !field.required }
+          : field
+      )
+    );
+  };
+
+  // Toggle status
+  const toggleStatus = (id) => {
+    setCustomFields((prev) =>
+      prev.map((field) =>
+        field.id === id
+          ? {
+              ...field,
+              status:
+                field.status === "Active"
+                  ? "Inactive"
+                  : "Active",
+            }
+          : field
+      )
+    );
+  };
+
+  // Delete
+  const deleteField = (id) => {
+    setCustomFields((prev) =>
+      prev.filter((field) => field.id !== id)
+    );
+  };
+
   return (
-    <Container fluid className="py-4">
-      {/* Header */}
-      <Row className="mb-4">
-        <Col>
-          <div className="d-flex justify-content-between align-items-center">
-            <h5 className="fw-bold mb-0">Custom Field</h5>
+    <Container fluid>
+      <div className="saas-card">
+        {/* Header */}
+        <div className="saas-card-header d-flex justify-content-between align-items-center">
+          <h5 className="fw-bold">Custom Field Table</h5>
 
-            <Button
-              variant="primary"
-              className="d-flex align-items-center gap-2"
-            >
-              + New Custom Field
-            </Button>
-          </div>
-          <hr />
-        </Col>
-      </Row>
+          <Button className="button">
+            + New Custom Field
+          </Button>
+        </div>
+        <hr/>
 
-      {/* Table */}
-      <Row>
-        <Col>
-          <Table hover responsive className="align-middle border">
-            <thead className="bg-light">
-              <tr>
-                <th className="py-3">Module</th>
-                <th className="py-3">Label</th>
-                <th className="py-3">Type</th>
-                <th className="py-3">Default Value</th>
-                <th className="py-3">Required</th>
-                <th className="py-3">Status</th>
-                <th className="py-3 text-end"></th>
-              </tr>
-            </thead>
+        {/* Table */}
+        <div className="saas-table-wrapper">
+          <Row>
+            <Col>
+              <Table
+                hover
+                responsive
+                className="align-middle saas-table mb-0"
+              >
+                <thead>
+                  <tr>
+                    <th>Module</th>
+                    <th>Label</th>
+                    <th>Type</th>
+                    <th>Default Value</th>
+                    <th>Required</th>
+                    <th>Status</th>
+                    <th
+                      className="text-end"
+                      style={{ width: "60px" }}
+                    ></th>
+                  </tr>
+                </thead>
 
-            <tbody>
-              {customFields.map((field) => (
-                <tr key={field.id}>
-                  <td>{field.module}</td>
+                <tbody>
+                  {customFields.map((field) => (
+                    <tr key={field.id}>
+                      <td className="fw-medium">
+                        {field.module}
+                      </td>
 
-                  <td>{field.label}</td>
+                      <td>{field.label}</td>
 
-                  <td>{field.type}</td>
+                      <td>{field.type}</td>
 
-                  <td>{field.defaultValue}</td>
+                      <td>{field.defaultValue}</td>
 
-                  {/* Required Switch */}
-                  <td>
-                    <Form.Check
-                      type="switch"
-                      checked={field.required}
-                      onChange={() => {}}
-                      className="custom-switch-lg"
-                    />
-                  </td>
+                      {/* Required Switch */}
+                      <td>
+                        <Form.Check
+                          type="switch"
+                          checked={field.required}
+                          onChange={() =>
+                            toggleRequired(field.id)
+                          }
+                        />
+                      </td>
 
-                  {/* Status Badge */}
-                  <td>
-                    <span
-                      className={`px-3 py-1 rounded-pill small fw-medium ${
-                        field.status === "Active"
-                          ? "text-success bg-success-subtle"
-                          : "text-danger bg-danger-subtle"
-                      }`}
-                    >
-                      {field.status}
-                    </span>
-                  </td>
+                      {/* Status */}
+                      <td>
+                        <Badge
+                          pill
+                          bg={
+                            field.status === "Active"
+                              ? "success"
+                              : "secondary"
+                          }
+                        >
+                          {field.status}
+                        </Badge>
+                      </td>
 
-                  {/* Action Menu */}
-                  <td className="text-end">
-                    <Button variant="link" className="text-secondary p-0">
-                      <span style={{ fontSize: "20px" }}>⋮</span>
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
+                      {/* 3 Dot Menu */}
+                      <td className="text-end">
+                        <Dropdown align="end">
+                          <Dropdown.Toggle
+                            as="button"
+                            className="saas-dot-btn"
+                          >
+                            ⋮
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu className="saas-dropdown">
+                            <Dropdown.Item
+                              onClick={() =>
+                                toggleStatus(field.id)
+                              }
+                            >
+                              {field.status === "Active"
+                                ? "Deactivate"
+                                : "Activate"}
+                            </Dropdown.Item>
+
+                            <Dropdown.Divider />
+
+                            <Dropdown.Item
+                              className="text-danger"
+                              onClick={() =>
+                                deleteField(field.id)
+                              }
+                            >
+                              Delete
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </div>
+      </div>
     </Container>
   );
 };

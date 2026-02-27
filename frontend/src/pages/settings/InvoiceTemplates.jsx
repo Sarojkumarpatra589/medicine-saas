@@ -12,14 +12,11 @@ const InvoiceTemplates = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-    <Container fluid className="py-4">
+    <Container fluid>
       {/* Header */}
-      <Row className="mb-4">
-        <Col>
-          <h5 className="fw-bold">Invoice Template</h5>
-          <hr />
-        </Col>
-      </Row>
+      <h5 className="fw-bold ">Invoice Template</h5>
+      <hr className="mb-4" />
+
 
       {/* Template Grid */}
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">

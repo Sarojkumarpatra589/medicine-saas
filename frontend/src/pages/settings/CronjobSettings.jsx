@@ -1,46 +1,78 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 const CronjobSettings = () => {
-  const [cronLink, setCronLink] = React.useState("");
-  const [interval, setInterval] = React.useState("1 Day 1 Hour");
+  const [cronLink, setCronLink] = useState("");
+  const [interval, setInterval] = useState("1 Day 1 Hour");
 
   const handleSave = () => {
     console.log("Saved:", cronLink, interval);
   };
 
   return (
-    <div className="p-4 bg-white">
-      <h5 className="fw-bold mb-3">Cronjob</h5>
-      <hr />
+    <Container fluid>
+      <div className="saas-card">
 
-      <div className="row g-3">
-        <div className="col-md-6">
-          <label className="form-label">Cronjob Link</label>
-          <input
-            className="form-control"
-            value={cronLink}
-            onChange={(e) => setCronLink(e.target.value)}
-          />
+        {/* Header */}
+        <div className="saas-card-header">
+          <h5 className="mb-0 fw-bold">Cronjob</h5>
         </div>
 
-        <div className="col-md-6">
-          <label className="form-label">Execution Interval</label>
-          <input
-            className="form-control"
-            value={interval}
-            onChange={(e) => setInterval(e.target.value)}
-          />
+        <hr />
+
+        {/* Form Section */}
+        <div className="p-3">
+          <Row className="g-4">
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="fw-medium">
+                  Cronjob Link
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  value={cronLink}
+                  onChange={(e) =>
+                    setCronLink(e.target.value)
+                  }
+                  placeholder="Enter cronjob URL"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="fw-medium">
+                  Execution Interval
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  value={interval}
+                  onChange={(e) =>
+                    setInterval(e.target.value)
+                  }
+                />
+              </Form.Group>
+            </Col>
+
+          </Row>
         </div>
-      </div>
 
-      <hr />
+        <hr />
 
-      <div className="d-flex justify-content-end gap-2">
-        <Button variant="light">Cancel</Button>
-        <Button onClick={handleSave}>Save Changes</Button>
+        {/* Footer Buttons */}
+        <div className="saas-card-footer d-flex justify-content-end gap-2 p-3">
+          <Button variant="light">
+            Cancel
+          </Button>
+
+          <Button className="button" onClick={handleSave}>
+            Save Changes
+          </Button>
+        </div>
+
       </div>
-    </div>
+    </Container>
   );
 };
 

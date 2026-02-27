@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Button,
+} from "react-bootstrap";
 
 const Sitemap = () => {
-  const [sitemaps] = React.useState([
+  const [sitemaps] = useState([
     {
       id: 1,
       url: "https://localhost/Preclinic",
@@ -10,54 +17,70 @@ const Sitemap = () => {
   ]);
 
   return (
-    <div className="p-4 bg-white">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="fw-bold">Sitemap</h5>
+    <Container fluid>
+      <div className="saas-card">
 
-        <button
-          className="btn btn-sm"
-          style={{ backgroundColor: "#2f3dbd", color: "#fff" }}
-        >
-          + Generate Sitemap
-        </button>
+        {/* Header */}
+        <div className="saas-card-header d-flex justify-content-between align-items-center">
+          <h5 className="mb-0 fw-bold">Sitemap</h5>
+
+          <Button className="button">
+            + Generate Sitemap
+          </Button>
+        </div>
+
+        <hr />
+
+        {/* Table */}
+        <div className="saas-table-wrapper">
+          <Row>
+            <Col>
+              <Table
+                hover
+                responsive
+                className="align-middle saas-table mb-0"
+              >
+                <thead>
+                  <tr>
+                    <th>URL</th>
+                    <th>Filename</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {sitemaps.map((item) => (
+                    <tr key={item.id}>
+                      <td>
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="fw-medium text-decoration-none"
+                        >
+                          {item.url}
+                        </a>
+                      </td>
+
+                      <td>
+                        <a
+                          href={`${item.url}/${item.filename}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-primary fw-semibold text-decoration-none"
+                        >
+                          {item.filename}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </div>
+
       </div>
-
-      <hr />
-
-      <div className="table-responsive">
-        <table className="table table-hover align-middle">
-          <thead className="bg-light">
-            <tr>
-              <th>URL</th>
-              <th>Filename</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {sitemaps.map((item) => (
-              <tr key={item.id}>
-                <td>
-                  <a href={item.url} target="_blank" rel="noreferrer">
-                    {item.url}
-                  </a>
-                </td>
-
-                <td>
-                  <a
-                    href={`${item.url}/${item.filename}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary fw-semibold"
-                  >
-                    {item.filename}
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </Container>
   );
 };
 

@@ -1,14 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { House, Gear, Wallet, FileText, Server } from "react-bootstrap-icons"; // example icons
-import "./settings.css"; 
+import { House, Gear, Wallet, FileText, Server } from "react-bootstrap-icons";
+import "./settings.css";
 
 export default function SettingsSidebar() {
-  const [openMenu, setOpenMenu] = useState("account");
+  const location = useLocation();
+  const [openMenu, setOpenMenu] = useState("");
+
+  // Auto-open correct section
+  useEffect(() => {
+    const path = location.pathname;
+
+    const sectionMap = {
+      account: [
+        ROUTES.MY_PROFILE,
+        ROUTES.SECURITY,
+        ROUTES.NOTIFICATIONS,
+        ROUTES.INTEGRATION_SETTING,
+      ],
+      clinic: [
+        ROUTES.APPOINTMENT,
+        ROUTES.WORKING_HOURS,
+        ROUTES.CANCELLATION_REASON,
+      ],
+      app: [
+        ROUTES.INVOICE_SETTING,
+        ROUTES.INVOICE_TEMPLATE,
+        ROUTES.SIGNATURE,
+        ROUTES.CUSTOM_FIELDS,
+      ],
+      system: [
+        ROUTES.EMAIL_SETTING,
+        ROUTES.EMAIL_TEMPLATE,
+        ROUTES.SMS_GATEWAY,
+        ROUTES.SMS_TEMPLATE,
+        ROUTES.GDPR_COOKIES,
+      ],
+      finance: [
+        ROUTES.PAYMENT_METHODS,
+        ROUTES.BANK_ACCOUNTS,
+        ROUTES.TAX_RATES,
+        ROUTES.CURRENCIES,
+      ],
+      other: [
+        ROUTES.SITEMAP,
+        ROUTES.CLEAR_CACHE,
+        ROUTES.STORAGE,
+        ROUTES.CRONJOB,
+        ROUTES.BAN_IP,
+        ROUTES.SYSTEM_BACKUPS,
+        ROUTES.DATABASE_BACKUPS,
+        ROUTES.SYSTEM_UPDATE,
+      ],
+    };
+
+    for (const key in sectionMap) {
+      if (sectionMap[key].includes(path)) {
+        setOpenMenu(key);
+        break;
+      }
+    }
+  }, [location.pathname]);
 
   return (
     <>
+    <div className="settings-sidebar-container">
       <SidebarSection
         title="Account Settings"
         icon={<Gear size={16} />}
@@ -96,15 +153,12 @@ export default function SettingsSidebar() {
           { label: "System Update", path: ROUTES.SYSTEM_UPDATE },
         ]}
       />
+      </div>  
     </>
   );
 }
 
-/* ================= Sidebar Section Component ================= */
-
 function SidebarSection({ title, icon, openKey, openMenu, setOpenMenu, items }) {
-  const location = useLocation();
-
   return (
     <div className="settings-sidebar mt-2">
       <div
@@ -117,21 +171,21 @@ function SidebarSection({ title, icon, openKey, openMenu, setOpenMenu, items }) 
 
       {openMenu === openKey && (
         <ul className="settings-menu-list">
-          {items.map((item) => {
-            const isActive = location.pathname === item.path;
-
-            return (
-              <li key={item.path} className={isActive ? "active-item" : ""}>
-                <NavLink to={item.path} className="settings-link">
-                  <span className="dot"></span>
-                  {item.label}
-                </NavLink>
-              </li>
-            );
-          })}
+          {items.map((item) => (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  "settings-link" + (isActive ? " active-item" : "")
+                }
+              >
+                <span className="dot"></span>
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       )}
     </div>
   );
 }
-

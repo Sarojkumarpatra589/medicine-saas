@@ -6,14 +6,11 @@ const InvoiceSettings = () => {
   const [invoiceRoundoff, setInvoiceRoundoff] = useState(true);
 
   return (
-    <Container fluid className="py-4">
+    <Container fluid >
       {/* Header */}
-      <Row className="mb-4">
-        <Col>
-          <h5 className="fw-bold">Invoice Settings</h5>
-          <hr />
-        </Col>
-      </Row>
+     <h5 className="fw-bold ">Invoice Settings</h5>
+      <hr className="mb-4" />
+
 
       <Row>
         <Col lg={12}>
@@ -123,7 +120,7 @@ const InvoiceSettings = () => {
             {/* Action Buttons */}
             <div className="d-flex justify-content-end gap-2 pt-3">
               <Button variant="outline-secondary">Cancel</Button>
-              <Button variant="primary">Save Changes</Button>
+              <Button className="button">Save Changes</Button>
             </div>
           </div>
         </Col>
