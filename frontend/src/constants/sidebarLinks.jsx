@@ -121,13 +121,47 @@ export const SIDEBAR_LINKS = [
   title: "Settings",
   key: "settings",
   children: [
+
+    // ================= ACCOUNT SETTINGS =================
     { label: "My Profile", to: ROUTES.MY_PROFILE },
-    { label: "Company Settings", to: ROUTES.COMPANY_SETTING },
-    { label: "Store Settings", to: ROUTES.STORE_SETTING },
-    { label: "User Roles", to: ROUTES.USER_ROLE },
-    { label: "Alert Settings", to: ROUTES.ALERT_SETTING },
+    { label: "Security", to: ROUTES.SECURITY },
+    { label: "Notifications", to: ROUTES.NOTIFICATIONS },
+    { label: "Integrations", to: ROUTES.INTEGRATION_SETTING },
+
+    // ================= CLINIC SETTINGS =================
+    { label: "Appointment", to: ROUTES.APPOINTMENT },
+    { label: "Working Hours", to: ROUTES.WORKING_HOURS },
+    { label: "Cancellation Reason", to: ROUTES.CANCELLATION_REASON },
+
+    // ================= APP SETTINGS =================
     { label: "Invoice Settings", to: ROUTES.INVOICE_SETTING },
-    { label: "Integration Settings", to: ROUTES.INTEGRATION_SETTING },
+    { label: "Invoice Templates", to: ROUTES.INVOICE_TEMPLATE },
+    { label: "Signatures", to: ROUTES.SIGNATURE },
+    { label: "Custom Fields", to: ROUTES.CUSTOM_FIELDS },
+
+    // ================= SYSTEM SETTINGS =================
+    { label: "Email Setting", to: ROUTES.EMAIL_SETTING },
+    { label: "Email Template", to: ROUTES.EMAIL_TEMPLATE },
+    { label: "SMS Gateway", to: ROUTES.SMS_GATEWAY },
+    { label: "SMS Template", to: ROUTES.SMS_TEMPLATE },
+    { label: "GDPR & Cookies", to: ROUTES.GDPR_COOKIES },
+
+    // ================= FINANCE SETTINGS =================
+    { label: "Payment Methods", to: ROUTES.PAYMENT_METHODS },
+    { label: "Bank Accounts", to: ROUTES.BANK_ACCOUNTS },
+    { label: "Tax Rates", to: ROUTES.TAX_RATES },
+    { label: "Currencies", to: ROUTES.CURRENCIES },
+
+    // ================= OTHER SETTINGS =================
+    { label: "Sitemap", to: ROUTES.SITEMAP },
+    { label: "Clear Cache", to: ROUTES.CLEAR_CACHE },
+    { label: "Storage", to: ROUTES.STORAGE },
+    { label: "Cronjob Settings", to: ROUTES.CRONJOB },
+    { label: "Ban IP Address", to: ROUTES.BAN_IP },
+    { label: "System Backup", to: ROUTES.SYSTEM_BACKUPS },
+    { label: "Database Backup", to: ROUTES.DATABASE_BACKUPS },
+    { label: "System Update", to: ROUTES.SYSTEM_UPDATE },
+
   ],
 },
 
