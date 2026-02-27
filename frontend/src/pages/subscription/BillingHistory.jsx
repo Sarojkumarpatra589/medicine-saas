@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./style.css";
 
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -25,9 +26,7 @@ const css = `
 
   .page {
     min-height: 100vh;
-    background: var(--bg);
-    font-family: 'Sora', sans-serif;
-    padding: 32px 28px 60px;
+    padding: 20px 22px 60px;
   }
 
   .page-header {
@@ -38,7 +37,7 @@ const css = `
   .page-title {
     font-size: 24px; font-weight: 700; color: var(--ink); letter-spacing: -0.5px;
   }
-  .page-title span { color: var(--blue); }
+  .page-title span { color: var(--primary-color); }
   .page-sub { font-size: 13px; color: var(--ink3); margin-top: 3px; }
 
   .header-actions { display: flex; gap: 10px; }
@@ -46,7 +45,7 @@ const css = `
   .hbtn {
     display: flex; align-items: center; gap: 6px;
     padding: 8px 16px; border-radius: 8px; font-size: 13px;
-    font-weight: 500; cursor: pointer; border: none; font-family: inherit;
+    font-weight: 500; cursor: pointer; border: none;;
     transition: all .15s;
   }
   .hbtn-ghost {
@@ -55,17 +54,15 @@ const css = `
     box-shadow: 0 1px 3px rgba(0,0,0,.05);
   }
   .hbtn-ghost:hover { border-color: #b0b8d0; }
-  .hbtn-primary { background: var(--blue); color: white; box-shadow: 0 2px 8px rgba(30,111,255,.3); }
+  .hbtn-primary { background: var(--primary-color); color: white; box-shadow: 0 2px 8px rgba(30,111,255,.3); }
   .hbtn-primary:hover { background: var(--blue-dark); }
 
   /* Filter Bar */
   .filter-bar {
     background: var(--white);
     border: 1px solid var(--border);
-    border-radius: 14px;
     padding: 16px 20px;
     margin-bottom: 20px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.04);
   }
   .filter-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .filter-row + .filter-row { margin-top: 10px; }
@@ -73,7 +70,7 @@ const css = `
   .filter-input, .filter-select {
     height: 38px; border: 1px solid var(--border);
     border-radius: 8px; padding: 0 12px;
-    font-size: 13px; font-family: inherit; color: var(--ink2);
+    font-size: 13px; color: var(--ink2);
     background: #f8f9fc; outline: none; transition: border .15s;
     flex: 1; min-width: 120px;
   }
@@ -89,8 +86,8 @@ const css = `
 
   .btn-apply {
     height: 38px; padding: 0 22px; border-radius: 8px;
-    background: var(--green); color: white; font-size: 13px;
-    font-weight: 600; border: none; cursor: pointer; font-family: inherit;
+    background: var( --active-button-color); color: white; font-size: 13px;
+    font-weight: 600; border: none; cursor: pointer; 
     box-shadow: 0 2px 8px rgba(22,163,74,.3); transition: all .15s; white-space: nowrap;
   }
   .btn-apply:hover { background: #15803d; transform: translateY(-1px); }
@@ -146,7 +143,7 @@ const css = `
   }
   .sum-value {
     font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
-    font-family: 'JetBrains Mono', monospace; position: relative; z-index: 1;
+     position: relative; z-index: 1;
   }
   .sum-delta {
     margin-top: 8px; font-size: 11px; opacity: .75;
@@ -161,8 +158,6 @@ const css = `
   .table-card {
     background: var(--white);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.04);
     overflow: hidden;
   }
 
@@ -177,7 +172,7 @@ const css = `
   .tbtn {
     height: 34px; padding: 0 14px; border-radius: 7px;
     font-size: 12px; font-weight: 500; border: 1px solid var(--border);
-    background: #f8f9fc; color: var(--ink2); cursor: pointer; font-family: inherit;
+    background: #f8f9fc; color: var(--ink2); cursor: pointer; 
     transition: all .15s;
   }
   .tbtn:hover { background: white; border-color: #b0b8d0; }
@@ -199,7 +194,6 @@ const css = `
   tbody tr:hover { background: #f8f9fc; }
 
   .inv-link {
-    font-family: 'JetBrains Mono', monospace;
     font-size: 13px; font-weight: 500; color: var(--blue); cursor: pointer;
   }
   .inv-link:hover { text-decoration: underline; }
@@ -214,9 +208,9 @@ const css = `
     background: #eff6ff; color: #1d4ed8; font-weight: 600;
   }
 
-  .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink3); }
+  .mono {  font-size: 12px; color: var(--ink3); }
 
-  .amount { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--ink); }
+  .amount {  font-weight: 700; color: var(--ink); }
   .amount.paid-amt { color: var(--green); }
   .amount.due-amt { color: var(--red); }
   .amount.total-amt { color: var(--blue); }
@@ -255,7 +249,7 @@ const css = `
     display: flex; align-items: center; justify-content: center;
     font-size: 12px; font-weight: 500; cursor: pointer;
     border: 1px solid var(--border); background: white; color: var(--ink2);
-    font-family: inherit; transition: all .15s;
+    transition: all .15s;
   }
   .ppage:hover, .ppage.active { background: var(--blue); color: white; border-color: var(--blue); }
 
@@ -296,10 +290,9 @@ export default function BillingHistory() {
       <div className="page">
 
         {/* Header */}
-        <div className="page-header">
+        <div className="page-header bg-white box_shadow p-3">
           <div>
             <div className="page-title">Billing <span>History</span></div>
-            <div className="page-sub">Track all patient billing records, payments and outstanding dues</div>
           </div>
           <div className="header-actions">
             <button className="hbtn hbtn-ghost">⬇ Export CSV</button>
@@ -309,7 +302,7 @@ export default function BillingHistory() {
         </div>
 
         {/* Filter Bar */}
-        <div className="filter-bar">
+        <div className="filter-bar box_shadow">
           <div className="filter-row">
             <div className="date-input">📅 <span>01/04/2025 to 30/04/2025</span></div>
             <input className="filter-input" placeholder="Invoice No" />
@@ -369,86 +362,114 @@ export default function BillingHistory() {
         </div>
 
         {/* Table */}
-        <div className="table-card">
-          <div className="table-toolbar">
-            <div>
-              <div className="table-title">Billing Transactions</div>
-              <div className="table-sub">Showing {rows.length} of 25 records · April 2025</div>
-            </div>
-            <div className="toolbar-right">
-              <button className="tbtn">🔍 Search</button>
-              <button className="tbtn">⇅ Sort</button>
-              <button className="tbtn">⬇ Export</button>
-            </div>
-          </div>
+<div className="table-card box_shadow">
+  <div className="table-toolbar">
+    <div>
+      <div className="table-title">Billing Transactions</div>
+      <div className="table-sub">
+        Showing {rows.length} of 25 records · April 2025
+      </div>
+    </div>
 
-          <div style={{overflowX:'auto'}}>
-            <table>
-              <thead>
-                <tr>
-                  <th>Invoice No</th>
-                  <th>Date & Time</th>
-                  <th>Patient Name</th>
-                  <th>Mobile No</th>
-                  <th>Doctor</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
-                  <th>Due Amount</th>
-                  <th>Payment Mode</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => (
-                  <tr key={r.inv}>
-                    <td><span className="inv-link">{r.inv}</span></td>
-                    <td>
-                      <div style={{fontSize:12, color:'var(--ink)', fontWeight:500}}>{r.date}</div>
-                      <div className="mono">{r.time}</div>
-                    </td>
-                    <td>
-                      <div className="patient-name">{r.patient}</div>
-                      <div className="patient-type">{r.type}</div>
-                    </td>
-                    <td><span className="mono">{r.mobile}</span></td>
-                    <td>
-                      <div className="doctor-name">{r.doctor}</div>
-                      <span className="dept-tag">{r.dept}</span>
-                    </td>
-                    <td><span className="amount total-amt">${r.total.toLocaleString()}</span></td>
-                    <td><span className="amount paid-amt">${r.paid.toLocaleString()}</span></td>
-                    <td>
-                      {r.due > 0
-                        ? <span className="amount due-amt">${r.due.toLocaleString()}</span>
-                        : <span style={{color:'var(--ink3)', fontSize:12}}>—</span>
-                      }
-                    </td>
-                    <td><span className={`pay-chip ${payClass(r.payment)}`}>{r.payment}</span></td>
-                    <td>
-                      <span className={`status-chip ${r.status}`}>
-                        <span className="status-dot" />
-                        {r.status.charAt(0).toUpperCase() + r.status.slice(1)}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+    <div className="toolbar-right">
+      <button className="tbtn">Search</button>
+      <button className="tbtn">Sort</button>
+      <button className="tbtn">Export</button>
+    </div>
+  </div>
 
-          <div className="table-footer">
-            <div className="page-info">Showing 1–{rows.length} of 25 entries</div>
-            <div className="pagination">
-              {[1, 2, 3, "…", 5].map((p, i) => (
-                <button
-                  key={i}
-                  className={`ppage ${activePage === p ? "active" : ""}`}
-                  onClick={() => typeof p === "number" && setActivePage(p)}
-                >{p}</button>
-              ))}
+  <table className="billing-table">
+    <thead>
+      <tr>
+        <th>Invoice</th>
+        <th>Date</th>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Total</th>
+        <th>Paid</th>
+        <th>Due</th>
+        <th>Status</th>
+        <th style={{textAlign:"center"}}>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {rows.map((r) => (
+        <tr key={r.inv}>
+          <td><span className="inv-link">{r.inv}</span></td>
+
+          <td>
+            <div className="primary-text">{r.date}</div>
+            <div className="sub-text">{r.time}</div>
+          </td>
+
+          <td>
+            <div className="primary-text">{r.patient}</div>
+            <div className="sub-text">{r.mobile}</div>
+          </td>
+
+          <td>
+            <div className="primary-text">{r.doctor}</div>
+            <div className="sub-text">{r.dept}</div>
+          </td>
+
+          <td className="amount total-amt">
+            ${r.total.toLocaleString()}
+          </td>
+
+          <td className="amount paid-amt">
+            ${r.paid.toLocaleString()}
+          </td>
+
+          <td>
+            {r.due > 0
+              ? <span className="amount due-amt">${r.due.toLocaleString()}</span>
+              : <span className="sub-text">—</span>
+            }
+          </td>
+
+          <td>
+            <span className={`status-chip ${r.status}`}>
+              {r.status}
+            </span>
+          </td>
+
+          {/* 3 DOT MENU */}
+          <td style={{textAlign:"center"}}>
+            <div className="action-menu">
+              <button className="dot-btn">⋮</button>
+
+              <div className="dropdown-menu">
+                <div className="dd-item">Download</div>
+                <div className="dd-item">Edit</div>
+                <div className="dd-item delete">Delete</div>
+              </div>
             </div>
-          </div>
-        </div>
+          </td>
+
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <div className="table-footer">
+    <div className="page-info">
+      Showing 1–{rows.length} of 25 entries
+    </div>
+
+    <div className="pagination">
+      {[1,2,3,"…",5].map((p,i)=>(
+        <button
+          key={i}
+          className={`ppage ${activePage === p ? "active" : ""}`}
+          onClick={()=> typeof p==="number" && setActivePage(p)}
+        >
+          {p}
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
 
       </div>
     </>

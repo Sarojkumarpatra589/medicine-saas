@@ -1,176 +1,305 @@
-import React, { useState } from "react";
-import "./style.css";
+import React, { useState, useMemo } from "react";
+import {
+  Table,
+  Dropdown,
+  Badge,
+  InputGroup,
+  Form,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
+import {
+  FiPlus,
+  FiFilter,
+  FiSearch,
+  FiMoreVertical,
+  FiChevronLeft,
+  FiChevronRight,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 const invoiceData = [
-  { id: "#INV0025", patient: "James Adair", avatar: "JA", color: "#4f8ef7", created: "30 Apr 2025", due: "30 Apr 2025", amount: "$800", status: "Paid" },
-  { id: "#INV0024", patient: "Emily Johnson", avatar: "EJ", color: "#e74c3c", created: "15 Apr 2025", due: "15 Apr 2025", amount: "$930", status: "Partially Paid" },
-  { id: "#INV0023", patient: "Robert Mitchell", avatar: "RM", color: "#95a5a6", created: "02 Apr 2025", due: "02 Apr 2025", amount: "$850", status: "Unpaid" },
-  { id: "#INV0022", patient: "Sophia Miller", avatar: "SM", color: "#e91e63", created: "27 Mar 2025", due: "27 Mar 2025", amount: "$700", status: "Paid" },
-  { id: "#INV0021", patient: "Daniel Anderson", avatar: "DA", color: "#607d8b", created: "12 Mar 2025", due: "12 Mar 2025", amount: "$650", status: "Partially Paid" },
-  { id: "#INV0020", patient: "Olivia Davis", avatar: "OD", color: "#3f51b5", created: "05 Mar 2025", due: "05 Mar 2025", amount: "$430", status: "Unpaid" },
-  { id: "#INV0019", patient: "Michael Thompson", avatar: "MT", color: "#795548", created: "24 Feb 2025", due: "24 Feb 2025", amount: "$300", status: "Paid" },
-  { id: "#INV0018", patient: "Isabella Wilson", avatar: "IW", color: "#546e7a", created: "16 Feb 2025", due: "16 Feb 2025", amount: "$450", status: "Unpaid" },
-  { id: "#INV0017", patient: "Michael Trade", avatar: "MT", color: "#f39c12", created: "01 Feb 2025", due: "01 Feb 2025", amount: "$570", status: "Paid" },
-  { id: "#INV0016", patient: "Ava Robinson", avatar: "AR", color: "#9e9e9e", created: "25 Jan 2025", due: "25 Jan 2025", amount: "$800", status: "Unpaid" },
+  { id: "#INV0025", patient: "James Adair", created: "2025-04-30", due: "2025-04-30", amount: 800, status: "Paid" },
+  { id: "#INV0024", patient: "Emily Johnson", created: "2025-04-15", due: "2025-04-15", amount: 930, status: "Partially Paid" },
+  { id: "#INV0023", patient: "Robert Mitchell", created: "2025-04-02", due: "2025-04-02", amount: 850, status: "Unpaid" },
+  { id: "#INV0022", patient: "Sophia Miller", created: "2025-03-27", due: "2025-03-27", amount: 700, status: "Paid" },
+  { id: "#INV0021", patient: "Daniel Anderson", created: "2025-03-12", due: "2025-03-12", amount: 650, status: "Partially Paid" },
+  { id: "#INV0020", patient: "Olivia Davis", created: "2025-03-05", due: "2025-03-05", amount: 430, status: "Unpaid" },
 ];
 
-const statusConfig = {
-  Paid: { className: "badge-paid", label: "Paid" },
-  "Partially Paid": { className: "badge-partial", label: "Partially Paid" },
-  Unpaid: { className: "badge-unpaid", label: "Unpaid" },
-};
+const Invoice = () => {
+  const [filter, setFilter] = useState({
+    search: "",
+    status: [],
+    fromDate: "",
+    toDate: "",
+  });
 
-export default function Invoice() {
-  const [search, setSearch] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [openMenu, setOpenMenu] = useState(null);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const filtered = invoiceData.filter((inv) =>
-    inv.patient.toLowerCase().includes(search.toLowerCase()) ||
-    inv.id.toLowerCase().includes(search.toLowerCase())
+  // Filtering Logic
+  const filteredInvoices = useMemo(() => {
+    return invoiceData.filter((inv) => {
+      const matchesSearch =
+        inv.id.toLowerCase().includes(filter.search.toLowerCase()) ||
+        inv.patient.toLowerCase().includes(filter.search.toLowerCase());
+
+      const matchesStatus =
+        !filter.status.length || filter.status.includes(inv.status);
+
+      const matchesFromDate =
+        !filter.fromDate || inv.created >= filter.fromDate;
+
+      const matchesToDate =
+        !filter.toDate || inv.created <= filter.toDate;
+
+      return matchesSearch && matchesStatus && matchesFromDate && matchesToDate;
+    });
+  }, [filter]);
+
+  const totalPages = Math.ceil(filteredInvoices.length / rowsPerPage);
+
+  const paginated = filteredInvoices.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
   );
 
-  const totalEntries = filtered.length;
-  const totalPages = Math.ceil(totalEntries / rowsPerPage);
-  const paginated = filtered.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  const resetFilters = () => {
+    setFilter({ search: "", status: [], fromDate: "", toDate: "" });
+    setCurrentPage(1);
+  };
+
+  const statusColor = (status) => {
+    if (status === "Paid") return "success";
+    if (status === "Partially Paid") return "warning";
+    return "danger";
+  };
+
+  const startItem =
+    filteredInvoices.length === 0
+      ? 0
+      : (currentPage - 1) * rowsPerPage + 1;
+
+  const endItem = Math.min(
+    currentPage * rowsPerPage,
+    filteredInvoices.length
+  );
 
   return (
-    <div className="inv-page">
+    <div className="container my-4 px-4">
+
       {/* Header */}
-      <div className="inv-header">
-        <div className="inv-title-row">
-          <h1 className="inv-title">Invoices</h1>
-          <span className="inv-total-badge">Total Invoices : {invoiceData.length}</span>
-        </div>
-        <div className="inv-actions">
-          <button className="btn-export">
-            Export <span className="chevron">▾</span>
-          </button>
-          <button className="btn-new">+ New Invoices</button>
-        </div>
-      </div>
+      <div className="box_shadow mb-3 p-3 bg-white">
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <h5 className="fw-bold mb-0">Invoices</h5>
+          </div>
 
-      {/* Toolbar */}
-      <div className="inv-toolbar">
-        <input
-          className="inv-search"
-          placeholder="Search"
-          value={search}
-          onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }}
-        />
-        <div className="inv-toolbar-right">
-          <button className="btn-filter">
-            <span className="filter-icon">⊟</span> Filters
-          </button>
-          <button className="btn-sort">
-            Sort By : Recent <span className="chevron">▾</span>
-          </button>
+          <Button size="sm" className="button d-flex align-items-center gap-1">
+            <FiPlus size={14} /> New Invoice
+          </Button>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="inv-table-wrapper">
-        <table className="inv-table">
-          <thead>
-            <tr>
-              <th>Invoice ID</th>
-              <th>Patient</th>
-              <th>Created Date</th>
-              <th>Due Date</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginated.map((inv) => {
-              const { className, label } = statusConfig[inv.status];
-              return (
-                <tr key={inv.id} className="inv-row">
-                  <td className="inv-id">{inv.id}</td>
-                  <td className="inv-patient">
-                    <div className="patient-avatar" style={{ background: inv.color }}>
-                      {inv.avatar}
-                    </div>
-                    <span>{inv.patient}</span>
-                  </td>
-                  <td>{inv.created}</td>
-                  <td>{inv.due}</td>
-                  <td className="inv-amount">{inv.amount}</td>
-                  <td>
-                    <span className={`status-badge ${className}`}>{label}</span>
-                  </td>
-                  <td className="inv-menu-cell">
-                    <button
-                      className="inv-menu-btn"
-                      onClick={() => setOpenMenu(openMenu === inv.id ? null : inv.id)}
-                    >
-                      ⋮
-                    </button>
-                    {openMenu === inv.id && (
-                      <div className="inv-dropdown">
-                       <Link to="/subscription/invoice/view" className="inv-dropdown-item">
-  View
-</Link>
+      {/* Table Section */}
+      <div className="box_shadow p-3 bg-white">
 
-<div className="inv-dropdown-item">Edit</div>
+        {/* Filters Inside Table */}
+        <Row className="g-2 mb-3 align-items-end">
 
-<div className="inv-dropdown-item inv-dropdown-danger">
-  Delete
-</div>
+          <Col md={3}>
+            <InputGroup size="sm">
+              <InputGroup.Text className="bg-white">
+                <FiSearch size={14} />
+              </InputGroup.Text>
+              <Form.Control
+                placeholder="Search invoice or patient..."
+                value={filter.search}
+                onChange={(e) =>
+                  setFilter({ ...filter, search: e.target.value })
+                }
+              />
+            </InputGroup>
+          </Col>
 
-                      </div>
-                    )}
+          <Col md={2}>
+            <Form.Select
+              size="sm"
+              value=""
+              onChange={(e) => {
+                const val = e.target.value;
+                setFilter({
+                  ...filter,
+                  status: val ? [val] : [],
+                });
+              }}
+            >
+              <option value="">All Status</option>
+              <option>Paid</option>
+              <option>Partially Paid</option>
+              <option>Unpaid</option>
+            </Form.Select>
+          </Col>
+
+          <Col md={2}>
+            <Form.Control
+              size="sm"
+              type="date"
+              value={filter.fromDate}
+              onChange={(e) =>
+                setFilter({ ...filter, fromDate: e.target.value })
+              }
+            />
+          </Col>
+
+          <Col md={2}>
+            <Form.Control
+              size="sm"
+              type="date"
+              value={filter.toDate}
+              onChange={(e) =>
+                setFilter({ ...filter, toDate: e.target.value })
+              }
+            />
+          </Col>
+
+          
+
+          <Col md={3} className="d-flex gap-2">
+            <Button
+              size="sm"
+              variant="outline-secondary"
+              onClick={resetFilters}
+            >
+              Reset
+            </Button>
+          </Col>
+        </Row>
+
+        <hr/>
+
+        {/* Table */}
+        <div className="saas-table-wrapper">
+          <Table hover responsive className="align-middle saas-table mb-0">
+            <thead>
+              <tr>
+                <th>Invoice ID</th>
+                <th>Patient</th>
+                <th>Created</th>
+                <th>Due</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th className="text-end" style={{ width: "60px" }}></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {paginated.length > 0 ? (
+                paginated.map((inv) => (
+                  <tr key={inv.id}>
+                    <td className="fw-medium">{inv.id}</td>
+                    <td>{inv.patient}</td>
+                    <td>{inv.created}</td>
+                    <td>{inv.due}</td>
+                    <td>${inv.amount}</td>
+                    <td>
+                      <Badge pill bg={statusColor(inv.status)}>
+                        {inv.status}
+                      </Badge>
+                    </td>
+
+                    <td className="text-end">
+                      <Dropdown align="end">
+                        <Dropdown.Toggle as="button" className="saas-dot-btn">
+                          <FiMoreVertical size={16} />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item
+                            as={Link}
+                            to="/subscription/invoice/view"
+                          >
+                            View
+                          </Dropdown.Item>
+                          <Dropdown.Item>Edit</Dropdown.Item>
+                          <Dropdown.Divider />
+                          <Dropdown.Item className="text-danger">
+                            Delete
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="text-center py-4 text-muted">
+                    No invoices found
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Footer */}
-      <div className="inv-footer">
-        <div className="inv-rows-select">
-          <span>Row Per Page</span>
-          <select
-            value={rowsPerPage}
-            onChange={(e) => { setRowsPerPage(Number(e.target.value)); setCurrentPage(1); }}
-          >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-          </select>
-          <span>Entries</span>
+              )}
+            </tbody>
+          </Table>
         </div>
-        <div className="inv-pagination">
-          <button
-            className="pg-btn"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((p) => p - 1)}
-          >
-            ‹
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i + 1}
-              className={`pg-btn${currentPage === i + 1 ? " pg-active" : ""}`}
-              onClick={() => setCurrentPage(i + 1)}
+
+        {/* Advanced Pagination */}
+        <div className="d-flex justify-content-between align-items-center mt-3 pt-3 border-top flex-wrap gap-2">
+
+          <div className="d-flex align-items-center gap-2">
+            <small className="text-muted">
+              Showing {startItem}–{endItem} of {filteredInvoices.length} invoices
+            </small>
+
+            <Form.Select
+              size="sm"
+              value={rowsPerPage}
+              onChange={(e) => {
+                setRowsPerPage(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+              style={{ width: "80px" }}
             >
-              {i + 1}
-            </button>
-          ))}
-          <button
-            className="pg-btn"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((p) => p + 1)}
-          >
-            ›
-          </button>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+            </Form.Select>
+          </div>
+
+          <div className="d-flex gap-2">
+            <Button
+              size="sm"
+              variant="outline-secondary"
+              disabled={currentPage === 1}
+              onClick={() =>
+                setCurrentPage((p) => Math.max(1, p - 1))
+              }
+            >
+              <FiChevronLeft />
+            </Button>
+
+            <small className="align-self-center">
+              Page {currentPage} of {totalPages || 1}
+            </small>
+
+            <Button
+              size="sm"
+              variant="outline-secondary"
+              disabled={currentPage === totalPages}
+              onClick={() =>
+                setCurrentPage((p) =>
+                  Math.min(totalPages, p + 1)
+                )
+              }
+            >
+              <FiChevronRight />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Invoice;
