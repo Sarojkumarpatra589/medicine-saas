@@ -1,19 +1,24 @@
 import React, { useState, useMemo } from "react";
 import {
-  Card,
-  Row,
-  Col,
-  Button,
-  Form,
-  InputGroup,
   Table,
   Badge,
+  InputGroup,
+  Form,
+  Button,
+  Row,
+  Col,
+  Dropdown,
+  Stack,
 } from "react-bootstrap";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiDownload, FiMoreVertical } from "react-icons/fi";
+import "./style.css";
 
 const BatchStockReport = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [stockFilter, setStockFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
 
   const data = [
     {
@@ -39,68 +44,81 @@ const BatchStockReport = () => {
     },
   ];
 
-  const filteredData = useMemo(() => {
-    return data.map((product) => {
-      const filteredBatches = product.batches.filter((b) => {
-        const matchSearch =
-          product.product.toLowerCase().includes(search.toLowerCase()) ||
-          b.no.toLowerCase().includes(search.toLowerCase());
+  /* Flatten all batches into one list */
+  const allBatches = data.flatMap((product) =>
+    product.batches.map((b) => ({
+      ...b,
+      product: product.product,
+      total: product.total,
+    }))
+  );
 
-        const matchStatus =
-          statusFilter === "All" ||
-          b.status === statusFilter;
+  /* Filtering */
+  const filtered = useMemo(() => {
+    let result = allBatches.filter((b) =>
+      `${b.product} ${b.no}`.toLowerCase().includes(search.toLowerCase())
+    );
 
-        return matchSearch && matchStatus;
+    if (statusFilter !== "All") {
+      result = result.filter((b) => b.status === statusFilter);
+    }
+
+    if (stockFilter !== "All") {
+      result = result.filter((b) => {
+        if (stockFilter === "Low") return b.stock < 20;
+        if (stockFilter === "Medium") return b.stock >= 20 && b.stock <= 50;
+        if (stockFilter === "High") return b.stock > 50;
+        return true;
       });
+    }
 
-      return { ...product, batches: filteredBatches };
-    });
-  }, [search, statusFilter]);
+    return result;
+  }, [search, statusFilter, stockFilter, allBatches]);
 
-  const statusBadge = (status) => {
-    if (status === "Valid")
-      return <Badge bg="success" pill className="px-3 py-1">VALID</Badge>;
+  /* Pagination */
+  const indexOfLast = currentPage * rowsPerPage;
+  const indexOfFirst = indexOfLast - rowsPerPage;
+  const currentData = filtered.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(filtered.length / rowsPerPage);
 
-    if (status === "Near Expiry")
-      return <Badge bg="warning" text="dark" pill className="px-3 py-1">NEAR EXPIRY</Badge>;
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const handleReset = () => {
+    setSearch("");
+    setStatusFilter("All");
+    setStockFilter("All");
+    setCurrentPage(1);
   };
 
   return (
-    <div className="p-3" style={{ background: "#f5f7fb", minHeight: "100vh" }}>
-      <Card
-        className="border-0"
-        style={{
-          borderRadius: 14,
-          boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-        }}
-      >
-        <Card.Body>
+    <div className="container my-4 px-4">
 
-          {/* Header */}
-          <Row className="align-items-center mb-4">
-            <Col md={6}>
-              <h4 className="fw-bold mb-0">Batch Stock Report</h4>
-            </Col>
+      {/* HEADER */}
+      <div className="box_shadow mb-3 p-3 bg-white d-flex justify-content-between align-items-center">
+        <h5 className="fw-bold mb-0">Batch Stock Report</h5>
+        <div className="d-flex gap-2">
+          <Button className="btn-success">
+            <FiDownload className="me-1" /> Excel
+          </Button>
+          <Button className="btn-danger">
+            <FiDownload className="me-1" /> PDF
+          </Button>
+        </div>
+      </div>
 
-            <Col md={6} className="text-md-end mt-3 mt-md-0">
-              <Button variant="success" className="me-2 shadow-sm">
-                Download Excel
-              </Button>
+      {/* TABLE SECTION */}
+      <div className="box_shadow p-3 bg-white table-responsive">
 
-              <Button variant="danger" className="shadow-sm">
-                Download PDF
-              </Button>
-            </Col>
-          </Row>
-
-          {/* Filters */}
-          <Row className="g-3 mb-4">
-            <Col md={6} lg={4}>
-              <InputGroup className="shadow-sm">
-                <InputGroup.Text>
-                  <FiSearch />
-                </InputGroup.Text>
-
+        {/* FILTERS INSIDE TABLE */}
+        <div className="mb-4">
+          <Row className="g-3 align-items-center">
+            <Col lg={4} md={6}>
+              <InputGroup>
+                <InputGroup.Text><FiSearch /></InputGroup.Text>
                 <Form.Control
                   placeholder="Search product, batch..."
                   value={search}
@@ -109,82 +127,156 @@ const BatchStockReport = () => {
               </InputGroup>
             </Col>
 
-            <Col md={4} lg={3}>
+            <Col lg={3} md={6}>
               <Form.Select
-                className="shadow-sm"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
-                <option value="All">All Expiry Status</option>
+                <option value="All">All Status</option>
                 <option value="Valid">Valid</option>
                 <option value="Near Expiry">Near Expiry</option>
               </Form.Select>
             </Col>
 
-            <Col md={2}>
-              <Button className="w-100 shadow-sm">
-                Search
-              </Button>
+            <Col lg={3} md={6}>
+              <Form.Select
+                value={stockFilter}
+                onChange={(e) => setStockFilter(e.target.value)}
+              >
+                <option value="All">All Stock</option>
+                <option value="Low">Low (&lt;20)</option>
+                <option value="Medium">20-50</option>
+                <option value="High">High (&gt;50)</option>
+              </Form.Select>
+            </Col>
+
+            <Col lg={2} md={6}>
+              <div className="d-flex gap-2">
+                <Button className="button flex-fill" onClick={() => setCurrentPage(1)}>
+                  Search
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  className="flex-fill"
+                  onClick={handleReset}
+                >
+                  Reset
+                </Button>
+              </div>
             </Col>
           </Row>
+        </div>
 
-          {/* Batch Tables */}
-          {filteredData.map((product, idx) =>
-            product.batches.length > 0 && (
-              <Card
-                key={idx}
-                className="mb-4 border-0"
-                style={{
-                  borderRadius: 12,
-                  boxShadow: "0 6px 18px rgba(0,0,0,0.07)",
-                }}
-              >
-                <Card.Body>
+        <hr />
 
-                  <div className="d-flex justify-content-between mb-3">
-                    <h6 className="fw-bold">
-                      {product.product}
-                    </h6>
+        {/* TABLE */}
+        <Table hover className="align-middle saas-table mb-0">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Batch No</th>
+              <th>Expiry</th>
+              <th>Status</th>
+              <th>Stock</th>
+              <th className="text-end"></th>
+            </tr>
+          </thead>
 
-                    <Badge bg="primary" pill>
-                      Total Stock: {product.total}
-                    </Badge>
+          <tbody>
+            {currentData.map((b, i) => (
+              <tr key={i}>
+                <td className="fw-semibold">{b.product}</td>
+                <td>{b.no}</td>
+                <td className="text-muted small">{b.expiry}</td>
+                <td>
+                  <Badge
+                    pill
+                    bg={b.status === "Valid" ? "success" : "warning"}
+                    text={b.status === "Near Expiry" ? "dark" : ""}
+                  >
+                    {b.status}
+                  </Badge>
+                </td>
+                <td>{b.stock}</td>
+                <td className="text-end">
+                  <Dropdown align="end">
+                    <Dropdown.Toggle as="button" className="saas-dot-btn">
+                      <FiMoreVertical size={16} />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>Edit</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item className="text-danger">
+                        Delete
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </td>
+              </tr>
+            ))}
+
+            {currentData.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center py-4 text-muted">
+                  No batches found
+                </td>
+              </tr>
+            )}
+          </tbody>
+
+          {/* PAGINATION */}
+          {totalPages > 0 && (
+            <tfoot>
+              <tr>
+                <td colSpan="6">
+                  <div className="d-flex justify-content-between align-items-center mt-2 flex-wrap gap-2">
+                    <small className="text-muted">
+                      Showing {filtered.length === 0 ? 0 : indexOfFirst + 1}–
+                      {Math.min(indexOfLast, filtered.length)} of {filtered.length} batches
+                    </small>
+
+                    <Stack direction="horizontal" gap={2}>
+                      <Button
+                        size="sm"
+                        className="pagination-btn"
+                        disabled={currentPage === 1}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                      >
+                        Prev
+                      </Button>
+
+                      {[...Array(totalPages)].map((_, index) => {
+                        const pageNumber = index + 1;
+                        return (
+                          <Button
+                            key={pageNumber}
+                            size="sm"
+                            className={`pagination-btn ${
+                              currentPage === pageNumber ? "active-page" : ""
+                            }`}
+                            onClick={() => handlePageChange(pageNumber)}
+                          >
+                            {pageNumber}
+                          </Button>
+                        );
+                      })}
+
+                      <Button
+                        size="sm"
+                        className="pagination-btn"
+                        disabled={currentPage === totalPages}
+                        onClick={() => handlePageChange(currentPage + 1)}
+                      >
+                        Next
+                      </Button>
+                    </Stack>
                   </div>
-
-                  <div className="table-responsive">
-                    <Table
-                      hover
-                      className="align-middle mb-0"
-                    >
-                      <thead className="table-light">
-                        <tr>
-                          <th>Batch No</th>
-                          <th>Expiry Date</th>
-                          <th>Status</th>
-                          <th>Batch Stock</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        {product.batches.map((b, i) => (
-                          <tr key={i}>
-                            <td className="fw-semibold">{b.no}</td>
-                            <td>{b.expiry}</td>
-                            <td>{statusBadge(b.status)}</td>
-                            <td>{b.stock}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </div>
-
-                </Card.Body>
-              </Card>
-            )
+                </td>
+              </tr>
+            </tfoot>
           )}
-
-        </Card.Body>
-      </Card>
+        </Table>
+      </div>
     </div>
   );
 };
