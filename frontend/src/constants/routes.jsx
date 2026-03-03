@@ -133,6 +133,7 @@ STAFF_MANAGEMENT: "/staff/management",
 ROLE_PERMISSIONS: "/staff/roles",
 STAFF_ATTENDANCE: "/staff/attendance",
 ACTIVITY_LOGS: "/staff/activity-logs",
+STAFF_PROFILE: "/staff/staff-profile",
 
    
 BANITA: "/banita",

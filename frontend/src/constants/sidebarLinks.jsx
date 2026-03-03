@@ -99,6 +99,7 @@ export const SIDEBAR_LINKS = [
     { label: "Role Permissions", to: ROUTES.ROLE_PERMISSIONS },
     { label: "Attendance", to: ROUTES.STAFF_ATTENDANCE },
     { label: "Activity Logs", to: ROUTES.ACTIVITY_LOGS },
+    { label: "Staff Profile", to: ROUTES.STAFF_PROFILE },
   ],
 },
 
