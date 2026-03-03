@@ -71,9 +71,6 @@ const POSBilling = () => {
       <div className="box_shadow mb-3 p-3 bg-white d-flex justify-content-between align-items-center">
         <div>
           <h5 className="fw-bold mb-0">POS Billing</h5>
-          <small className="text-muted">
-            Total Bills: {bills.length}
-          </small>
         </div>
 
         <Button size="sm" className="button">
