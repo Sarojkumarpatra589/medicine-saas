@@ -86,7 +86,7 @@ const styles = `
     padding: 20px;
   }
 
-  .pp-layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; }
+  .pp-layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; margin: 0 auto; }
 
   /* ── Sidebar ── */
   .pp-sidebar { display: flex; flex-direction: column; gap: 16px; }

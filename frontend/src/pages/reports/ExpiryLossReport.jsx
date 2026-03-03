@@ -133,7 +133,7 @@ function FilterBar() {
   const activeCount = Object.values(checks).filter(Boolean).length + Object.values(filters).filter(Boolean).length;
 
   return (
-    <div className="mb-4 box_shadow" >
+    <div className="mb-4 box_shadow">
       <div style={{ background: "#fff", border: "1px solid #e2e8f0", overflow: "visible" }}>
 
         {/* Top Bar */}
@@ -168,7 +168,6 @@ function FilterBar() {
                 <span style={{ marginLeft: "auto" }}>📅</span>
               </div>
 
-              {/* Calendar */}
               {dateOpen && (
                 <div style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, zIndex: 9999, background: "#fff", border: "1px solid #e2e8f0", borderRadius: 10, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", padding: 16, minWidth: 280 }}>
                   <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
@@ -230,12 +229,10 @@ function FilterBar() {
             ))}
           </div>
 
-          {/* Divider */}
           <div style={{ height: 1, background: "#f1f5f9", marginBottom: 14 }} />
 
           {/* Row 2 — Toggle Filters */}
           <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ fontSize: 10, fontWeight: 700, color: "#cbd5e1", textTransform: "uppercase", letterSpacing: "0.5px" }}>Loss</span>
               <div style={{ display: "flex", gap: 5 }}>
@@ -277,7 +274,6 @@ function FilterBar() {
                 {branchOptions.map(b => <option key={b} value={b}>{b}</option>)}
               </Form.Select>
             </div>
-
           </div>
         </div>
       </div>
@@ -314,7 +310,7 @@ export default function ExpiryLossReport() {
 
   return (
     <div className="bg-light min-vh-100">
-      <Container fluid className="py-3 px-3 px-lg-4" style={{ maxWidth: 1500 }}>
+      <Container fluid className="py-3 px-3 px-lg-4">
 
         {/* ── HEADER BAR ── */}
         <div className="box_shadow" style={{
@@ -346,13 +342,19 @@ export default function ExpiryLossReport() {
           </div>
         </div>
 
-        {/* KPI CARDS */}
-        <div className="d-flex gap-3 mb-3 pb-1" style={{ overflowX: "auto" }}>
+        {/* KPI CARDS — single row always: fills full width on large, scrolls on small */}
+        <div className="mb-3" style={{
+          display: "flex",
+          flexWrap: "nowrap",
+          gap: 12,
+          overflowX: "auto",
+          scrollbarWidth: "none",
+        }}>
           {kpiCards.map((k, i) => (
-            <div key={i} className="flex-shrink-0 rounded-3 p-3 box_shadow"
-              style={{ minWidth: 185, background: "#fff", border: "1px solid #e8edf5", position: "relative", overflow: "hidden" }}>
+            <div key={i} className="rounded-3 p-3 box_shadow"
+              style={{ background: "#fff", border: "1px solid #e8edf5", position: "relative", overflow: "hidden", flex: "1 1 0", minWidth: 160 }}>
               <div style={{ position: "absolute", top: -18, right: -18, width: 80, height: 80, backgroundColor: `${k.barColor || "#1a2744"}12`, pointerEvents: "none" }} />
-              <div className="d-flex align-items-center gap-2 mb-3 ">
+              <div className="d-flex align-items-center gap-2 mb-3">
                 <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, backgroundColor: `${k.barColor || "#1a2744"}18`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: k.barColor || "#1a2744" }} />
                 </div>
