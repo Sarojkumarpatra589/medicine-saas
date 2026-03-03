@@ -1,0 +1,163 @@
+/* ───────── METRIC GRID ───────── */
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+/* ───────── METRIC CARD ───────── */
+
+.mc {
+  border-radius: 16px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+
+.mc:hover {
+  transform: translateY(-4px);
+}
+
+/* ───────── THEMES ───────── */
+
+.mc-blue {
+  background: linear-gradient(145deg, #1e3a8a, #2563eb);
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35);
+}
+
+.mc-amber {
+  background: linear-gradient(145deg, #713f12, #d97706);
+  box-shadow: 0 6px 24px rgba(217, 119, 6, 0.35);
+}
+
+.mc-emerald {
+  background: linear-gradient(145deg, #064e3b, #059669);
+  box-shadow: 0 6px 24px rgba(5, 150, 105, 0.35);
+}
+
+.mc-violet {
+  background: linear-gradient(145deg, #3b0764, #7c3aed);
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.35);
+}
+
+.mc-blue:hover {
+  box-shadow: 0 12px 36px rgba(37, 99, 235, 0.5);
+}
+
+.mc-amber:hover {
+  box-shadow: 0 12px 36px rgba(217, 119, 6, 0.5);
+}
+
+.mc-emerald:hover {
+  box-shadow: 0 12px 36px rgba(5, 150, 105, 0.5);
+}
+
+.mc-violet:hover {
+  box-shadow: 0 12px 36px rgba(124, 58, 237, 0.5);
+}
+
+/* Decorative circles */
+
+.mc::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mc::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 40%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ───────── CONTENT ───────── */
+
+.mc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 1;
+  position: relative;
+}
+
+.mc-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.mc-val {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.mc-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 4px;
+}
+
+.mc-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 14px;
+  z-index: 1;
+  position: relative;
+}
+
+.mc-tag {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

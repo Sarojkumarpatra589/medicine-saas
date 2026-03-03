@@ -1,372 +1,447 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, Table, Badge, Alert, ButtonGroup } from 'react-bootstrap';
-import { 
-  FiShield, 
-  FiCheck, 
-  FiX, 
-  FiArrowLeft, 
-  FiEye, 
-  FiEdit, 
-  FiPlusCircle, 
-  FiTrash,
-  FiSave,
-  FiAlertCircle,
-  FiCheckCircle
-} from 'react-icons/fi';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useMemo } from "react";
+import "./style.css";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Table,
+  Badge,
+  Alert,
+} from "react-bootstrap";
+import { FiArrowLeft, FiSave, FiCheckCircle } from "react-icons/fi";
+import { useNavigate, useLocation } from "react-router-dom";
 
+const ACTIONS = ["view", "create", "edit", "delete"];
+
+const toggleColors = {
+  view: "#3B82F6",
+  create: "#22C55E",
+  edit: "#F59E0B",
+  delete: "#F43F5E",
+};
+function StatCard({ label, value, sub, badge, theme = "blue" }) {
+  return (
+    <div className={`mc box_shadow mc-${theme}`}>
+      <div className="mc-top">
+        <div>
+          <div className="mc-lbl">{label}</div>
+          <div className="mc-val">{value}</div>
+          {sub && <div className="mc-sub">{sub}</div>}
+        </div>
+      </div>
+
+      <div className="mc-bottom">
+        {badge && <span className="mc-tag">{badge}</span>}
+      </div>
+    </div>
+  );
+}
 const Permissions = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
-  const { roleId, roleName } = location.state || { roleId: null, roleName: 'Unknown Role' };
-  
+  const { roleName } = location.state || { roleName: "Unknown Role" };
+
   const [showAlert, setShowAlert] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [accessFilter, setAccessFilter] = useState("all");
+
+  const [viewFilter, setViewFilter] = useState("all");
+  const [createFilter, setCreateFilter] = useState("all");
+  const [editFilter, setEditFilter] = useState("all");
+  const [deleteFilter, setDeleteFilter] = useState("all");
+
   const [permissions, setPermissions] = useState({
-    dashboard: {
-      label: 'Dashboard',
-      icon: '📊',
-      view: true,
-      create: false,
-      edit: false,
-      delete: false
-    },
-    users: {
-      label: 'Users Management',
-      icon: '👥',
-      view: true,
-      create: true,
-      edit: true,
-      delete: false
-    },
-    patients: {
-      label: 'Patient Records',
-      icon: '🏥',
-      view: true,
-      create: true,
-      edit: true,
-      delete: false
-    },
-    appointments: {
-      label: 'Appointments',
-      icon: '📅',
-      view: true,
-      create: true,
-      edit: true,
-      delete: true
-    },
-    roles: {
-      label: 'Roles & Permissions',
-      icon: '🔐',
-      view: true,
-      create: false,
-      edit: false,
-      delete: false
-    },
-    billing: {
-      label: 'Billing & Invoices',
-      icon: '💳',
-      view: true,
-      create: false,
-      edit: true,
-      delete: false
-    },
-    reports: {
-      label: 'Reports & Analytics',
-      icon: '📈',
-      view: true,
-      create: true,
-      edit: true,
-      delete: true
-    },
-    settings: {
-      label: 'System Settings',
-      icon: '⚙️',
-      view: true,
-      create: false,
-      edit: true,
-      delete: false
-    }
+    dashboard: { label: "Dashboard", icon: "📊", view: true, create: false, edit: false, delete: false },
+    users: { label: "Users Management", icon: "👥", view: true, create: true, edit: true, delete: false },
+    patients: { label: "Patient Records", icon: "🏥", view: true, create: true, edit: true, delete: false },
+    appointments: { label: "Appointments", icon: "📅", view: true, create: true, edit: true, delete: true },
+    roles: { label: "Roles & Permissions", icon: "🔐", view: true, create: false, edit: false, delete: false },
+    billing: { label: "Billing & Invoices", icon: "💳", view: true, create: false, edit: true, delete: false },
+    reports: { label: "Reports & Analytics", icon: "📈", view: true, create: true, edit: true, delete: true },
+    settings: { label: "System Settings", icon: "⚙️", view: true, create: false, edit: true, delete: false },
   });
 
   const handlePermissionChange = (module, action) => {
-    setPermissions(prev => ({
+    setPermissions((prev) => ({
       ...prev,
       [module]: {
         ...prev[module],
-        [action]: !prev[module][action]
-      }
+        [action]: !prev[module][action],
+      },
     }));
   };
+const [tempSearch, setTempSearch] = useState(searchTerm);
+const [tempView, setTempView] = useState(viewFilter);
+const [tempCreate, setTempCreate] = useState(createFilter);
+const [tempEdit, setTempEdit] = useState(editFilter);
+const [tempDelete, setTempDelete] = useState(deleteFilter);
+const [tempAccess, setTempAccess] = useState(accessFilter);
+  const getPermissionCount = (module) =>
+    ACTIONS.filter((a) => permissions[module][a]).length;
 
-  const handleSelectAll = (action) => {
-    setPermissions(prev => {
-      const updated = { ...prev };
-      Object.keys(updated).forEach(module => {
-        updated[module][action] = true;
-      });
-      return updated;
-    });
-  };
+  const totalGranted = useMemo(() => {
+    return Object.keys(permissions).reduce(
+      (acc, module) => acc + getPermissionCount(module),
+      0
+    );
+  }, [permissions]);
 
-  const handleDeselectAll = (action) => {
-    setPermissions(prev => {
-      const updated = { ...prev };
-      Object.keys(updated).forEach(module => {
-        updated[module][action] = false;
-      });
-      return updated;
+  const totalPossible = Object.keys(permissions).length * 4;
+
+  const filteredModules = useMemo(() => {
+    return Object.keys(permissions).filter((module) => {
+      const permCount = getPermissionCount(module);
+      const moduleData = permissions[module];
+
+      const matchesSearch =
+        moduleData.label.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesAccess =
+        accessFilter === "all" ||
+        (accessFilter === "full" && permCount === 4) ||
+        (accessFilter === "partial" && permCount > 0 && permCount < 4) ||
+        (accessFilter === "none" && permCount === 0);
+
+      const matchesView =
+        viewFilter === "all" ||
+        permissions[module].view.toString() === viewFilter;
+
+      const matchesCreate =
+        createFilter === "all" ||
+        permissions[module].create.toString() === createFilter;
+
+      const matchesEdit =
+        editFilter === "all" ||
+        permissions[module].edit.toString() === editFilter;
+
+      const matchesDelete =
+        deleteFilter === "all" ||
+        permissions[module].delete.toString() === deleteFilter;
+
+      return (
+        matchesSearch &&
+        matchesAccess &&
+        matchesView &&
+        matchesCreate &&
+        matchesEdit &&
+        matchesDelete
+      );
     });
-  };
+  }, [
+    permissions,
+    searchTerm,
+    accessFilter,
+    viewFilter,
+    createFilter,
+    editFilter,
+    deleteFilter,
+  ]);
 
   const handleSave = () => {
-    console.log('Permissions saved for role:', roleName, permissions);
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
       navigate(-1);
-    }, 2000);
-  };
-
-  const getPermissionCount = (module) => {
-    const perms = permissions[module];
-    return ['view', 'create', 'edit', 'delete'].filter(action => perms[action]).length;
-  };
-
-  const actionConfig = {
-    view: { icon: FiEye, color: 'primary', label: 'View' },
-    create: { icon: FiPlusCircle, color: 'success', label: 'Create' },
-    edit: { icon: FiEdit, color: 'warning', label: 'Edit' },
-    delete: { icon: FiTrash, color: 'danger', label: 'Delete' }
-  };
-
-  const gradientStyle = {
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    color: 'white'
-  };
-
-  const iconLargeStyle = {
-    background: 'rgba(255, 255, 255, 0.2)',
-    width: '60px',
-    height: '60px',
-    borderRadius: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
-
-  const moduleIconStyle = {
-    fontSize: '1.8rem',
-    width: '45px',
-    height: '45px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-    borderRadius: '10px'
+    }, 1500);
   };
 
   return (
-    <div style={{ background: '#f8f9fa', minHeight: '100vh' }}>
-      <Container fluid className="py-4">
-        {/* Success Alert */}
+    <div style={{ background: "#F7F8FA", minHeight: "100vh", padding: "20px 10px" }}>
+      <Container>
+
         {showAlert && (
-          <Alert variant="success" className="d-flex align-items-center mb-4 shadow-sm">
-            <FiCheckCircle size={20} className="me-2" />
-            <span>Permissions updated successfully for <strong>{roleName}</strong>!</span>
+          <Alert variant="dark" className="d-flex align-items-center box_shadow">
+            <FiCheckCircle className="me-2 text-success" />
+            Permissions saved for <strong className="ms-1">{roleName}</strong>
           </Alert>
         )}
 
-        {/* Header Section */}
-        <Row className="mb-4">
-          <Col>
-            <Card className="border-0 shadow-sm" style={gradientStyle}>
-              <Card.Body className="py-4">
+        {/* Header */}
+        <Row className="mb-4 bg-white box_shadow p-3 mx-1">
+          <Col className="d-flex justify-content-between align-items-center">
+            <div>
+              <h4 className="fw-bold mb-1">Permissions</h4>
+            </div>
+            <Badge bg="dark" className="px-3 py-2 ">
+              {roleName}
+            </Badge>
+          </Col>
+        </Row>
+
+        {/* METRIC CARDS */}
+<div className="metrics-row">
+  <StatCard
+    label="Granted"
+    value={totalGranted}
+    sub="active permissions"
+    badge="Enabled"
+    theme="emerald"
+  />
+
+  <StatCard
+    label="Restricted"
+    value={totalPossible - totalGranted}
+    sub="blocked access"
+    badge="Limited"
+    theme="amber"
+  />
+
+  <StatCard
+    label="Coverage"
+    value={`${Math.round((totalGranted / totalPossible) * 100)}%`}
+    sub="overall access"
+    badge="Role scope"
+    theme="blue"
+  />
+
+  <StatCard
+    label="Total Possible"
+    value={totalPossible}
+    sub="all permissions"
+    badge="System"
+    theme="violet"
+  />
+</div>
+{/* Compact Permission Table */}
+<div className="box_shadow"
+  style={{
+    overflow: "hidden",
+    border: "1px solid #e5e7eb",
+    background: "#ffffff",
+  }}
+>
+  <div className="table-responsive ">
+    <Table 
+      hover
+      className="align-middle my-4"
+      style={{ fontSize: "14px" }}
+    >
+      <thead style={{ background: "#f9fafb" }}>
+        
+        {/* Filter Row */}
+<tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+  {/* Search */}
+  <th className="ps-4 py-3">
+    <Form.Control
+      size="sm"
+      placeholder="Search module..."
+      value={tempSearch}
+      onChange={(e) => setTempSearch(e.target.value)}
+      style={{
+        borderRadius: "6px",
+        border: "1px solid #e2e8f0",
+      }}
+    />
+  </th>
+
+  {/* Action Filters */}
+  {ACTIONS.map((action) => (
+    <th key={action} className="text-center py-3">
+      <Form.Select
+        size="sm"
+        value={
+          action === "view"
+            ? tempView
+            : action === "create"
+            ? tempCreate
+            : action === "edit"
+            ? tempEdit
+            : tempDelete
+        }
+        onChange={(e) => {
+          const value = e.target.value;
+          if (action === "view") setTempView(value);
+          if (action === "create") setTempCreate(value);
+          if (action === "edit") setTempEdit(value);
+          if (action === "delete") setTempDelete(value);
+        }}
+        style={{
+          borderRadius: "6px",
+          border: "1px solid #e2e8f0",
+        }}
+      >
+        <option value="all">All</option>
+        <option value="true">Has</option>
+        <option value="false">No</option>
+      </Form.Select>
+    </th>
+  ))}
+
+  {/* Access + Apply */}
+  <th className="pe-4 py-3">
+    <div className="d-flex gap-2 justify-content-end">
+      <Form.Select
+        size="sm"
+        value={tempAccess}
+        onChange={(e) => setTempAccess(e.target.value)}
+        style={{
+          borderRadius: "6px",
+          border: "1px solid #e2e8f0",
+        }}
+      >
+        <option value="all">All</option>
+        <option value="full">Full</option>
+        <option value="partial">Partial</option>
+        <option value="none">None</option>
+      </Form.Select>
+
+      <Button
+        size="sm"
+        variant="dark"
+        onClick={() => {
+          setSearchTerm(tempSearch);
+          setViewFilter(tempView);
+          setCreateFilter(tempCreate);
+          setEditFilter(tempEdit);
+          setDeleteFilter(tempDelete);
+          setAccessFilter(tempAccess);
+        }}
+        style={{
+          borderRadius: "6px",
+          padding: "4px 14px",
+        }}
+      >
+        Apply
+      </Button>
+    </div>
+  </th>
+</tr>
+
+        {/* Column Labels */}
+        <tr style={{ fontSize: "12px", letterSpacing: "0.4px" }}>
+          <th className="ps-4 py-2 text-muted fw-semibold">
+            MODULE
+          </th>
+
+          {ACTIONS.map((action) => (
+            <th
+              key={action}
+              className="text-center py-2 text-muted fw-semibold"
+            >
+              {action.toUpperCase()}
+            </th>
+          ))}
+
+          <th className="text-center pe-4 py-2 text-muted fw-semibold">
+            ACCESS
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {filteredModules.map((module) => {
+          const permCount = getPermissionCount(module);
+
+          return (
+            <tr
+              key={module}
+              style={{ transition: "background 0.2s ease" }}
+            >
+              {/* Module Column */}
+              <td className="ps-4 py-2">
                 <div className="d-flex align-items-center gap-3">
-                  <Button 
-                    variant="light" 
-                    size="sm"
-                    onClick={() => navigate(-1)}
-                    className="d-flex align-items-center gap-2"
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 8,
+                      background: "#f3f4f6",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "1px solid #e5e7eb",
+                    }}
                   >
-                    <FiArrowLeft /> Back
-                  </Button>
-                  <div className="flex-grow-1">
-                    <div className="d-flex align-items-center gap-3">
-                      <div style={iconLargeStyle}>
-                        <FiShield size={32} />
-                      </div>
-                      <div>
-                        <h3 className="mb-1 fw-bold">Permissions Management</h3>
-                        <p className="mb-0" style={{ opacity: 0.9 }}>
-                          Configure access control for <Badge bg="light" text="dark" className="ms-1 px-3 py-2">{roleName}</Badge>
-                        </p>
-                      </div>
-                    </div>
+                    {permissions[module].icon}
                   </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
 
-    
-
-        {/* Permissions Table */}
-        <Row>
-          <Col>
-            <Card className="border-0 shadow-sm">
-              <Card.Header className="bg-white border-bottom py-3">
-                <Row className="align-items-center">
-                  <Col md={4}>
-                    <h5 className="mb-0 fw-semibold">Module Permissions</h5>
-                  </Col>
-                  <Col md={8}>
-                    <div className="d-flex gap-2 justify-content-end flex-wrap">
-                      {Object.keys(actionConfig).map(action => {
-                        const ActionIcon = actionConfig[action].icon;
-                        return (
-                          <ButtonGroup key={action} size="sm">
-                            <Button 
-                              variant="outline-secondary"
-                              onClick={() => handleSelectAll(action)}
-                              title={`Select all ${action}`}
-                            >
-                              <FiCheck size={12} /> All {actionConfig[action].label}
-                            </Button>
-                            <Button 
-                              variant="outline-secondary"
-                              onClick={() => handleDeselectAll(action)}
-                              title={`Deselect all ${action}`}
-                            >
-                              <FiX size={12} />
-                            </Button>
-                          </ButtonGroup>
-                        );
-                      })}
+                  <div>
+                    <div className="fw-semibold">
+                      {permissions[module].label}
                     </div>
-                  </Col>
-                </Row>
-              </Card.Header>
-              <Card.Body className="p-0">
-                <div className="table-responsive">
-                  <Table hover className="mb-0">
-                    <thead className="table-light">
-                      <tr>
-                        <th className="ps-4 fw-semibold" style={{ width: '30%' }}>Module</th>
-                        <th className="text-center fw-semibold" style={{ width: '15%' }}>
-                          <div className="d-flex flex-column align-items-center gap-1">
-                            <FiEye size={18} className="text-primary" />
-                            <small>View</small>
-                          </div>
-                        </th>
-                        <th className="text-center fw-semibold" style={{ width: '15%' }}>
-                          <div className="d-flex flex-column align-items-center gap-1">
-                            <FiPlusCircle size={18} className="text-success" />
-                            <small>Create</small>
-                          </div>
-                        </th>
-                        <th className="text-center fw-semibold" style={{ width: '15%' }}>
-                          <div className="d-flex flex-column align-items-center gap-1">
-                            <FiEdit size={18} className="text-warning" />
-                            <small>Edit</small>
-                          </div>
-                        </th>
-                        <th className="text-center fw-semibold" style={{ width: '15%' }}>
-                          <div className="d-flex flex-column align-items-center gap-1">
-                            <FiTrash size={18} className="text-danger" />
-                            <small>Delete</small>
-                          </div>
-                        </th>
-                        <th className="text-center pe-4 fw-semibold" style={{ width: '10%' }}>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Object.keys(permissions).map((module) => {
-                        const permCount = getPermissionCount(module);
-                        return (
-                          <tr key={module}>
-                            <td className="ps-4 align-middle">
-                              <div className="d-flex align-items-center gap-3">
-                                <div style={moduleIconStyle}>
-                                  <span>{permissions[module].icon}</span>
-                                </div>
-                                <div>
-                                  <div className="fw-semibold">{permissions[module].label}</div>
-                                  <small className="text-muted text-uppercase" style={{ fontSize: '0.75rem' }}>
-                                    {module}
-                                  </small>
-                                </div>
-                              </div>
-                            </td>
-                            {['view', 'create', 'edit', 'delete'].map((action) => (
-                              <td key={action} className="text-center align-middle">
-                                <div className="d-flex justify-content-center">
-                                  <Form.Check
-                                    type="switch"
-                                    id={`${module}-${action}`}
-                                    checked={permissions[module][action]}
-                                    onChange={() => handlePermissionChange(module, action)}
-                                    style={{ transform: 'scale(1.3)' }}
-                                  />
-                                </div>
-                              </td>
-                            ))}
-                            <td className="text-center align-middle pe-4">
-                              <Badge 
-                                bg={permCount === 4 ? 'success' : permCount > 0 ? 'warning' : 'secondary'}
-                                className="px-3 py-2 fw-semibold"
-                                style={{ fontSize: '0.85rem' }}
-                              >
-                                {permCount}/4
-                              </Badge>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
-
-
-        {/* Action Buttons */}
-        <Row className="mt-4">
-          <Col>
-            <Card className="border-0 shadow-sm">
-              <Card.Body className="py-3">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex align-items-center gap-2">
-                    <FiAlertCircle size={16} className="text-muted" />
-                    <small className="text-muted">
-                      Make sure to save your changes before leaving this page
+                    <small className="text-muted text-uppercase">
+                      {module}
                     </small>
                   </div>
-                  <div className="d-flex gap-2">
-                    <Button 
-                      variant="outline-secondary" 
-                      onClick={() => navigate(-1)}
-                      className="px-4"
-                    >
-                      Cancel
-                    </Button>
-                    <Button 
-                      variant="primary" 
-                      onClick={handleSave}
-                      className="d-flex align-items-center gap-2 px-4"
-                    >
-                      <FiSave /> Save Changes
-                    </Button>
-                  </div>
                 </div>
-              </Card.Body>
-            </Card>
+              </td>
+
+              {/* Toggles */}
+              {ACTIONS.map((action) => (
+                <td key={action} className="text-center">
+                  <Form.Check
+                    type="switch"
+                    checked={permissions[module][action]}
+                    onChange={() =>
+                      handlePermissionChange(module, action)
+                    }
+                    style={{
+                      transform: "scale(1.05)",
+                      cursor: "pointer",
+                    }}
+                  />
+                </td>
+              ))}
+
+              {/* Access Indicator */}
+              <td className="text-center pe-4">
+                <span
+                  style={{
+                    padding: "4px 10px",
+                    borderRadius: "999px",
+                    fontSize: "12px",
+                    fontWeight: 600,
+                    background:
+                      permCount === 4
+                        ? "#ecfdf5"
+                        : permCount > 0
+                        ? "#fffbeb"
+                        : "#f3f4f6",
+                    color:
+                      permCount === 4
+                        ? "#047857"
+                        : permCount > 0
+                        ? "#b45309"
+                        : "#6b7280",
+                  }}
+                >
+                  {permCount}/4
+                </span>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
+  </div>
+</div>
+
+        {/* Footer */}
+        <Row className="mt-3">
+          <Col className="d-flex justify-content-between">
+            <Button
+              size="sm"
+              variant="outline-secondary"
+              onClick={() => navigate(-1)}
+            >
+              <FiArrowLeft className="me-2" />
+              Back
+            </Button>
+
+            <Button
+              size="sm"
+              onClick={handleSave}
+              style={{ background: "#3B82F6", border: "none" }}
+            >
+              <FiSave className="me-2" />
+              Save
+            </Button>
           </Col>
         </Row>
+
       </Container>
     </div>
   );

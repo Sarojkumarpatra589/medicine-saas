@@ -4,6 +4,7 @@ import StaffManagement from "./StaffManagement";
 import RolePermissions from "./RolePermissions";
 import Attendance from "./Attendance";
 import ActivityLogs from "./ActivityLogs";
+import StaffProfile from "./StaffProfile";
 
 import { ROUTES } from "../../constants/routes";
 
@@ -26,6 +27,10 @@ export default [
       {
         path: ROUTES.ACTIVITY_LOGS,
         element: <ActivityLogs />,
+      },
+       {
+        path: ROUTES.STAFF_PROFILE,
+        element: <StaffProfile />,
       },
     ],
   },
