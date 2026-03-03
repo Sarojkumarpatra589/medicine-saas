@@ -1,14 +1,10 @@
-// ─────────────────────────────────────────────────────────────
-//  SETUP:
-//  npm install react-bootstrap bootstrap
-//  In your index.js: import 'bootstrap/dist/css/bootstrap.min.css';
-// ─────────────────────────────────────────────────────────────
 
 import { useState } from "react";
 import {
   Container, Row, Col, Card, Table,
   Form, InputGroup, Button,
 } from "react-bootstrap";
+import "./style.css";
 
 // ── DATA ──────────────────────────────────────────────────────
 const inventoryData = [
@@ -170,8 +166,30 @@ export default function InventoryReport() {
 
   const styles = {
     pageWrapper:  { backgroundColor: "#eef1f5", minHeight: "100vh" },
-    filterCard:   { backgroundColor: "#fff", border: "1px solid #dde3ec", borderRadius: 6 },
-    kpiWrapper:   { backgroundColor: "#fff", border: "1px solid #dde3ec", borderRadius: 8, padding: "12px 10px" },
+    // ── HEADER BAR ──
+    headerBar: {
+      backgroundColor: "#fff",
+      padding: "11px 24px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 22,
+    },
+    headerTitle: { fontSize: 20, fontWeight: 800, color: "#111827", margin: 0 },
+    headerActions: { display: "flex", gap: 10 },
+    btnPrimary: {
+      background: "#1e9e3e", color: "#fff", border: "none", borderRadius: 8,
+      padding: "9px 18px", fontSize: 13.5, fontWeight: 600, cursor: "pointer",
+      display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit",
+    },
+    btnOutline: {
+      background: "#fff", color: "#374151", border: "1.5px solid #e5e7eb", borderRadius: 8,
+      padding: "9px 18px", fontSize: 13.5, fontWeight: 600, cursor: "pointer",
+      display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit",
+    },
+    // ── rest unchanged ──
+    filterCard:   { backgroundColor: "#fff", border: "1px solid #dde3ec" },
+    kpiWrapper:   { backgroundColor: "#fff", border: "1px solid #dde3ec",  padding: "12px 10px" },
     kpiCard:      (bg) => ({
                     backgroundColor: bg, color: "#fff", borderRadius: 8,
                     textAlign: "center", padding: "12px 8px 14px", flex: 1, minWidth: 0,
@@ -207,11 +225,34 @@ export default function InventoryReport() {
     <div style={styles.pageWrapper}>
       <Container fluid className="py-3 px-3 px-lg-4" style={{ maxWidth: 1400 }}>
 
-        {/* ── PAGE TITLE ── */}
-        <h5 className="fw-bold mb-3" style={{ fontSize: 20 }}>Inventory Report</h5>
+        {/* ── HEADER BAR ── */}
+        <div style={styles.headerBar} className="box_shadow">
+          <h2 style={styles.headerTitle}>Inventory Report</h2>
+          <div style={styles.headerActions}>
+            <button style={styles.btnPrimary}>
+              <span style={{ fontSize: 16, lineHeight: 1 }}>+</span> Add Stock
+            </button>
+            <button style={styles.btnOutline}>
+              <span>📅</span> Export Report
+            </button>
+          </div>
+        </div>
 
+        {/* ── KPI CARDS ── */}
+        <div style={styles.kpiWrapper} className="mb-4 p-4 box_shadow">
+          <div className="d-flex flex-wrap gap-2">
+            {kpiData.map((k) => (
+              <div key={k.label} style={styles.kpiCard(k.bg)} className="flex-grow-1">
+                <div style={styles.kpiTitle}>{k.label}</div>
+                <div style={styles.kpiValue}>{k.value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        
         {/* ── FILTERS ── */}
-        <div style={styles.filterCard} className="p-4 mb-4 shadow-lg">
+        <div style={styles.filterCard} className="p-4 mb-4 box_shadow">
           <Row className="g-2 align-items-center">
 
             <Col xs={12} md="auto">
@@ -291,20 +332,10 @@ export default function InventoryReport() {
           </Row>
         </div>
 
-        {/* ── KPI CARDS ── */}
-        <div style={styles.kpiWrapper} className="mb-4 p-4 shadow-lg">
-          <div className="d-flex flex-wrap gap-2">
-            {kpiData.map((k) => (
-              <div key={k.label} style={styles.kpiCard(k.bg)} className="flex-grow-1">
-                <div style={styles.kpiTitle}>{k.label}</div>
-                <div style={styles.kpiValue}>{k.value}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+
 
         {/* ── INVENTORY TABLE ── */}
-        <div className="mb-4 p-4 rounded overflow-hidden border bg-white shadow-lg">
+        <div className="mb-4 p-4 rounded overflow-hidden border bg-white box_shadow">
           <div className="table-responsive">
             <Table hover className="mb-0 align-middle small">
               <thead>
@@ -385,11 +416,11 @@ export default function InventoryReport() {
         </Row>
 
         {/* ── CHART CARDS ── */}
-        <Row className="g-3 mt-4 shadow-lg">
+        <Row className="g-3 mt-4">
 
           {/* 1 · Top Stocked Medicines */}
           <Col xs={12} sm={6} xl={3}>
-            <div style={styles.chartCard}>
+            <div style={styles.chartCard} className="box_shadow">
               <div style={styles.chartTitle}>Top Stocked Medicines</div>
               <div style={{ display: "flex", height: 160 }}>
 
@@ -460,7 +491,7 @@ export default function InventoryReport() {
 
           {/* 2 · Stock by Category */}
           <Col xs={12} sm={6} xl={3}>
-            <div style={styles.chartCard}>
+            <div style={styles.chartCard} className="box_shadow">
               <div style={styles.chartTitle}>Stock by Category</div>
               <div style={styles.donutRow}>
                 <DonutChartWithLabels segments={categorySvgSegments} size={150} strokeWidth={36} />
@@ -478,7 +509,7 @@ export default function InventoryReport() {
 
           {/* 3 · GST on Purchases */}
           <Col xs={12} sm={6} xl={3}>
-            <div style={styles.chartCard}>
+            <div style={styles.chartCard} className="box_shadow">
               <div style={styles.chartTitle}>GST on Purchases</div>
               <div style={{ display: "flex", height: 160 }}>
                 <div style={{
@@ -551,7 +582,7 @@ export default function InventoryReport() {
 
           {/* 4 · Stock Status Breakdown */}
           <Col xs={12} sm={6} xl={3}>
-            <div style={styles.chartCard}>
+            <div style={styles.chartCard} className="box_shadow">
               <div style={styles.chartTitle}>Stock Status Breakdown</div>
               <div style={styles.donutRow}>
                 <DonutChartWithLabels segments={stockSvgSegments} size={150} strokeWidth={36} />

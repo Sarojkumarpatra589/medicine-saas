@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
+import "./style.css";
 
 // ── DATA ──────────────────────────────────────────────────────
 const kpiCards = [
@@ -132,8 +133,8 @@ function FilterBar() {
   const activeCount = Object.values(checks).filter(Boolean).length + Object.values(filters).filter(Boolean).length;
 
   return (
-    <div className="mb-4">
-      <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(21,101,192,0.05)", overflow: "visible" }}>
+    <div className="mb-4 box_shadow" >
+      <div style={{ background: "#fff", border: "1px solid #e2e8f0", overflow: "visible" }}>
 
         {/* Top Bar */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 20px", borderBottom: "1px solid #f1f5f9" }}>
@@ -315,16 +316,43 @@ export default function ExpiryLossReport() {
     <div className="bg-light min-vh-100">
       <Container fluid className="py-3 px-3 px-lg-4" style={{ maxWidth: 1500 }}>
 
-        {/* HEADING */}
-        <h3 className="fw-bold mb-3" style={{ fontSize: 30 }}>Expiry &amp; Loss Report</h3>
+        {/* ── HEADER BAR ── */}
+        <div className="box_shadow" style={{
+          backgroundColor: "#fff",
+          padding: "11px 24px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 22,
+        }}>
+          <h2 style={{ fontSize: 20, fontWeight: 800, color: "#111827", margin: 0 }}>
+            Expiry &amp; Loss Report
+          </h2>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button style={{
+              background: "#c62828", color: "#fff", border: "none", borderRadius: 8,
+              padding: "9px 18px", fontSize: 13.5, fontWeight: 600, cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit",
+            }}>
+              <span style={{ fontSize: 16, lineHeight: 1 }}>+</span> Add Record
+            </button>
+            <button style={{
+              background: "#fff", color: "#374151", border: "1.5px solid #e5e7eb", borderRadius: 8,
+              padding: "9px 18px", fontSize: 13.5, fontWeight: 600, cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit",
+            }}>
+              <span>📅</span> Export Report
+            </button>
+          </div>
+        </div>
 
         {/* KPI CARDS */}
         <div className="d-flex gap-3 mb-3 pb-1" style={{ overflowX: "auto" }}>
           {kpiCards.map((k, i) => (
-            <div key={i} className="flex-shrink-0 rounded-3 p-3"
-              style={{ minWidth: 185, background: "#fff", border: "1px solid #e8edf5", boxShadow: "0 2px 8px rgba(21,101,192,0.07)", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: -18, right: -18, width: 80, height: 80, borderRadius: "50%", backgroundColor: `${k.barColor || "#1a2744"}12`, pointerEvents: "none" }} />
-              <div className="d-flex align-items-center gap-2 mb-3">
+            <div key={i} className="flex-shrink-0 rounded-3 p-3 box_shadow"
+              style={{ minWidth: 185, background: "#fff", border: "1px solid #e8edf5", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: -18, right: -18, width: 80, height: 80, backgroundColor: `${k.barColor || "#1a2744"}12`, pointerEvents: "none" }} />
+              <div className="d-flex align-items-center gap-2 mb-3 ">
                 <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, backgroundColor: `${k.barColor || "#1a2744"}18`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: k.barColor || "#1a2744" }} />
                 </div>
@@ -354,7 +382,7 @@ export default function ExpiryLossReport() {
         <FilterBar />
 
         {/* FULL WIDTH TABLE */}
-        <div className="bg-white rounded border overflow-hidden mb-3 w-100" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
+        <div className="bg-white rounded border overflow-hidden mb-3 w-100 box_shadow">
           <div className="d-flex align-items-center justify-content-between px-3 py-2 border-bottom" style={{ background: "#f8faff" }}>
             <span className="fw-bold text-dark" style={{ fontSize: 13 }}>Expiry &amp; Loss Records</span>
             <span className="text-muted" style={{ fontSize: 12 }}>{allTableData.length} records found</span>
@@ -423,7 +451,7 @@ export default function ExpiryLossReport() {
         <Row className="g-2 mb-3">
 
           <Col xs={12} sm={6} lg={3}>
-            <div className="bg-white rounded border p-3 h-100" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
+            <div className="bg-white rounded border p-3 h-100 box_shadow">
               <div className="fw-bold mb-2" style={{ fontSize: 13, color: "#222" }}>Monthly Expiry Loss</div>
               <div className="d-flex" style={{ height: 148 }}>
                 <div className="d-flex flex-column justify-content-between align-items-end pe-1" style={{ paddingBottom: 18, paddingTop: 2 }}>
@@ -449,7 +477,7 @@ export default function ExpiryLossReport() {
           </Col>
 
           <Col xs={12} sm={6} lg={3}>
-            <div className="bg-white rounded border p-3 h-100" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
+            <div className="bg-white rounded border p-3 h-100 box_shadow">
               <div className="fw-bold mb-1" style={{ fontSize: 13, color: "#222" }}>Loss Type Distribution</div>
               <div className="d-flex justify-content-center align-items-center" style={{ height: 148 }}>
                 <DonutChart segments={donutSegs} size={148} />
@@ -458,7 +486,7 @@ export default function ExpiryLossReport() {
           </Col>
 
           <Col xs={12} sm={6} lg={3}>
-            <div className="bg-white rounded border p-3 h-100" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
+            <div className="bg-white rounded border p-3 h-100 box_shadow">
               <div className="fw-bold mb-2" style={{ fontSize: 13, color: "#222" }}>
                 Expiry Trend <em className="text-muted fw-normal" style={{ fontSize: 11 }}>Analysis</em>
               </div>
@@ -483,7 +511,7 @@ export default function ExpiryLossReport() {
           </Col>
 
           <Col xs={12} sm={6} lg={3}>
-            <div className="bg-white rounded border p-3 h-100" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
+            <div className="bg-white rounded border p-3 h-100 box_shadow">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <div className="d-flex align-items-center gap-2">
                   <span style={{ color: "#1565c0", fontSize: 14 }}>🔔</span>
@@ -506,13 +534,6 @@ export default function ExpiryLossReport() {
           </Col>
 
         </Row>
-
-        {/* FOOTER */}
-        <div className="bg-white rounded border d-flex align-items-center flex-wrap gap-4 px-4 mt-1" style={{ height: 44 }}>
-          <span className="text-muted" style={{ fontSize: 12 }}>📄 Total Records: {allTableData.length}</span>
-          <span className="text-muted" style={{ fontSize: 12 }}>📅 Last Updated: 12/01/2026 10:49 AM</span>
-          <span className="text-muted" style={{ fontSize: 12 }}>👤 Generated by: <span className="fw-semibold" style={{ color: "#1565c0" }}>AdminUser</span></span>
-        </div>
 
       </Container>
     </div>
