@@ -7,8 +7,7 @@ const css = `
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   .bm-root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #eef0f3;
+    
     min-height: 100vh;
     padding: 20px 20px;
     color: #111;

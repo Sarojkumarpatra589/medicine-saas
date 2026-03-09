@@ -76,7 +76,7 @@ function Chart() {
   const yLines = [0, 4, 8, 10, 13, 16];
 
   return (
-    <div className="chart-area">
+    <div className="chart-area" >
       <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
         <defs>
           <linearGradient id="gradExpiring" x1="0" y1="0" x2="0" y2="1">
@@ -152,7 +152,7 @@ export default function ExpiryTracking() {
   const [page, setPage] = useState(0);
 
   return (
-    <div className="dashboard">
+    <div className="dashboard" style={{ minWidth: "100%" }}>
 
       {/* Header */}
 <div className="dashboard-header bg-white box_shadow rounded p-3 mb-4 d-flex justify-content-between align-items-center">
