@@ -360,7 +360,7 @@ export default function PatientProfile() {
   return (
     <>
       <style>{styles}</style>
-      <div className="pp-root">
+      <div className="pp-root" >
          {/* ── PAGE HEADER ── */}
   <div className="pp-page-header box_shadow">
     <div>
@@ -372,7 +372,7 @@ export default function PatientProfile() {
       <button className="pp-header-btn primary">More Actions</button>
     </div>
   </div>
-        <div className="pp-layout">
+        <div className="pp-layout mt-3"  style={{ minWidth: "100%" }}>
 
           {/* ── SIDEBAR ── */}
           <div className="pp-sidebar">
