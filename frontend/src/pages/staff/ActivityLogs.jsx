@@ -184,7 +184,7 @@ export default function ActivityLogs() {
   }), []);
 
   return (
-    <div style={{ fontFamily: "'Instrument Sans', sans-serif", background: "#EEF2F7", minHeight: "100vh", padding: "24px 20px" }}>
+    <div style={{ fontFamily: "'Instrument Sans', sans-serif", background: "#EEF2F7", minHeight: "100vh", padding: "24px 20px"  }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -325,7 +325,7 @@ export default function ActivityLogs() {
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
       `}</style>
 
-      <div className="al-wrap">
+      <div className="al-wrap" style={{ minWidth: "100%" }}>
 
         {/* ── HEADER ── */}
         <div className="al-header box_shadow">

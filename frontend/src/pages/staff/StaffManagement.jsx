@@ -108,7 +108,7 @@ const StaffManagement = () => {
   };
 
   return (
-    <div className="container my-4 px-4">
+    <div className="container my-4 px-4" style={{ minWidth: "100%" }}>
 
       {/* ================= HEADER ================= */}
       <div className="box_shadow mb-3 p-3 bg-white d-flex justify-content-between align-items-center">

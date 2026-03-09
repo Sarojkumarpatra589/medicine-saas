@@ -437,7 +437,7 @@ export default function Attendance() {
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
       `}</style>
 
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+      <div style={{  minWidth: "100%", margin: "0 auto" }}>
 
         {/* ── TOP HEADER ── */}
         <div className="bg-white p-3 box_shadow" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>

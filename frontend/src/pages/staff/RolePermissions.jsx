@@ -149,8 +149,8 @@ const [tempAccess, setTempAccess] = useState(accessFilter);
   };
 
   return (
-    <div style={{ background: "#F7F8FA", minHeight: "100vh", padding: "20px 10px" }}>
-      <Container>
+    <div style={{ background: "#F7F8FA", minHeight: "100vh", padding: "20px 10px" }} >
+      <Container style={{ minWidth: "100%" }}>
 
         {showAlert && (
           <Alert variant="dark" className="d-flex align-items-center box_shadow">
