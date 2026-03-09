@@ -139,4 +139,26 @@ STAFF_PROFILE: "/staff/staff-profile",
 BANITA: "/banita",
 SAROJ: "/saroj",
 SARMISTHA: "/sarmistha",
+
+
+
+// Settings
+RACK_SETTINGS: "/racksettings/settings",
+RACK_CATEGORY_MAPPING: "/racksettings/category-mapping",
+RACK_BARCODE_SETTINGS: "/racksettings/barcode-settings",
+RACK_ALERT_SETTINGS: "/racksettings/alert-settings",
+RACK_LAYOUT_SETTINGS: "/racksettings/layout-settings",
+
+// Operations
+RACK_DASHBOARD: "/rackoperations/dashboard",
+RACK_LIST: "/rackoperations/list",
+RACK_FORM: "/rackoperations/form",
+SHELF_MANAGEMENT: "/rackoperations/shelf-management",
+RACK_LAYOUT: "/rackoperations/layout",
+MEDICINE_RACK_ASSIGNMENT: "/rackoperations/medicine-assignment",
+RACK_INVENTORY: "/rackoperations/inventory",
+RACK_EXPIRY_ALERTS: "/rackoperations/expiry-alerts",
+RACK_BARCODE_GENERATOR: "/rackoperations/barcode-generator",
+RACK_MOVEMENT_HISTORY: "/rackoperations/movement-history",
+
 };
