@@ -494,3 +494,81 @@
   flex-shrink: 0;
   transition: background 0.15s;
 }
+
+
+
+
+/* Sidebar bottom */
+.sidebar-bottom{
+  margin-top:auto;
+  padding:16px;
+  border-top:1px solid #eef2f7;
+}
+
+/* Profile */
+.sidebar-profile{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.profile-avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#4f8ef7;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+}
+
+.profile-name{
+  font-size:14px;
+  font-weight:600;
+  margin:0;
+}
+
+.profile-role{
+  font-size:12px;
+  color:#6b7280;
+  margin:0;
+}
+
+/* Support section */
+.sidebar-support{
+  background:#f7f9fc;
+  border-radius:10px;
+  padding:14px;
+  text-align:center;
+}
+
+.support-title{
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+.support-text{
+  font-size:12px;
+  color:#6b7280;
+  margin-bottom:10px;
+}
+
+/* Button */
+.book-call-btn{
+  width:100%;
+  padding:8px 10px;
+  border:none;
+  background:#4f8ef7;
+  color:white;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.book-call-btn:hover{
+  background:#3a74d9;
+}

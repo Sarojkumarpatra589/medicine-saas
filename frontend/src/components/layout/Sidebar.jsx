@@ -183,6 +183,31 @@ export default function Sidebar() {
           );
         })}
       </ul>
+      {/* ─── Sidebar Bottom Section ─── */}
+<div className="sidebar-bottom">
+
+  {/* Profile */}
+  <div className="sidebar-profile">
+    <div className="profile-avatar">S</div>
+    <div className="profile-info">
+      <p className="profile-name">Sarmistha</p>
+      <p className="profile-role">Admin</p>
+    </div>
+  </div>
+
+  {/* Discuss Section */}
+  <div className="sidebar-support">
+    <p className="support-title">Need Help?</p>
+    <p className="support-text">
+      Discuss new features & issues
+    </p>
+
+    <button className="book-call-btn">
+      Book a Call
+    </button>
+  </div>
+
+</div>
     </div>
   );
 }
