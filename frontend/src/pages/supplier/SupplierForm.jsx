@@ -77,7 +77,7 @@ const CSS = `
     letter-spacing: -0.4px;
   }
 
-  /* ── SUB TOOLBAR BAR — step pills only, inside left column ── */
+  /* ── SUB TOOLBAR BAR ── */
   .sub-toolbar {
     background: var(--surface);
     border-radius: var(--radius);
@@ -107,24 +107,23 @@ const CSS = `
     background: #fff; color: #374151;
     border: 1.5px solid var(--border);
     border-radius: 10px; padding: 10px 18px;
-    font-family:'Inter', sans-serif; font-size: 14px; font-weight: 600;
+    font-family: inherit; font-size: 14px; font-weight: 600;
     cursor: pointer; display: flex; align-items: center; gap: 7px;
     transition: border-color .18s, color .18s;
     white-space: nowrap;
   }
   .dh-btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
-  /* ── PAGE WRAPPER ── */
+  /* ── PAGE WRAPPER — full width, no max-width ── */
   .page-wrap {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 24px 20px 60px;
+    width: 100%;
+    padding: 24px 28px 60px;
   }
 
   /* ── STEP PILLS ── */
   .step-pills {
     display: flex;
-    gap: 150px;
+    gap: 8px;
     background: #f0f2f5;
     border: 1px solid var(--border);
     padding: 4px;
@@ -132,7 +131,7 @@ const CSS = `
   }
   .step-pill {
     display: flex; align-items: center; gap: 7px;
-    padding: 8px 14px; border-radius: 9px;
+    padding: 8px 20px; border-radius: 9px;
     cursor: pointer; font-size: 13.5px; font-weight: 600;
     color: var(--muted); background: transparent;
     border: none; font-family: inherit;
@@ -153,14 +152,16 @@ const CSS = `
     background: var(--border); color: var(--muted);
   }
 
-  /* ── MAIN LAYOUT ── */
+  /* ── MAIN LAYOUT — left form takes all remaining space, sidebar fixed width ── */
   .main-layout {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 320px;
     gap: 20px;
     align-items: start;
+    width: 100%;
   }
-  @media(max-width: 900px) { .main-layout { grid-template-columns: 1fr; } }
+  @media(max-width: 1024px) { .main-layout { grid-template-columns: 1fr 280px; } }
+  @media(max-width: 900px)  { .main-layout { grid-template-columns: 1fr; } }
 
   /* ── SECTION CARD ── */
   .s-card {
@@ -171,6 +172,7 @@ const CSS = `
     margin-bottom: 16px;
     box-shadow: var(--shadow);
     animation: fadeUp .3s ease both;
+    width: 100%;
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
@@ -445,13 +447,13 @@ const CSS = `
 
   /* ── RESPONSIVE MOBILE ── */
   @media(max-width: 600px) {
-    .page-wrap { padding: 14px 12px 80px; }
+    .page-wrap { padding: 14px 14px 80px; }
     .dash-header { padding: 14px 16px; }
     .sub-toolbar { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 14px; }
     .sub-toolbar-left  { width: 100%; }
     .sub-toolbar-right { width: 100%; }
     .step-pills { width: 100%; flex-wrap: wrap; }
-    .step-pill { flex: 1 1 auto; font-size: 13px; }
+    .step-pill  { flex: 1 1 auto; font-size: 13px; padding: 8px 10px; }
     .dh-btn-primary, .dh-btn-outline { flex: 1; justify-content: center; }
     .actions-bar { flex-direction: column; }
     .btn-primary, .btn-secondary, .btn-ghost { width: 100%; }
@@ -540,7 +542,7 @@ export default function AddSupplier() {
             {/* LEFT FORM */}
             <div>
 
-              {/* ── SUB TOOLBAR — step pills only, width matches left form ── */}
+              {/* ── SUB TOOLBAR — step pills ── */}
               <div className="sub-toolbar">
                 <div className="sub-toolbar-left">
                   <div className="step-pills">
@@ -841,11 +843,10 @@ export default function AddSupplier() {
                       <button className="btn-ghost" onClick={() => setTab("legal")}>← Back</button>
                     </div>
                   </div>
-
                 </>
               )}
 
-              {/* ACTIONS BAR — always visible below the left form */}
+              {/* ACTIONS BAR */}
               <div className="actions-bar" style={{ marginTop: 16 }}>
                 <button className="btn-primary" onClick={handleSave}>💾 Save Supplier</button>
                 <button className="btn-secondary" onClick={handleSP}>🛒 Save &amp; Add Purchase</button>
@@ -855,7 +856,6 @@ export default function AddSupplier() {
 
             {/* SIDEBAR */}
             <div className="sidebar">
-              {/* PREVIEW */}
               <div className="preview-card">
                 <div className="preview-head">
                   <div className="preview-avatar">
@@ -882,7 +882,6 @@ export default function AddSupplier() {
                 </div>
               </div>
 
-              {/* PROGRESS */}
               <div className="prog-card">
                 <div className="prog-head">
                   <span className="prog-title">Profile Completion</span>
@@ -901,12 +900,11 @@ export default function AddSupplier() {
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
 
-      {/* TOAST */}
       {toast && (
         <div className={`toast ${toast.type}`}>
           <span className="toast-ico">{toast.type === "success" ? "✅" : "❌"}</span>

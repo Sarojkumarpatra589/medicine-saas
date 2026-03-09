@@ -88,8 +88,23 @@ const CSS = `
 body { font-family: 'Outfit', sans-serif !important; background: var(--bg) !important; color: var(--t1); -webkit-font-smoothing: antialiased; }
 .po-app { font-family: 'Outfit', sans-serif; background: var(--bg); min-height: 100vh; }
 
-/* ── NAV ── */
-.po-nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 28px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; margin-top:20px;} 
+/* ── NAV — full width, no margin-top ── */
+.po-nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 28px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 20px;
+  z-index: 200;
+  width: calc(100% - 40px);
+  margin: 20px 19px 0 19px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
 .po-nav-brand { display: flex; align-items: center; gap: 10px; }
 .po-nav-ico { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 14px rgba(37,99,235,.35); flex-shrink: 0; }
 .po-nav-title { font-size: 16px; font-weight: 800; color: var(--t1); letter-spacing: -.2px; }
@@ -99,12 +114,15 @@ body { font-family: 'Outfit', sans-serif !important; background: var(--bg) !impo
 .nbtn-primary { height: 34px; padding: 0 16px; border-radius: var(--rxs); border: none; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 3px 12px rgba(37,99,235,.4); transition: all .15s; white-space: nowrap; }
 .nbtn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,.45); }
 
-/* ── BODY ── */
-.po-body { padding: 22px 28px 60px; max-width: 1600px; margin: 0 auto; }
+/* ── BODY — full width, no max-width ── */
+.po-body {
+  width: 100%;
+  padding: 22px 28px 60px;
+}
 
 /* ── METRIC CARDS ── */
 .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
-.mc { border-radius: var(--r); padding: 18px 20px; position: relative; overflow: hidden; cursor: default; transition: transform .2s, display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
+.mc { border-radius: var(--r); padding: 18px 20px; position: relative; overflow: hidden; cursor: default; transition: transform .2s; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
 .mc:hover { transform: translateY(-3px); }
 .mc-blue    { background: linear-gradient(145deg, #1e3a8a, #2563eb); box-shadow: 0 6px 24px rgba(37,99,235,.36); }
 .mc-amber   { background: linear-gradient(145deg, #713f12, #d97706); box-shadow: 0 6px 24px rgba(217,119,6,.36); }
@@ -132,7 +150,6 @@ body { font-family: 'Outfit', sans-serif !important; background: var(--bg) !impo
 .an-title-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
 .an-content { position: relative; z-index: 1; }
 
-
 /* deliveries */
 .dl-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
 .dl-row:last-child { margin-bottom: 0; }
@@ -152,7 +169,7 @@ body { font-family: 'Outfit', sans-serif !important; background: var(--bg) !impo
 .vel-trend { font-size: 11px; font-weight: 700; color: #34d399; background: rgba(16,185,129,.15); padding: 2px 8px; border-radius: 20px; }
 
 /* ── STATUS STRIP ── */
-.status-strip { background: var(--surface); border: 1px solid var(--border); padding: 12px 18px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+.status-strip { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 12px 18px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; box-shadow: var(--sh); }
 .ss-chip { display: flex; align-items: center; gap: 9px; flex: 1; min-width: 90px; padding: 9px 12px; border-radius: 10px; background: var(--bg); border: 1.5px solid var(--border); transition: all .15s; cursor: default; }
 .ss-chip:hover { border-color: var(--accent); background: #eff6ff; }
 .ss-dot   { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -161,7 +178,7 @@ body { font-family: 'Outfit', sans-serif !important; background: var(--bg) !impo
 .ss-div   { width: 1px; height: 30px; background: var(--border); flex-shrink: 0; }
 
 /* ── FULL WIDTH TABLE ── */
-.tbl-card { background: var(--surface); border: 1px solid var(--border); overflow: hidden; margin-bottom: 18px; }
+.tbl-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 18px; box-shadow: var(--sh); width: 100%; }
 .tbl-toolbar { padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #fafbfe; }
 .tbl-search { flex: 1; min-width: 160px; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--rxs); padding: 8px 12px; transition: all .15s; }
 .tbl-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
@@ -218,7 +235,7 @@ table.po-tbl tbody tr:hover { background: #f4f8ff; }
 
 /* ── BOTTOM ROW ── */
 .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.form-card { background: var(--surface); border: 1px solid var(--border);overflow: hidden; }
+.form-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: var(--sh); }
 .form-card-hd { padding: 14px 18px; border-bottom: 1px solid var(--border); background: #fafbfe; display: flex; align-items: center; gap: 10px; }
 .form-card-title { font-size: 14px; font-weight: 800; color: var(--t1); }
 .form-card-sub { font-size: 11px; color: var(--t4); margin-top: 2px; }
@@ -252,7 +269,7 @@ table.po-tbl tbody tr:hover { background: #f4f8ff; }
 .btn-reset:hover { border-color: var(--t4); }
 
 /* ── TOP MEDS ── */
-.top-card { background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
+.top-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: var(--sh); }
 .top-card-hd { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: #fafbfe; }
 .top-card-title { font-size: 14px; font-weight: 800; color: var(--t1); }
 .top-body { padding: 10px 18px 16px; }
@@ -374,25 +391,6 @@ const METRICS = [
   { theme: "mc-violet",  label: "Total Orders",     value: "8",          sub: "All suppliers",     badge: "▲ 12.1%", spark: [3,4,5,6,5,7,6,8,7,9,8,8],             donut: 100 },
 ];
 
-const SUPPLIER_HEALTH = [
-  { name: "MedCo Pharma", pct: 88, color: "#34d399" },
-  { name: "HealthPlus",   pct: 62, color: "#fbbf24" },
-  { name: "PharmaNet",    pct: 75, color: "#60a5fa" },
-  { name: "CureCraft",    pct: 91, color: "#34d399" },
-  { name: "VitalMed",     pct: 48, color: "#f87171" },
-];
-
-const DELIVERIES = [
-  { id: "PO-002", supplier: "HealthPlus Distributors", date: "Feb 14", badge: "today", icon: "🟡" },
-  { id: "PO-003", supplier: "PharmaNet Supplies",      date: "Feb 18", badge: "soon",  icon: "🔴" },
-  { id: "PO-004", supplier: "CureCraft Wholesale",     date: "Feb 20", badge: "soon",  icon: "🔴" },
-  { id: "PO-007", supplier: "HealthPlus Distributors", date: "Mar 01", badge: "ok",    icon: "🟢" },
-];
-
-const MONTHLY_SPEND = [
-  { l: "Oct", v: 180 }, { l: "Nov", v: 210 }, { l: "Dec", v: 195 }, { l: "Jan", v: 245 }, { l: "Feb", v: 294 },
-];
-
 const fmt = n => "₹" + Number(n).toLocaleString("en-IN");
 const blank = () => ({ name: "", qty: "", rate: "" });
 
@@ -465,9 +463,8 @@ export default function PurchaseOrders() {
       <div className="po-app">
 
         {/* NAV */}
-        <nav className="po-nav mx-4 box_shadow">
+        <nav className="po-nav">
           <div className="po-nav-brand">
-            <div className="po-nav-ico">📦</div>
             <span className="po-nav-title">Purchase Orders</span>
           </div>
           <div className="po-nav-right">
@@ -479,9 +476,9 @@ export default function PurchaseOrders() {
         <div className="po-body">
 
           {/* METRIC CARDS */}
-          <div className="metrics-row ">
+          <div className="metrics-row">
             {METRICS.map((m, i) => (
-              <div className={`mc box_shadow ${m.theme}`} key={i}>
+              <div className={`mc ${m.theme}`} key={i}>
                 <div className="mc-top">
                   <div>
                     <div className="mc-lbl">{m.label}</div>
@@ -498,9 +495,8 @@ export default function PurchaseOrders() {
             ))}
           </div>
 
-
           {/* STATUS STRIP */}
-          <div className="status-strip box_shadow">
+          <div className="status-strip">
             {[
               { count: poList.length, lbl: "Total Orders", col: "#2563eb" },
               { count: pending,       lbl: "Pending",      col: "#d97706" },
@@ -522,7 +518,7 @@ export default function PurchaseOrders() {
           </div>
 
           {/* FULL WIDTH TABLE */}
-          <div className="tbl-card box_shadow">
+          <div className="tbl-card">
             <div className="tbl-toolbar">
               <div className="tbl-search">
                 <span style={{ color: "#94a3b8", fontSize: 14, flexShrink: 0 }}>🔍</span>
@@ -631,12 +627,12 @@ export default function PurchaseOrders() {
             </div>
           </div>
 
-          {/* ── BOTTOM ROW: Quick Create + Top Purchased ── */}
+          {/* BOTTOM ROW */}
           <div className="bottom-row">
 
             {/* Quick Create PO */}
-            <div className="form-card box_shadow">
-              <div className="form-card-hd ">
+            <div className="form-card">
+              <div className="form-card-hd">
                 <div className="po-nav-ico" style={{ width: 28, height: 28, fontSize: 13, borderRadius: 8 }}>⚡</div>
                 <div>
                   <div className="form-card-title">Quick Create PO</div>
@@ -664,7 +660,6 @@ export default function PurchaseOrders() {
                     </div>
                   </div>
                 </div>
-
                 <div className="fgrp" style={{ marginBottom: 4 }}>
                   <label className="flbl" style={{ marginBottom: 8 }}>Medicines</label>
                   {meds.map((m, i) => (
@@ -684,7 +679,6 @@ export default function PurchaseOrders() {
                   ))}
                   <button className="add-med" onClick={() => setMeds([...meds, blank()])}>＋ Add Medicine</button>
                 </div>
-
                 <div className="form-actions">
                   <button className="btn-create" onClick={doCreate}>Create Purchase Order</button>
                   <button className="btn-reset" onClick={() => { setSup(""); setDel(""); setMeds([blank()]); }}>✕</button>
@@ -693,7 +687,7 @@ export default function PurchaseOrders() {
             </div>
 
             {/* Top Purchased */}
-            <div className="top-card box_shadow">
+            <div className="top-card">
               <div className="top-card-hd">
                 <span className="top-card-title">🏆 Top Purchased Medicines</span>
                 <span style={{ fontSize: 11, color: "var(--t4)", fontWeight: 600 }}>Feb 2026</span>

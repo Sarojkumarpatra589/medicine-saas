@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Container, Row, Col, Card, Table,
@@ -86,10 +85,10 @@ const gstGroups = [
 ];
 
 const stockLegend = [
-  { label: "In Stock",    color: "#1e88e5" },
-  { label: "Low Stock",   color: "#fb8c00" },
-  { label: "Out of Stock",color: "#43a047" },
-  { label: "Expired",     color: "#e53935" },
+  { label: "In Stock",     color: "#1e88e5" },
+  { label: "Low Stock",    color: "#fb8c00" },
+  { label: "Out of Stock", color: "#43a047" },
+  { label: "Expired",      color: "#e53935" },
 ];
 
 // ── DONUT WITH INLINE SVG LABELS ──────────────────────────────
@@ -166,7 +165,6 @@ export default function InventoryReport() {
 
   const styles = {
     pageWrapper:  { backgroundColor: "#eef1f5", minHeight: "100vh" },
-    // ── HEADER BAR ──
     headerBar: {
       backgroundColor: "#fff",
       padding: "11px 24px",
@@ -187,12 +185,11 @@ export default function InventoryReport() {
       padding: "9px 18px", fontSize: 13.5, fontWeight: 600, cursor: "pointer",
       display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit",
     },
-    // ── rest unchanged ──
     filterCard:   { backgroundColor: "#fff", border: "1px solid #dde3ec" },
-    kpiWrapper:   { backgroundColor: "#fff", border: "1px solid #dde3ec",  padding: "12px 10px" },
     kpiCard:      (bg) => ({
                     backgroundColor: bg, color: "#fff", borderRadius: 8,
-                    textAlign: "center", padding: "12px 8px 14px", flex: 1, minWidth: 0,
+                    textAlign: "center", padding: "12px 8px 14px",
+                    flex: "1 1 0", minWidth: 140,
                   }),
     kpiTitle:     { fontSize: 13, fontWeight: 600, opacity: 0.93, marginBottom: 6 },
     kpiValue:     { fontSize: 22, fontWeight: 700, margin: 0 },
@@ -216,14 +213,14 @@ export default function InventoryReport() {
     donutRow:     { display: "flex", alignItems: "center", gap: 14 },
     legendCol:    { display: "flex", flexDirection: "column", gap: 8 },
     legendRow:    { display: "flex", alignItems: "center", gap: 8 },
-    stkSeg:       (h, c) => ({ height: h, width: "100%", backgroundColor: c, borderRadius: 2 }),
   };
 
   const formCtrl = { fontSize: 13, height: 34 };
 
   return (
     <div style={styles.pageWrapper}>
-      <Container fluid className="py-3 px-3 px-lg-4" style={{ maxWidth: 1400 }}>
+      {/* maxWidth removed — true full width */}
+      <Container fluid className="py-3 px-3 px-lg-4">
 
         {/* ── HEADER BAR ── */}
         <div style={styles.headerBar} className="box_shadow">
@@ -238,11 +235,19 @@ export default function InventoryReport() {
           </div>
         </div>
 
-        {/* ── KPI CARDS ── */}
-        <div style={styles.kpiWrapper} className="mb-4 p-4 box_shadow">
-          <div className="d-flex flex-wrap gap-2">
+        {/* ── KPI CARDS — single row, fills full width on large, scrolls on small ── */}
+        <div className="mb-4 box_shadow" style={{
+          backgroundColor: "#fff", border: "1px solid #dde3ec", padding: "12px 10px",
+        }}>
+          <div style={{
+            display: "flex",
+            flexWrap: "nowrap",
+            gap: 10,
+            overflowX: "auto",
+            scrollbarWidth: "none",
+          }}>
             {kpiData.map((k) => (
-              <div key={k.label} style={styles.kpiCard(k.bg)} className="flex-grow-1">
+              <div key={k.label} style={styles.kpiCard(k.bg)}>
                 <div style={styles.kpiTitle}>{k.label}</div>
                 <div style={styles.kpiValue}>{k.value}</div>
               </div>
@@ -250,7 +255,6 @@ export default function InventoryReport() {
           </div>
         </div>
 
-        
         {/* ── FILTERS ── */}
         <div style={styles.filterCard} className="p-4 mb-4 box_shadow">
           <Row className="g-2 align-items-center">
@@ -331,8 +335,6 @@ export default function InventoryReport() {
 
           </Row>
         </div>
-
-
 
         {/* ── INVENTORY TABLE ── */}
         <div className="mb-4 p-4 rounded overflow-hidden border bg-white box_shadow">
@@ -423,7 +425,6 @@ export default function InventoryReport() {
             <div style={styles.chartCard} className="box_shadow">
               <div style={styles.chartTitle}>Top Stocked Medicines</div>
               <div style={{ display: "flex", height: 160 }}>
-
                 <div style={{
                   display: "flex", flexDirection: "column",
                   justifyContent: "space-between", alignItems: "flex-end",
@@ -433,7 +434,6 @@ export default function InventoryReport() {
                     <span key={v} style={{ fontSize: 10, fontWeight: 700, color: "#333" }}>{v}</span>
                   ))}
                 </div>
-
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
                   <div style={{
                     flex: 1, position: "relative",
@@ -466,7 +466,6 @@ export default function InventoryReport() {
                       ))}
                     </div>
                   </div>
-
                   <div style={{ display: "flex", gap: 5, padding: "4px 6px 0 6px", height: 36 }}>
                     {topMedicines.map((m) => (
                       <div key={m.name} style={{
@@ -555,7 +554,6 @@ export default function InventoryReport() {
                       ))}
                     </div>
                   </div>
-
                   <div style={{ display: "flex", gap: 8, padding: "4px 8px 0 8px", height: 20 }}>
                     {gstGroups.map((g) => (
                       <div key={g.label} style={{
@@ -568,7 +566,6 @@ export default function InventoryReport() {
                   </div>
                 </div>
               </div>
-
               <div className="d-flex flex-wrap gap-2 mt-2 justify-content-center">
                 {gstLegend.map((l) => (
                   <div key={l.label} style={styles.legendRow}>

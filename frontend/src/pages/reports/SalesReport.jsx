@@ -70,7 +70,6 @@ const paymentLegend = [
   { label: "Online Wallet", color: "#e53935" },
 ];
 
-// Unique dropdown values derived from data
 const allBatches   = [...new Set(allInvoiceData.map(r => r.batch))];
 const allMedicines = [...new Set(allInvoiceData.map(r => r.medicine))];
 const allGstTypes  = [...new Set(allInvoiceData.map(r => r.gst))];
@@ -111,7 +110,6 @@ function DonutChartWithLabels({ segments, size = 150, strokeWidth = 36 }) {
 
 // ── MAIN COMPONENT ─────────────────────────────────────────────
 export default function SalesReport() {
-  // ── Filter input state ──
   const [invoiceNoInput,      setInvoiceNoInput]      = useState("");
   const [medicineInput,       setMedicineInput]        = useState("");
   const [batchFilter,         setBatchFilter]          = useState("All");
@@ -121,11 +119,7 @@ export default function SalesReport() {
   const [medicineNameFilter,  setMedicineNameFilter]   = useState("All");
   const [customerTypeFilter,  setCustomerTypeFilter]   = useState("All");
   const [paymentModeFilter,   setPaymentModeFilter]    = useState("All");
-
-  // ── Applied filter state (committed on "Apply Filter" click) ──
   const [applied, setApplied] = useState(null);
-
-  // ── Pagination ──
   const [activePage, setActivePage] = useState(1);
 
   const handleApply = () => {
@@ -151,7 +145,6 @@ export default function SalesReport() {
     setActivePage(1);
   };
 
-  // ── Filtered + sorted data ──
   const filteredData = useMemo(() => {
     if (!applied) return allInvoiceData;
     let data = [...allInvoiceData];
@@ -174,14 +167,11 @@ export default function SalesReport() {
     return data;
   }, [applied]);
 
-  // ── Pagination calc ──
-  const totalPages     = Math.max(1, Math.ceil(filteredData.length / ROWS_PER_PAGE));
-  const safePage       = Math.min(activePage, totalPages);
-  const pagedData      = filteredData.slice((safePage - 1) * ROWS_PER_PAGE, safePage * ROWS_PER_PAGE);
+  const totalPages = Math.max(1, Math.ceil(filteredData.length / ROWS_PER_PAGE));
+  const safePage   = Math.min(activePage, totalPages);
+  const pagedData  = filteredData.slice((safePage - 1) * ROWS_PER_PAGE, safePage * ROWS_PER_PAGE);
+  const goToPage   = (p) => setActivePage(Math.max(1, Math.min(p, totalPages)));
 
-  const goToPage = (p) => setActivePage(Math.max(1, Math.min(p, totalPages)));
-
-  // Build visible page number buttons (window of 4)
   const maxVisible = 4;
   let pStart = Math.max(1, safePage - 1);
   let pEnd   = Math.min(totalPages, pStart + maxVisible - 1);
@@ -198,7 +188,6 @@ export default function SalesReport() {
     { pct: 29, color: "#43a047" }, { pct: 26, color: "#e53935" },
   ];
 
-  // ── STYLES (unchanged from original) ──
   const styles = {
     pageWrapper:  { backgroundColor: "#eef1f5", minHeight: "100vh" },
     headerBar:    { backgroundColor: "#fff", padding: "11px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 },
@@ -227,7 +216,8 @@ export default function SalesReport() {
 
   return (
     <div style={styles.pageWrapper}>
-      <Container fluid className="py-3 px-3 px-lg-4" style={{ maxWidth: 1400 }}>
+      {/* ↓ Removed maxWidth: 1400 — now truly full width on all screens */}
+      <Container fluid className="py-3 px-3 px-lg-4">
 
         {/* ── HEADER BAR ── */}
         <div style={styles.headerBar} className="box_shadow">
@@ -274,21 +264,13 @@ export default function SalesReport() {
             </Col>
 
             <Col xs={6} sm={4} md={2} lg="auto">
-              <Form.Control
-                placeholder="Invoice No"
-                value={invoiceNoInput}
-                onChange={e => setInvoiceNoInput(e.target.value)}
-                style={{ ...formCtrl, borderColor: "#ccd3de" }}
-              />
+              <Form.Control placeholder="Invoice No" value={invoiceNoInput}
+                onChange={e => setInvoiceNoInput(e.target.value)} style={{ ...formCtrl, borderColor: "#ccd3de" }} />
             </Col>
 
             <Col xs={6} sm={4} md={2} lg="auto">
-              <Form.Control
-                placeholder="Medicine Name"
-                value={medicineInput}
-                onChange={e => setMedicineInput(e.target.value)}
-                style={{ ...formCtrl, borderColor: "#ccd3de" }}
-              />
+              <Form.Control placeholder="Medicine Name" value={medicineInput}
+                onChange={e => setMedicineInput(e.target.value)} style={{ ...formCtrl, borderColor: "#ccd3de" }} />
             </Col>
 
             <Col xs={6} sm={4} md={2} lg="auto">
@@ -346,18 +328,12 @@ export default function SalesReport() {
             </Col>
 
             <Col xs={6} sm={4} md={2} className="d-flex gap-2 justify-content-end">
-              <Button
-                className="flex-grow-1 fw-bold"
-                onClick={handleApply}
-                style={{ background: "#1e9e3e", border: "none", fontSize: 14, borderRadius: 5, height: 34 }}
-              >
+              <Button className="flex-grow-1 fw-bold" onClick={handleApply}
+                style={{ background: "#1e9e3e", border: "none", fontSize: 14, borderRadius: 5, height: 34 }}>
                 Apply Filter
               </Button>
-              <Button
-                variant="outline-secondary"
-                onClick={handleReset}
-                style={{ fontSize: 13, borderRadius: 5, height: 34, whiteSpace: "nowrap" }}
-              >
+              <Button variant="outline-secondary" onClick={handleReset}
+                style={{ fontSize: 13, borderRadius: 5, height: 34, whiteSpace: "nowrap" }}>
                 Reset
               </Button>
             </Col>
@@ -371,8 +347,6 @@ export default function SalesReport() {
           )}
         </div>
 
-
-
         {/* ── INVOICE TABLE ── */}
         <div className="mb-4 p-4 rounded overflow-hidden border bg-white box_shadow">
           <div className="table-responsive">
@@ -383,8 +357,7 @@ export default function SalesReport() {
                     "Medicine & Batch","Expiry Date","Qty","MRP",
                     "Sale Price","Discount","GST","Total Amount","Payment Mode","Profit"
                   ].map((h) => (
-                    <th key={h}
-                      className="px-3 py-3 fw-semibold text-uppercase text-muted bg-light"
+                    <th key={h} className="px-3 py-3 fw-semibold text-uppercase text-muted bg-light"
                       style={{ fontSize: 11, letterSpacing: "0.6px", whiteSpace: "nowrap" }}>
                       {h}
                     </th>
@@ -443,18 +416,13 @@ export default function SalesReport() {
           </Col>
           <Col xs={12} md={6}>
             <div className="d-flex gap-1 justify-content-md-end align-items-center">
-              {/* First */}
               <a href="#" style={styles.pgBtn(false)} onClick={(e) => { e.preventDefault(); goToPage(1); }}>«</a>
-              {/* Prev */}
               <a href="#" style={styles.pgBtn(false)} onClick={(e) => { e.preventDefault(); goToPage(safePage - 1); }}>‹</a>
-
               {pageNumbers.map((p) => (
                 <a href="#" key={p} style={styles.pgBtn(safePage === p)} onClick={(e) => { e.preventDefault(); goToPage(p); }}>{p}</a>
               ))}
-
               <a href="#" style={styles.pgText} onClick={(e) => { e.preventDefault(); goToPage(safePage + 1); }}>Next</a>
               <a href="#" style={styles.pgBtn(false)} onClick={(e) => { e.preventDefault(); goToPage(safePage + 1); }}>›</a>
-              {/* Last */}
               <a href="#" style={styles.pgBtn(false)} onClick={(e) => { e.preventDefault(); goToPage(totalPages); }}>»</a>
             </div>
           </Col>
