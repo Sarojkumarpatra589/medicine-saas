@@ -35,6 +35,14 @@ import SystemBackup from "./SystemBackup";
 import DatabaseBackup from "./DatabaseBackup";
 import SystemUpdate from "./SystemUpdate";
 
+import RackSettings from "./RackSettings";
+import RoomManagement from "./RoomManagement";
+import WallManagement from "./WallManagement";
+import RackSetup from "./RackSetup";
+import ShelfManagement from "./ShelfManagement";
+import RackLayoutDesigner from "./RackLayoutDesigner";
+import RackListVerification from "./RackListVerification";
+
 import { ROUTES } from "../../constants/routes";
 
 export default [
@@ -78,6 +86,16 @@ export default [
           { path: ROUTES.SYSTEM_BACKUPS, element: <SystemBackup /> },
           { path: ROUTES.DATABASE_BACKUPS, element: <DatabaseBackup /> },
           { path: ROUTES.SYSTEM_UPDATE, element: <SystemUpdate /> },
+
+
+          // Rack Settings Module
+          { path: ROUTES.RACK_SETTINGS, element: <RackSettings /> },
+          { path: ROUTES.ROOM_MANAGEMENT, element: <RoomManagement /> },
+          { path: ROUTES.WALL_MANAGEMENT, element: <WallManagement /> },
+          { path: ROUTES.RACK_SETUP, element: <RackSetup /> },
+          { path: ROUTES.SHELF_MANAGEMENT, element: <ShelfManagement /> },
+          { path: ROUTES.RACK_LAYOUT_DESIGNER, element: <RackLayoutDesigner /> },
+          { path: ROUTES.RACK_LIST_VERIFICATION, element: <RackListVerification /> },
 
         ],
       },

@@ -153,6 +153,22 @@ export default function SettingsSidebar() {
           { label: "System Update", path: ROUTES.SYSTEM_UPDATE },
         ]}
       />
+      <SidebarSection
+        title="Rack Settings"
+        icon={<Gear size={16} />}
+        openKey="racksettings"
+        openMenu={openMenu}
+        setOpenMenu={setOpenMenu}
+        items={[
+          { label: "Rack Settings", path: ROUTES.RACK_SETTINGS },
+          { label: "Room Management", path: ROUTES.ROOM_MANAGEMENT },
+          { label: "Wall Management", path: ROUTES.WALL_MANAGEMENT },
+          { label: "Rack Setup", path: ROUTES.RACK_SETUP },
+          { label: "Shelf Management", path: ROUTES.SHELF_MANAGEMENT },
+          { label: "Rack Layout Designer", path: ROUTES.RACK_LAYOUT_DESIGNER },
+          { label: "Rack List Verification", path: ROUTES.RACK_LIST_VERIFICATION },
+        ]}
+      />
       </div>  
     </>
   );
