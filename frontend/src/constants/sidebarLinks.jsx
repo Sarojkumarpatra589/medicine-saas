@@ -163,6 +163,15 @@ export const SIDEBAR_LINKS = [
     { label: "Database Backup", to: ROUTES.DATABASE_BACKUPS },
     { label: "System Update", to: ROUTES.SYSTEM_UPDATE },
 
+    // ================= RACK SETTINGS =================
+    { label: "Rack Settings", to: ROUTES.RACK_SETTINGS },
+    { label: "Room Management", to: ROUTES.ROOM_MANAGEMENT },
+    { label: "Wall Management", to: ROUTES.WALL_MANAGEMENT },
+    { label: "Rack Setup", to: ROUTES.RACK_SETUP },
+    { label: "Shelf Management", to: ROUTES.SHELF_MANAGEMENT },
+    { label: "Rack Layout Designer", to: ROUTES.RACK_LAYOUT_DESIGNER },
+    { label: "Rack List Verification", to: ROUTES.RACK_LIST_VERIFICATION },
+
   ],
 },
 
@@ -191,6 +200,9 @@ children: [
 
 ],
 },
+
+
+
 
 
 ];

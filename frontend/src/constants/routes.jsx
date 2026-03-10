@@ -146,4 +146,12 @@ RACK_DASHBOARD: "/rackoperations/dashboard",
 MEDICINE_RACK_ASSIGNMENT: "/rackoperations/medicine-assignment",
 RACK_VIEW: "/rackoperations/view",
 
+
+RACK_SETTINGS: "/settings/rack-settings",
+ROOM_MANAGEMENT: "/settings/room-management",
+WALL_MANAGEMENT: "/settings/wall-management",
+RACK_SETUP: "/settings/rack-setup",
+SHELF_MANAGEMENT: "/settings/shelf-management",
+RACK_LAYOUT_DESIGNER: "/settings/rack-layout-designer",
+RACK_LIST_VERIFICATION: "/settings/rack-list-verification",
 };
