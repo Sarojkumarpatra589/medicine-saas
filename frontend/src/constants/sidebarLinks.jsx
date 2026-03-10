@@ -178,40 +178,19 @@ export const SIDEBAR_LINKS = [
   ],
 },
 
+
 {
-  title: "Rack Settings",
-  key: "racksettings",
-  children: [
+title: "Rack Operations",
+key: "rackoperations",
+children: [
 
-    // ===== SETTINGS =====
-    { label: "Rack Settings", to: ROUTES.RACK_SETTINGS },
-    { label: "Rack Category Mapping", to: ROUTES.RACK_CATEGORY_MAPPING },
-    { label: "Rack Barcode Settings", to: ROUTES.RACK_BARCODE_SETTINGS },
-    { label: "Rack Alert Settings", to: ROUTES.RACK_ALERT_SETTINGS },
-    { label: "Rack Layout Settings", to: ROUTES.RACK_LAYOUT_SETTINGS },
+{ label: "Rack Dashboard", to: ROUTES.RACK_DASHBOARD },
+{ label: "Medicine Rack Assignment", to: ROUTES.MEDICINE_RACK_ASSIGNMENT },
+{ label: "Rack View", to: ROUTES.RACK_VIEW },
 
-    
 
-  ],
+],
 },
-{
-  title: "Rack Operations",
-  key: "rackoperations",
-  children: [
 
-    // ===== OPERATIONS =====
-    { label: "Rack Dashboard", to: ROUTES.RACK_DASHBOARD },
-    { label: "Rack List", to: ROUTES.RACK_LIST },
-    { label: "Add / Edit Rack", to: ROUTES.RACK_FORM },
-    { label: "Shelf Management", to: ROUTES.SHELF_MANAGEMENT },
-    { label: "Rack Layout", to: ROUTES.RACK_LAYOUT },
-    { label: "Medicine Rack Assignment", to: ROUTES.MEDICINE_RACK_ASSIGNMENT },
-    { label: "Rack Inventory", to: ROUTES.RACK_INVENTORY },
-    { label: "Rack Expiry Alerts", to: ROUTES.RACK_EXPIRY_ALERTS },
-    { label: "Rack Barcode Generator", to: ROUTES.RACK_BARCODE_GENERATOR },
-    { label: "Rack Movement History", to: ROUTES.RACK_MOVEMENT_HISTORY },
-
-  ],
-},
 
 ];

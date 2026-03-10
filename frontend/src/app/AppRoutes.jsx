@@ -18,7 +18,6 @@ import SubscriptionRoutes from "../pages/subscription/routes";
 import DeveloperRoutes from "../pages/developer/routes";
 import OnboardingRoutes from "../pages/onboarding/routes";
 import StaffRoutes from "../pages/staff/routes";
-import RackSettingsRoutes from "../pages/racksettings/routes";
 import RackOperationsRoutes from "../pages/rackoperations/routes";
 
 
@@ -48,7 +47,6 @@ export default function AppRoutes() {
         ...DeveloperRoutes,
         ...OnboardingRoutes,
         ...StaffRoutes,
-        ...RackSettingsRoutes,
         ...RackOperationsRoutes,
       ],
     },
