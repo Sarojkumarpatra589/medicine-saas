@@ -393,7 +393,6 @@ const styles = {
   },
 
   mainContainer: {
-    maxWidth: '1200px',
     margin: '0 auto',
     padding: '24px 20px',
   },

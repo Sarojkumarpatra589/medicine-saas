@@ -48,7 +48,6 @@ const css = `
 
   /* ── Page Header ── */
   .rm-ph {
-    max-width: 1020px;
     margin: 0 auto 28px;
     display: flex;
     align-items: flex-start;
@@ -136,7 +135,6 @@ const css = `
 
   /* ── Layout ── */
   .rm-layout {
-    max-width: 1020px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
